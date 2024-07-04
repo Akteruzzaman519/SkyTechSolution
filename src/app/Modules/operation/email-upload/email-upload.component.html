@@ -1,21 +1,18 @@
 
-<div class="row g-0">
-  <div class="col-md-12 my-2">
+<div class="row">
+  <div class="col-md-12 my-3">
     <span class="fs-4"> <i class="fa-solid fa-envelopes-bulk text-black ms-1"></i> Add Bulk Email </span>
-  </div>
-  <div class="col-md-12 my-2">
-    <button type="button" class="btn btn-info float-end" (click)="addBulkEmailBtn()">Add Bulk Email</button>
+    <button type="button" class="btn btn-info float-end " (click)="addBulkEmailBtn()">Add Bulk Email</button>
   </div>
 
   <div class="col-md-12">
     <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; " [rowData]="rowData" [columnDefs]="colDefs"
-      [pagination]="true" (gridReady)="ApiGridReady($event)" [paginationPageSize]="paginationPageSize"
-      [defaultColDef]="DeafultCol">
+      [pagination]="true" (gridReady)="ApiGridReady($event)" [paginationPageSize]="paginationPageSize"  [defaultColDef]="DeafultCol">
     </ag-grid-angular>
   </div>
 
-  <div class="col-md-12 my-2">
-    <span class="fs-4">Total Record : {{totalRecord}}</span>
+  <div class="col-md-12 mt-3">
+    <span class="fs-5">Total Record : {{totalRecord}}</span>
     <button type="button" class="btn btn-success float-end" (click)="BulkEmailSave()">Save Data</button>
   </div>
 
@@ -42,7 +39,7 @@
       <div class="modal-body">
 
         <div class="mb-4">
-          <label for="fileUpload" class="form-label">File Upload</label>
+          <label for="fileUpload" class="form-label">Select File</label>
           <input type="file" readonly class="form-control" id="fileUpload" (change)="onFileSelected($event)"
             value="file upload">
         </div>
