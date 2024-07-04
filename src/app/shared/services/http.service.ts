@@ -1,13 +1,13 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CommonService } from 'shared/services/common.service';
 import { Menu } from 'shared/models/menu.model';
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HttpCommonService extends CommonService {
+export class HttpService  extends CommonService {
 
   //over all gets 
   Get(URL: string, loadingIndegator?: boolean, loadingMessage?: string): Observable<any[]> {
