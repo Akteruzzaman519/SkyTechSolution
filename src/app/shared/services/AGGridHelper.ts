@@ -5,8 +5,6 @@ import { ColDef, GridApi } from "ag-grid-community";
 export class AGGridHelper {
     constructor() { }
 
-
-
     public static DeafultCol: ColDef = {
         sortable: true,
         filter: true,
@@ -14,7 +12,6 @@ export class AGGridHelper {
         cellClass: 'ics-ag-cell-border'
     };
 
-    
     public static GetRows(gridApi: GridApi) {
         const rowData: any[] = [];
         gridApi.forEachNode(function (node) {
@@ -39,7 +36,7 @@ export class AGGridHelper {
     }
 
     public static SelectRow(gridApi: GridApi, nRowIndex: any) {
-        gridApi.forEachNode(function (node) { 
+        gridApi.forEachNode(function (node) {
             if (node.rowIndex == nRowIndex) {
                 node.setSelected(true);
             }
@@ -63,4 +60,5 @@ export class AGGridHelper {
         }
         return selectedNodes[0].rowIndex;
     }
+    
 }
