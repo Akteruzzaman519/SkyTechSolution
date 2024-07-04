@@ -14,7 +14,7 @@ import { EmailIssueFormDto } from 'src/app/Models/EmailIssueFormDto';
   templateUrl: './change-mail-credential.component.html',
   styleUrls: ['./change-mail-credential.component.css']
 })
-export class ChangeMailCredentialComponent {
+export class ChangeMailCredentialComponent  implements OnInit {
   
   
   private balkEmailGridApi!: GridApi;
@@ -33,9 +33,15 @@ export class ChangeMailCredentialComponent {
   public sEmailUserName :string = "";
   public sEmailPassword :string = "";
   public sEmailRecoveryEmail :string = "";
+
+  public sNewEmailPassword :string = "";
+  public sNewRecoveryEmail :string = "";
   public totalRecord: number = 0;
 
   constructor(private service: HttpCommonService, private toast: ToastrService,) { }
+  ngOnInit(): void {
+    this.GetEmailsByOperationTag("");
+  }
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
@@ -57,6 +63,15 @@ export class ChangeMailCredentialComponent {
     this.sEmailRecoveryEmail = "";
   }
 
+  public GetEmailsByOperationTag(relatedModule: any) {
+    //{{baseURL}}/EmailOperation/GetEmailsByOperationTag/{operationTag}
+    this.service.Get('/EmailOperation/GetEmailsByOperationTag/' + relatedModule).subscribe((res: any) => {
+      this.oEmailOperationGridDtoList = res;
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
 
   public GetEmailUsername(mailSystemId: any) {
   //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
@@ -68,7 +83,6 @@ export class ChangeMailCredentialComponent {
       })
   }
 
-  
   public GetEmailPassword(mailSystemId: any) {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
       this.service.Get('/EmailManagement/GetEmailPassword/' + mailSystemId).subscribe((res: any) => {
@@ -78,6 +92,7 @@ export class ChangeMailCredentialComponent {
           console.log(err);
         })
     }
+
     //{{baseURL}}/EmailManagement/GetEmailRcoveryEmail/{mailSystemId}
   public GetEmailRcoveryEmail(mailSystemId: any) {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
@@ -89,19 +104,20 @@ export class ChangeMailCredentialComponent {
         })
     }
 
-
-  public GetEmailsByOperationTag(relatedModule: any) {
-    //{{baseURL}}/EmailOperation/GetEmailsByOperationTag/{operationTag}
-    this.service.Get('/EmailOperation/GetEmailsByOperationTag/' + relatedModule).subscribe((res: any) => {
-      this.oEmailOperationGridDtoList = res;
-    },
-      (err: any) => {
-        console.log(err);
-      })
-  }
-
   public ChangeEmailCredential(mailsystemId :any){
-    this.oEmailBaseInfo
+
+    if(this.sNewEmailPassword == ""){
+      this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
+      return;
+    }
+    if(this.sNewRecoveryEmail == ""){
+      this.toast.warning("Please Provide New Recovery Email!!", "Warning", { progressBar: true });
+      return;
+    }
+
+    this.oEmailBaseInfo.mailUserName = this.sEmailUserName;
+    this.oEmailBaseInfo.mailRecoveryMail = this.sNewRecoveryEmail;
+    this.oEmailBaseInfo.mailUserPassword = this.sNewEmailPassword;
     //{{baseURL}}/EmailManagement/ChangeEmailCredential/{mailSystemId}
     this.service.Post('EmailManagement/ChangeEmailCredential/'+mailsystemId, this.oEmailBaseInfo, true).subscribe((res: any) => {
       this.toast.success("Email Uploaded Successfully!!", "Success", { progressBar: true });
@@ -112,7 +128,7 @@ export class ChangeMailCredentialComponent {
         console.log(err);
       })
   }
-  
+
   public ReportMailIssue(){
     this.oEmailIssueFormDto
     //{{baseURL}}/EmailManagement/ChangeEmailCredential/{mailSystemId}
