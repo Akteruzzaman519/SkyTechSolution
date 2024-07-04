@@ -6,6 +6,7 @@ import { KeyValueDto } from 'src/app/Models/KeyValueDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-email-upload',
@@ -27,7 +28,7 @@ export class EmailUploadComponent {
   public oEmailBaseInfos: EmailBaseInfo[] = [];
   public totalRecord: number = 0;
 
-  constructor(private service: HttpCommonService, private toast: ToastrService,) { }
+  constructor(private service: HttpCommonService, private toast: ToastrService, private datePipe: DatePipe) { }
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
@@ -97,7 +98,7 @@ export class EmailUploadComponent {
       this.service.UploadFile('FileReader/ReadFreshMailFromExcel', formData).subscribe(response => {
         this.rowData = response as any[];
         if (this.rowData.length > 0) {
-          this.totalRecord = this.rowData.length
+          this.totalRecord = this.rowData.length; 
         }
         document.getElementById("BulkemailCloseModal")?.click();
       }, error => {
