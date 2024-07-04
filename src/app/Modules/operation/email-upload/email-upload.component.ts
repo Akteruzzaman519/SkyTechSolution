@@ -5,6 +5,7 @@ import { EmailFormDto } from 'src/app/Models/EmailFormDto';
 import { KeyValueDto } from 'src/app/Models/KeyValueDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-email-upload',
@@ -26,7 +27,7 @@ export class EmailUploadComponent {
   public oEmailBaseInfos: EmailBaseInfo[] = [];
   public totalRecord:number = 0;
 
-  constructor(private service: HttpCommonService) { }
+  constructor(private service: HttpCommonService,private toast: ToastrService,) { }
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
@@ -50,6 +51,11 @@ export class EmailUploadComponent {
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
     }
+  }
+
+  SampleDownload() {
+    this.service.SampleFileDownload();
+    this.toast.success("Sample File Downloaded Successfully!!", "success", { progressBar: true });
   }
 
   public GetSourcesInKeyValue(relatedModule: any) {
