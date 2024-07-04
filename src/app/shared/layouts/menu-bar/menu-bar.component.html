@@ -1,0 +1,164 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" #navBar>
+    <div class="container-fluid mx-2">
+        <a routerLink="/dashboard" class="navbar-brand" >X-Digital ERP</a>
+        <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            (click)="isCollapsed = !isCollapsed">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true">
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item"  *ngFor="let menu of menus"
+                    [class.dropdown]="menu.ChildMenus"
+						  #dropdown{{menu.MenuId}}="bs-dropdown"
+                    dropdown
+						  [autoClose]="true">
+
+						  	<!-- First level with URL begin -->
+                    	<a class="nav-link" *ngIf="!menu.ChildMenus || menu.ChildMenus.length === 0"
+                        [routerLink]="'/'+menu.MenuURL"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact : true}"
+								>
+								{{ menu.MenuName }}
+							</a>
+							<!-- First level with URL end -->
+
+							<!-- Second level begin -->
+                    	<a class="nav-link dropdown-toggle" *ngIf="menu.ChildMenus && menu.ChildMenus.length > 0"
+                        dropdownToggle
+                        role="button"
+                        (click)="false"
+								>
+								{{ menu.MenuName }}
+							</a>
+
+                    	<!-- <div class="dropdown-menu" *dropdownMenu role="menu">
+                        <a class="dropdown-item" *ngFor="let submenu of menu.ChildMenus"
+                            role="menuitem"
+                            [routerLink]="'/'+submenu.MenuURL"
+                            routerLinkActive="active">
+                            {{ submenu.MenuName }}
+                        </a>
+                    	</div> -->
+
+						  	<ul class="dropdown-menu" *dropdownMenu role="menu">
+								<li role="menuitem" dropdown
+									  *ngFor="let l2menu of menu.ChildMenus"
+									  triggers="mouseover"
+									  placement="right"
+									  container="body"
+									  [isAnimated]="false"
+									  [autoClose]="true"
+									  >
+
+								 <a class="dropdown-item" *ngIf="l2menu.ChildMenus.length === 0"
+									  role="menuitem"
+									  [routerLink]="'/'+l2menu.MenuURL"
+									  routerLinkActive="active">
+									  {{ l2menu.MenuName }}
+								 </a>
+
+								 <!-- 3rd level menu begin -->
+								 <a class="dropdown-item dropdown-toggle l3-menu-parent" *ngIf="l2menu.ChildMenus.length > 0"
+									  dropdownToggle
+									  role="button"
+									  triggers="mouseover"
+									  placement="right"
+									  container="body"
+									  (click)="true">
+									  {{ l2menu.MenuName }}
+									  <!-- <span class="caret"></span> -->
+								 </a>
+
+								 <ng-container *ngIf="l2menu.ChildMenus.length > 0">
+									  <ul class="dropdown-menu l3-menu" role="menu"  *dropdownMenu>
+											<li role="menuitem" *ngFor="let l3menu of l2menu.ChildMenus">
+												 <a class="dropdown-item"
+													  [routerLink]="'/'+l3menu.MenuURL"
+													  routerLinkActive="active">
+													  {{ l3menu.MenuName }}
+												 </a>
+											</li>
+									  </ul>
+								 </ng-container>
+								 <!-- 3rd level menu end -->
+							</li>
+					  </ul>
+					  <!-- Second level end -->
+
+
+                </li>
+
+
+                <!-- <li class="nav-item">
+                    <a [routerLink]="['/dashboard']" routerLinkActive="active" class="nav-link" >Home
+                    <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        [routerLink]="['/merchant', 'add-parcel']"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact : true}">Add Parcel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        [routerLink]="['/hub', 'riders']"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact : true}">Riders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        [routerLink]="['/cwh', 'hubs']"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact : true}">Hubs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        [routerLink]="['/hub', 'parcels', 'unassigned']"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact : true}">Unassigned Parcels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        [routerLink]="['/cwh', 'hub-users']"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{ exact : true}">Hub Users</a>
+                </li> -->
+                <!-- <li class="nav-item dropdown" dropdown>
+                    <a class="nav-link dropdown-toggle" dropdownToggle role="button" (click)="false">Dropdown</a>
+                    <div class="dropdown-menu" *dropdownMenu role="menu">
+                        <a class="dropdown-item" role="menuitem" href="#">Action</a>
+                        <a class="dropdown-item" role="menuitem" href="#">Another action</a>
+                        <a class="dropdown-item" role="menuitem" href="#">Something else here</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" role="menuitem" href="#">Separated link</a>
+                    </div>
+                </li> -->
+            </ul>
+            <form class="d-flex">
+                <!-- <input class="form-control me-sm-2" type="text" placeholder="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> -->
+                <div class="nav-item dropdown" dropdown>
+                    <a class="nav-link dropdown-toggle text-light" dropdownToggle role="button" (click)="false">
+                        <i class="fa-regular fa-user"></i>
+                        {{ user.name }}
+                    </a>
+                    <div class="dropdown-menu" *dropdownMenu role="menu">
+                        <a class="dropdown-item" role="button" (click)="logout()">
+                            <i class="fa-solid fa-power-off"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</nav>

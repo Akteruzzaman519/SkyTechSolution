@@ -1,0 +1,40 @@
+@media (min-width: 992px) {
+	.modal-lg, .modal-xl {
+		max-width: 70%;
+	}
+}
+
+.table td, .table th {
+	padding: .3rem;
+}
+
+.table td {
+	font-size: 0.9rem;
+	font-family: sans-serif, Arial, Helvetica;
+}
+
+
+.pane {
+	height: 65vh;
+    overflow-y: scroll;
+    border: 1px solid #b1afaf;
+}
+
+
+thead {
+	background-color: #d7d7d7;
+}
+
+.right-table-th-1,
+.right-table-td-1 {
+	width:80%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 0;
+}
+
+.right-table-th-2,
+.right-table-td-2 {
+	width:20%;
+}

@@ -1,0 +1,206 @@
+<div class="modal fade" bsModal
+		#multiSelectModal="bs-modal"
+		tabindex="-1"
+		[config]="{backdrop: 'static'}"
+		role="dialog"
+		aria-labelledby="dialog-nested-name2">
+
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content modal_talent">
+			<!-- Modal header begin -->
+			<div class="modal-header">
+				<h5 class="modal-title">Title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCloseMultiSelectModal(false)"></button>
+			</div>
+			<!-- Modal header end -->
+
+			<!-- Modal body begin -->
+			<div class="modal-body py-0 px-4">
+
+				<div class="row" >
+					<div class="col-md-6 pt-1 pb-2" style="border-right:2px solid green;">
+						<div class="row">
+							<div class="col-md-7">
+								<label for="">
+									Find
+								</label>
+								<input type="text" name="searchTerm"
+										class="form-control form-control-sm"
+										[(ngModel)]="searchTerm"
+										(keyup)="setAllPageOptions()">
+							</div>
+							<div class="col-md-5">
+								<label for="">
+									Sort by
+								</label>
+								<select name="optionSorter"
+										class="form-control form-control-sm"
+										[(ngModel)]="optionSorter"
+										(change)="setAllPageOptions()">
+									<option value="ASC">ASC</option>
+									<option value="DESC">DESC</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row my-1">
+							<div class="col-md-7 pr-0 mr-0">
+								<div class="form-check" style="white-space: nowrap;overflow: hidden;">
+									<input class="form-check-input" type="checkbox"
+                      name="showSelected"
+                      id="showSelected"
+											[checked]="showSelectedToo"
+											(change)="toggleShowSelected()">
+									<label class="form-check-label" for="showSelected">
+										Show selected
+									</label>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<strong>Filtered : </strong> {{allPageOptions.length}}
+							</div>
+						</div>
+
+						<div class="pane">
+							<table class="table table-striped" style="width:100%;">
+								<thead>
+									<tr>
+										<th>{{configuration.mainColHeader}}</th>
+										<th *ngIf="configuration.column1.isVisible">{{configuration.column1.header}}</th>
+										<th *ngIf="configuration.column2.isVisible">{{configuration.column2.header}}</th>
+										<th *ngIf="configuration.action.isVisible">{{configuration.action.header}}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let item of allPageOptions;index as i">
+										<td>
+											<div class="form-check">
+												<input type="checkbox" id="{{componentId}}_leftCheck{{i}}"
+														class="form-check-input"
+														[checked]="item.isChecked"
+														(change)="onOptionChange($event, item.key)">
+												<label class="form-check-label" for="{{componentId}}_leftCheck{{i}}">
+													{{item.title}}
+												</label>
+											</div>
+										</td>
+										<td *ngIf="configuration.column1.isVisible"
+												innerHTML="{{item.shortDescription | highlight : searchTerm}}">
+										</td>
+										<td *ngIf="configuration.column2.isVisible"
+												innerHTML="{{item.fullDescription | highlight : searchTerm}}">
+										</td>
+										<td *ngIf="configuration.action.isVisible">
+											<div class="button-group">
+												<button type="button" class="btn btn-sm talent"
+														(click)="onFirstButtonClicked(item.key)">
+													<i class="fa fa-arrow-up"></i>
+												</button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+					<div class="col-md-6 pt-1 pb-2">
+						<div class="row">
+							<div class="col-md-7">
+								<h4>Your selection</h4>
+							</div>
+							<div class="col-md-5" >
+								<label for="">
+									Sort by
+								</label>
+								<select name="selectedSorter"
+										class="form-control form-control-sm"
+										[disabled]="!configuration.rightAutoOrder"
+										[(ngModel)]="selectedSorter"
+										(change)="rightSort()">
+									<option value="ASC">ASC</option>
+									<option value="DESC">DESC</option>
+								</select>
+							</div>
+						</div>
+						<div class="row my-1 pl-3 d-block">
+							<strong>Selected items : </strong>{{allPageSelectedOptions.length}}
+						</div>
+						<div class="pane">
+							<table class="table table-striped" style="width:100%;">
+								<thead>
+									<tr>
+										<th class="right-table-th-1">
+											{{configuration.mainColHeader}}
+										</th>
+										<th class="right-table-th-2"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let item of allPageSelectedOptions;index as i">
+										<td class="right-table-td-1">
+											<div class="form-check">
+												<input type="checkbox" id="{{componentId}}_rightCheck{{i}}"
+														class="form-check-input"
+														[checked]="item.isChecked"
+														(change)="onSelectedOptionChange($event, item.key)">
+												<label class="form-check-label" for="{{componentId}}_rightCheck{{i}}">
+													{{item.title}}
+												</label>
+											</div>
+										</td>
+										<td class="right-table-td-2">
+											<button type="button" class="btn btn-sm btn-success"
+													style="max-width: 50%;margin-right: 0.2rem;"
+													(click)="onReordered('up', i)">
+												<i class="fa fa-arrow-up"></i>
+											</button>
+											<button type="button" class="btn btn-sm btn-success"
+													style="max-width: 50%;"
+													(click)="onReordered('down', i)">
+												<i class="fa fa-arrow-down"></i>
+											</button>
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<!-- Modal body end -->
+
+			<!-- Modal footer start -->
+			<div class="modal-footer">
+				<div class="row" style="width:100%;margin: 0px;">
+					<div class="col-md-6 pull-left pl-1">
+						<button type="button"
+								class="btn btn-sm btn-dark"
+								(click)="onCloseMultiSelectModal(false)">
+							<i class="fa fa-undo"> </i>
+							Exit without selection
+						</button>
+					</div>
+					<div class="col-md-6 pr-1">
+						<button type="button"
+								class="btn btn-sm btn-primary float-end"
+								(click)="onCloseMultiSelectModal(true)">
+							<i class="fa fa-check"> </i>
+							Confirm selection
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Modal footer end -->
+
+		</div>
+		<!-- End modal content -->
+	</div>
+	<!-- End modal dialogue -->
+</div>
+<!-- End modal -->
+

@@ -1,0 +1,15 @@
+.table td, .table th {
+	padding: .3rem;
+}
+
+.table td {
+	font-size: 0.9rem;
+	font-family: sans-serif, Arial, Helvetica;
+}
+
+
+.pane {
+	height: 65vh;
+    overflow-y: auto;
+    /* border: 1px solid #b1afaf; */
+}

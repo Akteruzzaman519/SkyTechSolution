@@ -1,0 +1,164 @@
+<!-- New object add or edit form modal begin -->
+<div class="modal fade" bsModal
+		#singleElementSelectModal="bs-modal"
+		tabindex="-1"
+		[config]="{backdrop: 'static'}"
+		role="dialog"
+		aria-labelledby="dialog-nested-name2">
+
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<!-- Modal header begin -->
+			<div class="modal-header">
+				<h5 class="modal-title" *ngIf="header">
+					{{header}}
+				</h5>
+				<h5 class="modal-title" *ngIf="!header">
+					Title
+				</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onCloseSingleSelectModal(false)"></button>
+			</div>
+			<!-- Modal header end -->
+
+			<!-- Modal body begin -->
+			<div class="modal-body pb-0 px-4">
+				<div class="row">
+					<div [class.col-md-10]="configuration.showMasterButton" [class.col-md-12]="!configuration.showMasterButton">
+						<h5>{{currentTitle}}</h5>
+					</div>
+					<div class="col-md-2" *ngIf="configuration.showMasterButton">
+						<button type="button" class="btn btn-sm talent pull-right" (click)="onMasterButtonClicked()">
+							<i class="fa fa-bars"></i>
+						</button>
+					</div>
+
+				</div>
+
+				<div class="row" style="border-top: 1px solid black;">
+					<div class="col-md-12 pt-1 pb-2">
+						<div class="row">
+							<div class="col-md-5">
+								<label for="">
+									Find
+								</label>
+								<input type="text" name="searchTerm"
+										class="form-control form-control-sm"
+										[(ngModel)]="searchTerm"
+										(keyup)="onFindFieldChange()">
+							</div>
+							<div class="col-md-2">
+								<label for="">
+									Size
+								</label>
+								<select name="filter_max_rows"
+										class="form-select form-select-sm custom-input"
+										(change)="onRecordSizeChange()"
+										[(ngModel)]="pageSize">
+									<option *ngFor="let item of [20, 50, 100, 200, 300, 500, 1000]" [value]="item">
+										{{item}}
+									</option>
+								</select>
+							</div>
+							<div class="col-md-5">
+								<label for="">
+									Sort by
+								</label>
+								<select name="optionSorter"
+										class="form-control form-control-sm"
+										[(ngModel)]="optionSorter"
+										(change)="sortItems()">
+									<option value="ASC">ASC</option>
+									<option value="DESC">DESC</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row my-1">
+							<div class="col-md-7 pr-0 mr-0">
+								<strong>Current : </strong> {{currentTitle}}
+							</div>
+							<div class="col-md-5">
+								<strong>Filtered : </strong> {{allOptions.length}}
+							</div>
+						</div>
+
+						<div class="pane">
+							<table class="table table-hover" style="width:100%;">
+								<thead>
+									<tr>
+										<th>{{configuration.mainColHeader}}</th>
+										<th *ngIf="configuration.column1.isVisible">{{configuration.column1.header}}</th>
+										<th *ngIf="configuration.column2.isVisible">{{configuration.column2.header}}</th>
+										<th *ngIf="configuration.action.isVisible">{{configuration.action.header}}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngFor="let item of allOptions;index as i"
+											[class.selected-row]="item.key == pageSelectedOptionKey"
+											(click)="onRowSelect(item)">
+										<td>
+											<label class="form-check-label">
+												<strong innerHTML="{{item.title | highlight : searchTerm}}"></strong> <br>
+												<span innerHTML="{{item.shortDescription | highlight : searchTerm}}"></span>
+											</label>
+										</td>
+										<td *ngIf="configuration.column1.isVisible"
+												innerHTML="{{item.fullDescription | highlight : searchTerm}}">
+										</td>
+										<td *ngIf="configuration.column2.isVisible"
+												innerHTML="{{item.additionalDescription | highlight : searchTerm}}">
+										</td>
+										<td *ngIf="configuration.action.isVisible">
+											<div class="button-group">
+												<button type="button" class="btn btn-sm talent"
+														(click)="onFirstButtonClicked(item.key)">
+													<i class="fa fa-arrow-up"></i>
+												</button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+			<!-- Modal body end -->
+
+			<!-- Modal footer start -->
+			<div class="modal-footer">
+				<div class="row" style="width:100%;margin: 0px;">
+					<div class="col-md-4 pull-start pl-1">
+						<button type="button" class="btn btn-sm btn-danger"
+								(click)="onCloseSingleSelectModal(false)">
+							<i class="fa fa-undo"> </i>
+							Exit without selection
+						</button>
+					</div>
+					<div class="col-md-4 text-center" *ngIf="configuration.showNullSelectionButton">
+						<button type="button" class="btn btn-sm btn-warning"
+								(click)="onNullClicked()">
+							<i class="fa fa-times"> </i>
+							Set to null
+						</button>
+					</div>
+					<div class="pr-1" [class.col-md-8]="!configuration.showNullSelectionButton" [class.col-md-4]="configuration.showNullSelectionButton">
+						<button type="button" class="btn btn-sm btn-success float-end"
+								(click)="onCloseSingleSelectModal(true)">
+							<i class="fa fa-check"> </i>
+							Confirm selection
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- Modal footer end -->
+
+		</div>
+		<!-- End modal content -->
+	</div>
+	<!-- End modal dialogue -->
+</div>
+<!-- End modal -->

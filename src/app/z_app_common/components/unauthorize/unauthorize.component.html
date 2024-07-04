@@ -1,0 +1,39 @@
+<div class="not-found-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="error-template">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <h1>Oops!</h1>
+                    <h2>401 Unauthorized</h2>
+                    <div class="error-details">
+                        Access denied
+					</div>
+                    <div class="error-actions">
+                        <a [routerLink]="['/dashboard']"  class="btn btn-lg btn-primary">
+                            <i class="fa fa-home"></i>
+                            Home
+						</a>
+						<button type="button" class="btn btn-lg btn-danger" (click)="onReturnToLogin()">
+							<i class="fa fa-undo"></i>
+							Login
+						</button>
+
+            <button type="button"
+                class="btn btn-default btn-danger"
+                popover="Vivamus sagittis lacus vel augue."
+                popoverTitle="Popover on top"
+                placement="bottom">
+                Popover
+            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <h3>Next Line</h3>
+          </div>
+        </div>
+    </div>
+</div>

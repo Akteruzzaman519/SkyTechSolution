@@ -1,0 +1,8 @@
+<div [class.hidden]="!show">
+	<div class="loader-overlay">
+		<div class="loading-msg-container">
+			<span class="loading-msg" [innerHTML]="message"></span>
+		</div>		
+		<div *ngIf="show" class="loader"></div>
+	</div>
+</div>

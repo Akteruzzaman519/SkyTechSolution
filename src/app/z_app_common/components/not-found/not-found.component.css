@@ -1,0 +1,20 @@
+.not-found-wrapper {
+    /* background-color: #e4e4e4; */
+    height: 100vh;
+}
+.fa-exclamation-triangle {
+    color : #f0b800e7;
+    font-size: 4rem;
+}
+.error-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+.error-actions {
+    margin-top:15px;
+    margin-bottom:15px;
+}
+.error-actions .btn {
+    margin-right:10px; 
+    border-radius : 0.1rem;
+}

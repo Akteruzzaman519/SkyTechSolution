@@ -1,0 +1,345 @@
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+/* @import "~node_modules/bootstrap/dist/css/bootstrap.min.css"; */
+@import "./assets/styles/zephyr.bootstrap.css";
+@import "./assets/lib/fontawesome/css/all.min.css";
+@import '~ngx-bootstrap/datepicker/bs-datepicker.css';
+/* @import '~ngx-toastr/toastr.css'; */
+
+/* ag grid style add  */
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
+
+@import 'node_modules/ngx-toastr/toastr';
+@import "./assets/styles/override.css";
+
+@font-face {
+	font-family: "Arcon";
+	src: local("Arcon"), url(./assets/fonts/Arcon-Regular.otf) format("truetype");
+	font-display: swap;
+}
+
+.modal-header{
+	background-color: #f8f9fa;
+}
+body {
+	font-family: "Arcon", Arial, Helvetica, sans-serif;
+}
+
+.content-wrapper {
+	padding: 20px 80px 10px 80px;
+	/* min-height: 62vh; */
+}
+
+@media (max-width: 768px) {
+	.content-wrapper {
+		padding: 20px 15px 10px 15px;
+	}
+}
+
+@media (min-width: 768px) {
+	.content-wrapper {
+		padding: 20px 30px 10px 30px;
+	}
+}
+
+@media (min-width: 992px) {
+	.content-wrapper {
+		padding: 20px 55px 10px 55px;
+	}
+}
+
+.btn-missing{
+	background-color: #FC5044;
+}
+
+/* FOOTER SECTION BEGIN */
+
+.developer-link {
+	text-decoration: none;
+	font-weight: 600;
+	color: #dfdada;
+}
+
+.developer-link:hover {
+	color: white;
+}
+
+/* FOOTER SECTION END */
+
+.ag-floating-bottom{
+	font-weight: bold;
+}
+
+
+/* FORM STYLE BEGIN*/
+.card-header {
+	background-color: #fff;
+}
+
+.card-body {
+	background-color: #E9FDFE;
+}
+
+.form-group {
+	margin-bottom: 0.75rem;
+}
+
+.form-label {
+	margin-bottom: 0.2rem;
+	font-weight: 500; 
+	color: black;
+}
+
+.label-required {
+	color: red;
+	font-weight: 600;
+;
+}
+
+.invalid-feedback {
+	display: block;
+}
+
+form.submitted input.ng-invalid,
+form.submitted textarea.ng-invalid {
+	border-color: #da292e;
+	padding-right: calc(1.5em + 1rem);
+
+}
+
+.required-asteric {
+	color: #F76C5E;
+	font-weight: bold;
+	font-size: 1.2rem;
+	line-height: 1rem;
+	margin-left: .1rem;
+}
+
+.validation-message {
+	font-style: italic;
+	font-weight: 600;
+	color: red;
+}
+
+.validation-message span:after {
+	content: "\a";
+	white-space: pre;
+}
+
+.form-control.ng-invalid.submitted {
+	border-color: red;
+}
+
+form.submitted input.ng-invalid {
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23da292e'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23da292e' stroke='none'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-position: right calc(0.375em + 0.25rem) center;
+	background-size: calc(0.75em + 0.5rem) calc(0.75em + 0.5rem);
+}
+
+.custom-checkbox {
+	width: 1rem;
+	height: 1rem;
+}
+
+/* FORM STYLE BEGIN*/
+
+
+/*  GRID STYLE BEGIN    */
+
+.bottom-grid-section {
+	margin-top: 50px;
+}
+
+.grid-header {
+	margin-top: 0;
+	margin-bottom: 0.8rem;
+	font-size: 1.5rem;
+	font-weight: 500;
+	color: #212529;
+}
+
+table tbody>tr:nth-child(odd) {
+	background-color: #E9FDFE;
+}
+
+tr.selected-row {
+	background-color: #99f5fa !important;
+}
+
+.empty-footer {
+	font-style: italic;
+	font-weight: 500;
+	text-align: center;
+}
+
+/*  GRID STYLE END    */
+
+
+
+
+/* DETAIL SECTION TAB BUTTON BEGIN */
+
+.detail-section {
+	border: 1px solid #bdc3c7;
+	height: 100%;
+	padding-right: calc(.5 * var(--bs-gutter-x));
+	padding-left: calc(.5 * var(--bs-gutter-x));
+}
+
+.detail-form-content {
+	min-height: 61vh;
+	margin-left: calc(-.5 * var(--bs-gutter-x));
+	margin-right: calc(-.5 * var(--bs-gutter-x));
+	padding-left: calc(.85 * var(--bs-gutter-x));
+	padding-right: calc(.85 * var(--bs-gutter-x));
+	padding-top: 1rem;
+	background-color: #E9FDFE;
+}
+
+.master-detail {
+	border: 1px solid #012a20;
+	background-color: #198754;
+	color: white;
+	padding: 0.25rem 1rem;
+	box-shadow: 0 2px 2px 0 rgba(153, 153, 153, 0.14), 0 3px 1px -2px rgba(153, 153, 153, 0.2), 0 1px 5px 0 rgba(153, 153, 153, 0.12);
+	transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.master-detail {
+	margin-right: 0.5vw;
+	font-weight: 500;
+	margin-top: 0.2rem;
+	border-radius: 0.25rem 0.25rem 0rem 0rem;
+}
+
+.master-detail-footer {
+	margin-top: 0.75rem;
+   margin-bottom: 0.5rem;
+}
+
+.master-detail.active {
+	border: 1px solid transparent;
+	background-color: #104F55 !important;
+}
+
+
+
+
+.master-detail:focus {
+	outline: 0px solid transparent;
+	background-color: #104F55 !important;
+}
+
+.master-detail:visited {
+	background-color: #104F55 !important;
+
+}
+
+.master-detail:active {
+	background-color: #104F55;
+	border-color: transparent;
+}
+
+.master-detail:hover {
+	background-color: #104F55;
+	border-color: transparent;
+}
+
+@media screen and (max-width: 1400px) {
+	.master-detail {
+		margin-right: 0.2rem;
+	}
+}
+
+/* DETAIL SECTION TAB BUTTON END */
+
+hr.section-split {
+	background-color: #085889;
+	width: 100%;
+	margin-top: unset;
+	margin-bottom: 0px;
+}
+
+.float-right {
+	float: right;
+}
+
+.d-webkit-box {
+	display: -webkit-box;
+}
+
+
+/* ------- CUSTOM FILE UPLOAD ELEMENT BEGIN ------------- */
+
+.file-container>input {
+	opacity: 0;
+	position: absolute;
+	z-index: 2;
+	/* width: 100%;
+	height: 100%; */
+	top: 0;
+	left: 0;
+ }
+
+ .file-upload-label {
+	color: #fff;
+	background-color: #343a40;
+	border-color: #343a40;
+	border-radius: 0.3rem;
+	padding: 8px 2rem;
+	cursor: pointer;
+ }
+
+
+ td {
+	padding: 0.5rem;
+ }
+
+ /* ------- CUSTOM FILE UPLOAD ELEMENT END ------------- */
+
+
+ /* -------- OVERRIDE INPUT TYPE NUMBER BEGIN ---------- */
+
+ /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+ /* -------- OVERRIDE INPUT TYPE NUMBER END ---------- */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.grid-view {
+	max-height: 75vh;
+	overflow-y: auto;
+}
+
+
+.example-wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+  }
+  
+  #myGrid {
+	flex: 1 1 0px;
+	width: 100%;
+  }
+  
+  .sick-days-warning {
+	background-color: red !important;
+  }
+  
+  .sick-days-breach {
+	background-color: lightcoral !important;
+  }

@@ -1,0 +1,50 @@
+<!-- Confirmation Modal begin -->
+<div class="modal fade" bsModal #confirmationModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+	role="dialog" aria-labelledby="dialog-nested-name2">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<!-- Modal header begin -->
+			<div class="modal-header ">
+				<h6 class="modal-title pull-left">
+					Confirm?
+				</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onChoose(false)">
+                    <span aria-hidden="true"></span>
+                </button>
+			</div>
+			<!-- Modal header end -->
+			<!-- Modal body begin -->
+			<div class="modal-body text-center">
+				<p>
+					<i class="fa fa-question-circle fa-4"></i>
+					<br>
+
+					<label innerHTML="{{message}}">
+
+					</label>
+
+				</p>
+			</div>
+			<!-- Modal body end -->
+			<!-- Modal footer begin -->
+			<div class="modal-footer">
+				<div class="row" style="width:100%;">
+					<div class="col-md-6 text-right">
+						<button type="button" class="btn btn-danger" (click)="onChoose(true)">
+                            <i class="fa-solid fa-check"></i> Yes
+                        </button>
+					</div>
+                    <div class="col-md-6 text-end">
+						<button type="button" class="btn btn-success ml-1" (click)="onChoose(false)">
+                            <i class="fa-solid fa-xmark"></i> No
+                        </button>
+					</div>
+				</div>
+			</div>
+			<!-- Modal footer endd -->
+		</div>
+		<!-- Modal content end -->
+	</div>
+	<!-- Modal dialog end -->
+</div>
+<!-- End Confirmation modal-->

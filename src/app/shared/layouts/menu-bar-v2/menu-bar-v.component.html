@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" #navBar>
+	<div class="container-fluid mx-2">
+		<a routerLink="/dashboard" class="navbar-brand" >X-Digital ERP</a>
+		<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse"
+				data-bs-target="#main_nav"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+            (click)="isCollapsed = !isCollapsed"
+				>
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" [collapse]="isCollapsed" [isAnimated]="true" id="main_nav">
+			<ul class="navbar-nav me-auto">
+
+				<li class="nav-item"  *ngFor="let menu of menus"
+                    [class.dropdown]="menu.ChildMenus"
+						  >
+
+					<!-- First level with URL begin -->
+					<a class="nav-link" *ngIf="!menu.ChildMenus || menu.ChildMenus.length === 0"
+						[routerLink]="'/'+menu.MenuURL"
+						routerLinkActive="active"
+						[routerLinkActiveOptions]="{ exact : true}"
+						(click)="MenuClick(menu)"
+						>
+						{{ menu.MenuName }}
+					</a>
+					<!-- First level with URL end -->
+
+					<!-- Second level begin -->
+					<a class="nav-link dropdown-toggle" *ngIf="menu.ChildMenus && menu.ChildMenus.length > 0"
+						data-bs-toggle="dropdown"
+						role="button"
+						(click)="false"
+						>
+						{{ menu.MenuName }}
+					</a>
+
+					<ul class="dropdown-menu">
+						<li *ngFor="let l2menu of menu.ChildMenus">
+
+							<a class="dropdown-item" *ngIf="l2menu.ChildMenus.length === 0"
+								[routerLink]="'/'+l2menu.MenuURL"
+								(click)="MenuClick(l2menu)"
+								routerLinkActive="active">
+								{{ l2menu.MenuName }}
+							</a>
+
+							<!-- 3rd level menu begin -->
+							<a class="dropdown-item l3-menu-parent" *ngIf="l2menu.ChildMenus.length > 0">
+								{{ l2menu.MenuName }}  &raquo;
+								<!-- <span class="caret"></span> -->
+							</a>
+
+							<ng-container *ngIf="l2menu.ChildMenus.length > 0">
+								<ul class="submenu dropdown-menu l3-menu" >
+									<li *ngFor="let l3menu of l2menu.ChildMenus">
+											<a class="dropdown-item"
+											(click)="MenuClick(l3menu)"
+												[routerLink]="'/'+l3menu.MenuURL"
+												routerLinkActive="active">
+												{{ l3menu.MenuName }}
+											</a>
+									</li>
+								</ul>
+							</ng-container>
+							<!-- 3rd level menu end -->
+						</li>
+					</ul>
+					<!-- Second level end -->
+
+
+            </li>
+			</ul>
+
+			<ul class="navbar-nav ms-auto">
+				<li class="nav-item dropdown">
+					<a class="nav-link  dropdown-toggle"
+								data-bs-toggle="dropdown"
+								(click)="false"
+								>
+						<i class="fa-regular fa-user"></i>
+						{{ user.name }}
+					</a>
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li>
+							<a class="dropdown-item" role="button" (click)="logout()">
+								<i class="fa-solid fa-power-off"></i>
+								Logout
+						  </a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+  </nav>
