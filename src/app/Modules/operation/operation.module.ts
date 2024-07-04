@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgStyle } from '@angular/common';
 import { EmailUploadComponent } from './email-upload/email-upload.component';
 import { AsignToAgentComponent } from './asign-to-agent/asign-to-agent.component';
 import { ChangeMailCredentialComponent } from './change-mail-credential/change-mail-credential.component';
@@ -11,7 +11,11 @@ import { AssignChangeMapInfoComponent } from './assign-change-map-info/assign-ch
 import { ChangeMapInfoComponent } from './change-map-info/change-map-info.component';
 import { AssignReviewMapComponent } from './assign-review-map/assign-review-map.component';
 import { ReviewMapComponent } from './review-map/review-map.component';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AgGridModule } from 'ag-grid-angular';
+import { SharedModule } from 'shared/shared.module';
+import { IDValueModule } from 'src/app/cod/Modules/idvalue/idvalue.module';
 
 const routes: Routes = [
   { path: "operation/fresh_email_upload", component: EmailUploadComponent, title: "Email Upload" },
@@ -42,7 +46,14 @@ const routes: Routes = [
     ReviewMapComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AgGridModule,
+    RouterModule.forChild(routes),
+    IDValueModule,
+    SharedModule,
+    NgStyle
   ]
 })
 export class OperationModule { }
