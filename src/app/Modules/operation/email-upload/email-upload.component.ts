@@ -25,6 +25,7 @@ export class EmailUploadComponent {
   // Oobject Initialization 
   public oEmailFormDto = new EmailFormDto();
   public oEmailBaseInfos: EmailBaseInfo[] = [];
+  public totalRecord:number = 0;
 
   constructor(private Http: HttpService) { }
 

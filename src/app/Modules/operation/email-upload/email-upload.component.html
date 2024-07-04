@@ -1,62 +1,72 @@
-<div class="header_Section">
-    <h1 class="float-start">Add Bulk Email</h1>
+
+<div class="row g-0">
+  <div class="col-md-12 my-2">
+    <span class="fs-4"> <i class="fa-solid fa-envelopes-bulk text-black ms-1"></i> Add Bulk Email </span>
+  </div>
+  <div class="col-md-12 my-2">
     <button type="button" class="btn btn-info float-end" (click)="addBulkEmailBtn()">Add Bulk Email</button>
   </div>
-  <div class="table_section">
-    <ag-grid-angular class="ag-theme-quartz" style="height: 500px;" [rowData]="rowData" [columnDefs]="colDefs"
+
+  <div class="col-md-12">
+    <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; " [rowData]="rowData" [columnDefs]="colDefs"
       [pagination]="true" (gridReady)="ApiGridReady($event)" [paginationPageSize]="paginationPageSize"
       [defaultColDef]="DeafultCol">
     </ag-grid-angular>
   </div>
-  <div class="footer_section my-3">
+
+  <div class="col-md-12 my-2">
+    <span class="fs-4">Total Record : {{totalRecord}}</span>
     <button type="button" class="btn btn-success float-end" (click)="BulkEmailSave()">Save Data</button>
   </div>
-  
-  
-  
-  
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" hidden id="modalOpen" data-bs-toggle="modal"
-    data-bs-target="#staticBackdrop">
-    Launch static backdrop modal
-  </button>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Bulk Email Upload</h5>
-          <button type="button" class="btn-close" id="BulkemailCloseModal" data-bs-dismiss="modal" aria-label="Close"></button>
+
+</div>
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" hidden id="modalOpen" data-bs-toggle="modal"
+  data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Add Bulk Email</h5>
+        <button type="button" class="btn-close" id="BulkemailCloseModal" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="mb-4">
+          <label for="fileUpload" class="form-label">File Upload</label>
+          <input type="file" readonly class="form-control" id="fileUpload" (change)="onFileSelected($event)"
+            value="file upload">
         </div>
-        <div class="modal-body">
-  
-          <div class="mb-4">
-            <label for="fileUpload" class="form-label">File Upload</label>
-            <input type="file" readonly class="form-control" id="fileUpload"  (change)="onFileSelected($event)" value="file upload">
-          </div>
-  
-          <div class="mb-4">
-            <label for="fileUpload" class="form-label">Select Source </label>
-            <select class="form-select form-select mb-3" aria-label=".form-select-lg example">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-  
-          <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Tag </label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Please select tag">
-          </div>
-  
+
+        <div class="mb-4">
+          <label for="mailSourcingId" class="form-label">Select Source </label>
+          <select class="form-select form-select mb-3" [(ngModel)]="oEmailFormDto.mailSourcingId" name="mailSourcingId"
+            id="mailSourcingId" aria-label=".form-select-lg example">
+            <option selected> --- Select ---</option>
+            <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
+          </select>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="BulkEmailLoadData()">Load Data</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+        <div class="mb-3">
+          <label for="mailRelatedTag" class="form-label">Tag </label>
+          <input type="text" class="form-control" [(ngModel)]="oEmailFormDto.mailRelatedTag" name="mailRelatedTag"
+            id="mailRelatedTag" placeholder="Please select tag">
         </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="BulkEmailLoadData()">Load Data</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+</div>

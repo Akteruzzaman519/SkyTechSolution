@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, NgStyle } from '@angular/common';
+import { CommonModule, DatePipe, NgStyle } from '@angular/common';
 import { EmailUploadComponent } from './email-upload/email-upload.component';
 import { AsignToAgentComponent } from './asign-to-agent/asign-to-agent.component';
 import { ChangeMailCredentialComponent } from './change-mail-credential/change-mail-credential.component';
@@ -54,6 +54,7 @@ const routes: Routes = [
     IDValueModule,
     SharedModule,
     NgStyle
-  ]
+  ],
+  providers: [DatePipe],
 })
 export class OperationModule { }
