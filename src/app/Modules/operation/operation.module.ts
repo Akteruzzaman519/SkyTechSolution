@@ -18,17 +18,17 @@ import { SharedModule } from 'shared/shared.module';
 import { IDValueModule } from 'src/app/cod/Modules/idvalue/idvalue.module';
 
 const routes: Routes = [
-  { path: "operation/fresh_email_upload", component: EmailUploadComponent, title: "Email Upload" },
-  { path: "operation/assign_to_change_mail_credential", component: AsignToAgentComponent, title: "Assign To Change Mail Credential" },
-  { path: "operation/change_mail_credential", component: ChangeMailCredentialComponent, title: "Change Mail Credential" },
-  { path: "operation/assign_for_mail_claiming", component: AssignMailClaimingComponent, title: "Assign For Map Claiming" },
-  { path: "operation/mail_claiming", component: MailClaimingComponent, title: "Map Claiming" },
-  { path: "operation/assign_for_routine_check", component: AssignRoutineCheckComponent, title: "Assign For Routine Check" },
-  { path: "operation/routine_check", component: RoutineCheckComponent, title: "Routine Check" },
-  { path: "operation/assign_to_change_map_info", component: AssignChangeMapInfoComponent, title: "Assign To Change Map Info" },
-  { path: "operation/change_map_info", component: ChangeMapInfoComponent, title: "Change Map Info" },
-  { path: "operation/assign_for_review_on_map", component: AssignReviewMapComponent, title: "Assign For Review On Map" },
-  { path: "operation/review_on_map", component: ReviewMapComponent, title: "Review On Map" }
+  { path: "fresh_email_upload", component: EmailUploadComponent, title: "Email Upload" },
+  { path: "assign_to_change_mail_credential", component: AsignToAgentComponent, title: "Assign To Change Mail Credential" },
+  { path: "change_mail_credential", component: ChangeMailCredentialComponent, title: "Change Mail Credential" },
+  { path: "assign_for_mail_claiming", component: AssignMailClaimingComponent, title: "Assign For Map Claiming" },
+  { path: "mail_claiming", component: MailClaimingComponent, title: "Map Claiming" },
+  { path: "assign_for_routine_check", component: AssignRoutineCheckComponent, title: "Assign For Routine Check" },
+  { path: "routine_check", component: RoutineCheckComponent, title: "Routine Check" },
+  { path: "assign_to_change_map_info", component: AssignChangeMapInfoComponent, title: "Assign To Change Map Info" },
+  { path: "change_map_info", component: ChangeMapInfoComponent, title: "Change Map Info" },
+  { path: "assign_for_review_on_map", component: AssignReviewMapComponent, title: "Assign For Review On Map" },
+  { path: "review_on_map", component: ReviewMapComponent, title: "Review On Map" }
 ]
 
 @NgModule({

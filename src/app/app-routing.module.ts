@@ -15,6 +15,11 @@ const routes: Routes = [
 		]
 	},
 	{
+		path: 'operation',
+		loadChildren: () =>
+			import('./Modules/operation/operation.module').then(m => m.OperationModule)
+	},
+	{
 		path: 'login',
 		loadComponent: () =>
 			import('src/app/z_app_common/components/login/login.component').then(a => a.LoginComponent)
