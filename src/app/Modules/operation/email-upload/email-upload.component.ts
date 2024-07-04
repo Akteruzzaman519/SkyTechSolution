@@ -25,9 +25,9 @@ export class EmailUploadComponent {
   // Oobject Initialization 
   public oEmailFormDto = new EmailFormDto();
   public oEmailBaseInfos: EmailBaseInfo[] = [];
-  public totalRecord:number = 0;
+  public totalRecord: number = 0;
 
-  constructor(private service: HttpCommonService,private toast: ToastrService,) { }
+  constructor(private service: HttpCommonService, private toast: ToastrService,) { }
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
@@ -73,7 +73,9 @@ export class EmailUploadComponent {
     this.oEmailBaseInfos = AGGridHelper.GetRows(this.balkEmailGridApi);
     this.oEmailFormDto.mailBaseInfoList = this.oEmailBaseInfos;
     this.service.Post('EmailOperation/AddFreshEmails', this.oEmailFormDto, true).subscribe((res: any) => {
+      this.toast.success("Email Uploaded Successfully!!", "Success", { progressBar: true });
       this.rowData = [];
+      this.totalRecord = 0;
     },
       (err: any) => {
         console.log(err);
@@ -82,11 +84,21 @@ export class EmailUploadComponent {
 
 
   public BulkEmailLoadData() {
+
+    if(this.oEmailFormDto.mailSourcingId==0){
+      this.toast.warning("Please select source!!", "Warning", { progressBar: true });
+      return ;
+    }
+
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile, this.selectedFile.name);
-      this.service.UploadFile('MailInfo/ExcelFileReader', formData).subscribe(response => {
-        this.rowData = response as any[]
+
+      this.service.UploadFile('FileReader/ReadFreshMailFromExcel', formData).subscribe(response => {
+        this.rowData = response as any[];
+        if (this.rowData.length > 0) {
+          this.totalRecord = this.rowData.length
+        }
         document.getElementById("BulkemailCloseModal")?.click();
       }, error => {
         console.error('File upload error', error);
