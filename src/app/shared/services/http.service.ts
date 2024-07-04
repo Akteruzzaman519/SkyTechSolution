@@ -108,7 +108,7 @@ export class HttpService  extends CommonService {
 
 
 
-  UploadFile(fromdata: FormData) {
+  UploadFile(URL: string,fromdata: FormData) {
     var token = localStorage.getItem('accesstoken');
     // 'Content-type': 'multipart/form-data',
     const config = {
@@ -117,7 +117,7 @@ export class HttpService  extends CommonService {
         Authorization: `Bearer ${token}`
       }
     }
-    return this.http.post(this.apiBaseUrl + '/File/UploadFile/Files', fromdata, { headers: new HttpHeaders({ 'Show-Loader': 'true' }) });
+    return this.http.post(this.apiBaseUrl + URL, fromdata, { headers: new HttpHeaders({ 'Show-Loader': 'true' }) });
   }
 
   FileDownloadPost(URL: string, object: any, loadingIndegator?: boolean, loadingMessage?: string): Observable<any[]> {
