@@ -1,11 +1,10 @@
-import { KeyValue } from '@angular/common';
 import { Component } from '@angular/core';
 import { GridApi, GridReadyEvent } from 'ag-grid-community';
-import { AGGridHelper } from 'shared/services/AGGridHelper';
-import { HttpService } from 'shared/services/http.service';
 import { EmailBaseInfo } from 'src/app/Models/EmailBaseInfo';
 import { EmailFormDto } from 'src/app/Models/EmailFormDto';
 import { KeyValueDto } from 'src/app/Models/KeyValueDto';
+import { AGGridHelper } from '../../Common/AGGridHelper';
+import { HttpCommonService } from '../../Common/http-common.service';
 
 @Component({
   selector: 'app-email-upload',
@@ -27,7 +26,7 @@ export class EmailUploadComponent {
   public oEmailBaseInfos: EmailBaseInfo[] = [];
   public totalRecord:number = 0;
 
-  constructor(private Http: HttpService) { }
+  constructor(private service: HttpCommonService) { }
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
@@ -56,7 +55,7 @@ export class EmailUploadComponent {
   public GetSourcesInKeyValue(relatedModule: any) {
     this.oEmailBaseInfos = AGGridHelper.GetRows(this.balkEmailGridApi);
     this.oEmailFormDto.mailBaseInfoList = this.oEmailBaseInfos;
-    this.Http.Get('KeyValue/GetSourcesInKeyValue/' + relatedModule).subscribe((res: any) => {
+    this.service.Get('KeyValue/GetSourcesInKeyValue/' + relatedModule).subscribe((res: any) => {
       this.KeyValues = res;
     },
       (err: any) => {
@@ -67,7 +66,7 @@ export class EmailUploadComponent {
   public BulkEmailSave() {
     this.oEmailBaseInfos = AGGridHelper.GetRows(this.balkEmailGridApi);
     this.oEmailFormDto.mailBaseInfoList = this.oEmailBaseInfos;
-    this.Http.Post('EmailOperation/AddFreshEmails', this.oEmailFormDto, true).subscribe((res: any) => {
+    this.service.Post('EmailOperation/AddFreshEmails', this.oEmailFormDto, true).subscribe((res: any) => {
       this.rowData = [];
     },
       (err: any) => {
@@ -80,7 +79,7 @@ export class EmailUploadComponent {
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile, this.selectedFile.name);
-      this.Http.UploadFile('MailInfo/ExcelFileReader', formData).subscribe(response => {
+      this.service.UploadFile('MailInfo/ExcelFileReader', formData).subscribe(response => {
         this.rowData = response as any[]
         document.getElementById("BulkemailCloseModal")?.click();
       }, error => {

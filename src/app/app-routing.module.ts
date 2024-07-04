@@ -12,13 +12,14 @@ const routes: Routes = [
 			{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 			{ path: 'home', redirectTo: 'dashboard', pathMatch: 'full' },
 			{ path: 'dashboard', component: HomeComponent, canActivate: [AuthGuard] },
+			{
+				path: 'operation',
+				loadChildren: () =>
+					import('src/app/Modules/operation/operation.module').then(m => m.OperationModule)
+			},
 		]
 	},
-	{
-		path: 'operation',
-		loadChildren: () =>
-			import('./Modules/operation/operation.module').then(m => m.OperationModule)
-	},
+	
 	{
 		path: 'login',
 		loadComponent: () =>

@@ -1,13 +1,13 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Menu } from 'shared/models/menu.model';
-import { CommonService } from './common.service';
+import { CommonService } from 'shared/services/common.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService  extends CommonService {
+export class HttpCommonService extends CommonService {
 
   //over all gets 
   Get(URL: string, loadingIndegator?: boolean, loadingMessage?: string): Observable<any[]> {
@@ -108,7 +108,7 @@ export class HttpService  extends CommonService {
 
 
 
-  UploadFile(URL: string,fromdata: FormData) {
+  UploadFile(URL:string,fromdata: FormData) {
     var token = localStorage.getItem('accesstoken');
     // 'Content-type': 'multipart/form-data',
     const config = {
@@ -173,6 +173,7 @@ export class HttpService  extends CommonService {
     downloadLink.click();
     URL.revokeObjectURL(downloadLink.href); // Clean up the object URL
   }
+
 
   IsFullPermission(){
    var oTempMenu :Menu ;

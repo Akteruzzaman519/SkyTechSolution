@@ -55,6 +55,20 @@ const routes: Routes = [
     SharedModule,
     NgStyle
   ],
+  exports: [
+    EmailUploadComponent,
+    AsignToAgentComponent,
+    ChangeMailCredentialComponent,
+    AssignMailClaimingComponent,
+    MailClaimingComponent,
+    AssignRoutineCheckComponent,
+    RoutineCheckComponent,
+    AssignChangeMapInfoComponent,
+    ChangeMapInfoComponent,
+    AssignReviewMapComponent,
+    ReviewMapComponent
+  ]
+  ,
   providers: [DatePipe],
 })
 export class OperationModule { }
