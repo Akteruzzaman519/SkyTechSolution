@@ -5,7 +5,7 @@
   
     <div class="col-md-12">
       <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; "
-        [columnDefs]="colDefs" [pagination]="true" (gridReady)="onGridReadyAsignToAgent($event)"
+        [columnDefs]="colDefs" [pagination]="true" [rowSelection]="'multiple'" (gridReady)="onGridReadyAsignToAgent($event)"
         [paginationPageSize]="paginationPageSize" [defaultColDef]="DeafultCol">
       </ag-grid-angular>
     </div>
@@ -41,7 +41,7 @@ aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="row">
         <div class="col-md-12">
             <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; "
-              [columnDefs]="colDefsConfirmAssign" [pagination]="true" (gridReady)="onGridReadyConfirmToAgent($event)"
+              [columnDefs]="colDefsConfirmAssign" [rowSelection]="'single'" [pagination]="true" (gridReady)="onGridReadyConfirmToAgent($event)"
               [paginationPageSize]="paginationPageSize" [defaultColDef]="DeafultCol">
             </ag-grid-angular>
           </div>

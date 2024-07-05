@@ -51,6 +51,7 @@ export class EmailUploadComponent {
   ];
 
   addBulkEmailBtn() {
+    this.oEmailFormDto=new EmailFormDto();
     this.GetSourcesInKeyValue();
     document.getElementById('modalOpen')?.click();
   }
@@ -81,7 +82,7 @@ export class EmailUploadComponent {
   public BulkEmailSave() {
     this.oEmailBaseInfos = AGGridHelper.GetRows(this.balkEmailGridApi);
     this.oEmailFormDto.mailBaseInfoList = this.oEmailBaseInfos;
-    this.service.Post('EmailOperation/AddFreshEmails', this.oEmailFormDto, true).subscribe((res: any) => {
+    this.service.Post('/EmailOperation/AddFreshEmails', this.oEmailFormDto, true).subscribe((res: any) => {
       this.toast.success("Email Uploaded Successfully!!", "Success", { progressBar: true });
       this.rowData = [];
       this.totalRecord = 0;

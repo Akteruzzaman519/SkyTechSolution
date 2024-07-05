@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { GridApi, ColDef, GridReadyEvent } from 'ag-grid-community';
+import { GridApi, ColDef, GridReadyEvent, ValueFormatterParams } from 'ag-grid-community';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { ToastrService } from 'ngx-toastr';
 import { HttpCommonService } from '../../Common/http-common.service';
@@ -26,13 +26,17 @@ export class AsignToAgentComponent implements OnInit {
 
   // Column Definitions: Defines the columns to be displayed.
   public colDefs: ColDef[] = [
-    { valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 100, editable: false, checkboxSelection: false, headerCheckboxSelection: false, showDisabledCheckboxes: false, },
-    { field: 'mailUploadedDate', headerName: 'Updated At' },
+    { valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 100, editable: false, checkboxSelection: true, headerCheckboxSelection: true, },
+    { field: 'mailUploadedDate', headerName: 'Updated At',
+      cellRenderer: (params: ValueFormatterParams) => {
+        return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
+      }
+     },
     { field: 'mailUploadedByFullName', headerName: 'Uploaded By' },
     { field: 'mailUploadedByUniqueCode', headerName: 'Code' },
     { field: 'sourceName', headerName: 'Source' },
     { field: 'mailBatch', headerName: 'Batch' },
-    { field: 'mailUserName ', headerName: 'Email' },
+    { field: 'mailUserName', headerName: 'Email' },
     { field: 'lifecycleRelatedName', headerName: 'Status' },
   ];
 
@@ -67,7 +71,7 @@ export class AsignToAgentComponent implements OnInit {
 
   private GetEmailsByStatusTag( userSystemId: number, pageIndex: number, pageSize: number) {
 
-    this.service.Get('EmailOperation/GetEmailsByStatusTag/' + this.statusTag + '/' + userSystemId + '/' + pageIndex + '/' + pageSize).subscribe((res: any) => {
+    this.service.Get('/EmailOperation/GetEmailsByStatusTag/' + this.statusTag + '/' + userSystemId + '/' + pageIndex + '/' + pageSize).subscribe((res: any) => {
       this.oEmailGridDto = res;
       this.totalRecord = res.noOfTotalRecord;
       this.asignToAgentGridApi.setRowData(res.emailList)
@@ -80,7 +84,7 @@ export class AsignToAgentComponent implements OnInit {
 
   private GetUsersCurrentWorkloadCount() {
     this.confirmToAgentGridApi.setRowData([]);
-    this.service.Get('EmailOperation/GetUsersCurrentWorkloadCount/' + this.statusTag + '/mail_agent').subscribe((res: any) => {
+    this.service.Get('/EmailOperation/GetUsersCurrentWorkloadCount/' + this.statusTag + '/mail_agent').subscribe((res: any) => {
       this.confirmToAgentGridApi.setRowData(res);
     },
       (err: any) => {
@@ -90,14 +94,15 @@ export class AsignToAgentComponent implements OnInit {
   }
 
   public AssignToAgent() {
-    document.getElementById('modalOpen')?.click();
-    // var data = AGGridHelper.GetSelectedRow(this.asignToAgentGridApi);
-    // if (data.length == 0) {
-    //   this.toast.warning("Please select item!!", "Warning", { progressBar: true });
-    //   return;
-    // }
+    // document.getElementById('modalOpen')?.click();
+    this.GetUsersCurrentWorkloadCount();
+    var data = AGGridHelper.GetSelectedRow(this.asignToAgentGridApi);
+    if (data.length == 0) {
+      this.toast.warning("Please select item!!", "Warning", { progressBar: true });
+      return;
+    }
 
-    // document.getElementById("modalOpen")?.click();
+    document.getElementById("modalOpen")?.click();
 
   }
 
@@ -111,7 +116,7 @@ export class AsignToAgentComponent implements OnInit {
     getSelectedRow.forEach((element:any) => {
       payload.push(element.UserSystemId)
     })
-    this.service.Post('EmailOperation/AssignEmailOperation/' + this.statusTag + '/' + assignedTo, payload).subscribe((res: any) => {
+    this.service.Post('/EmailOperation/AssignEmailOperation/' + this.statusTag + '/' + assignedTo, payload).subscribe((res: any) => {
 
     },
       (err: any) => {
