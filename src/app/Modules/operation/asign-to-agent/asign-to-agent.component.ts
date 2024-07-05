@@ -132,6 +132,7 @@ export class AsignToAgentComponent implements OnInit {
     this.service.Post('/EmailOperation/AssignEmailOperation/' + this.statusTag + '/' + assignedTo, payload).subscribe((res: any) => {
       this.toast.success("Agent Email Assign Successfully!!", "success", { progressBar: true });
       document.getElementById("assignToAgentCloseModal")?.click();
+      this.totalRecord=0;
       this.GetEmailsByStatusTag( 0, 1, 20);
 
     },

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { GridApi, GridReadyEvent } from 'ag-grid-community';
 import { EmailBaseInfo } from 'src/app/Models/EmailBaseInfo';
 import { EmailFormDto } from 'src/app/Models/EmailFormDto';
@@ -30,6 +30,8 @@ export class EmailUploadComponent {
   public totalRecord: number = 0;
   public relatedModule: any = "";
 
+  @ViewChild('fileInput') fileUpload: any;
+  
   constructor(private service: HttpCommonService, private toast: ToastrService,
     private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router) {
@@ -52,6 +54,9 @@ export class EmailUploadComponent {
 
   addBulkEmailBtn() {
     this.oEmailFormDto=new EmailFormDto();
+    if(this.fileUpload){
+      this.fileUpload.nativeElement.value = '';
+    }
     this.GetSourcesInKeyValue();
     document.getElementById('modalOpen')?.click();
   }
@@ -113,6 +118,9 @@ export class EmailUploadComponent {
       }, error => {
         console.error('File upload error', error);
       });
+    }else{
+      this.toast.warning("Please select file!!", "Warning", { progressBar: true });
+      return;
     }
   }
 
