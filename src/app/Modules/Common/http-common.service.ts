@@ -161,12 +161,12 @@ export class HttpCommonService extends CommonService {
   }
 
   SampleFileDownload() {
-    this.http.get("./assets/employee_import_sample.xlsx", { responseType: "blob" }).subscribe((res: Blob) => {
+    this.http.get("./assets/Upload_Fresh_Email_Sample.xlsx", { responseType: "blob" }).subscribe((res: Blob) => {
       this.saveExcelFile(res);
     });
   }
   private saveExcelFile(blob: Blob) {
-    const fileName = 'employee_import_sample.xlsx'; // Replace with the filename you set in the Web API response
+    const fileName = 'Upload_Fresh_Email_Sample.xlsx'; // Replace with the filename you set in the Web API response
     const downloadLink = document.createElement('a');
     downloadLink.href = URL.createObjectURL(blob);
     downloadLink.download = fileName;
