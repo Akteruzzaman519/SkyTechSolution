@@ -121,7 +121,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
 
   public GetEmailUsername() {
   //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
-    this.service.Get('/EmailManagement/GetEmailUsername/' + this.mailSystemId).subscribe((res: any) => {
+    this.service.Get('/EmailManagement/GetEmailUsername/' + this.mailSystemId +"/"+this.statusTag).subscribe((res: any) => {
       this.sEmailUserName = res.data;
     },
       (err: any) => {
@@ -131,7 +131,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
 
   public GetEmailPassword() {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
-      this.service.Get('/EmailManagement/GetEmailPassword/' +  this.mailSystemId).subscribe((res: any) => {
+      this.service.Get('/EmailManagement/GetEmailPassword/' +  this.mailSystemId+"/"+this.statusTag).subscribe((res: any) => {
         this.sEmailPassword = res.data;
       },
         (err: any) => {
@@ -142,7 +142,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
     //{{baseURL}}/EmailManagement/GetEmailRcoveryEmail/{mailSystemId}
   public GetEmailRcoveryEmail() {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
-      this.service.Get('/EmailManagement/GetEmailRecoveryMail/' +  this.mailSystemId).subscribe((res: any) => {
+      this.service.Get('/EmailManagement/GetEmailRecoveryMail/' +  this.mailSystemId+"/"+this.statusTag).subscribe((res: any) => {
         this.sEmailRecoveryEmail = res.data;
       },
         (err: any) => {
