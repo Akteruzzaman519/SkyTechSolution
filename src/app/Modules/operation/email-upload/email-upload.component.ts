@@ -7,6 +7,7 @@ import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-upload',
@@ -27,9 +28,15 @@ export class EmailUploadComponent {
   public oEmailFormDto = new EmailFormDto();
   public oEmailBaseInfos: EmailBaseInfo[] = [];
   public totalRecord: number = 0;
+  public relatedModule: any = "";
 
-  constructor(private service: HttpCommonService, private toast: ToastrService, private datePipe: DatePipe) { }
-
+  constructor(private service: HttpCommonService, private toast: ToastrService,
+    private datePipe: DatePipe,
+    private route: ActivatedRoute, private router: Router) {
+    this.route.url.subscribe(urlSegments => {
+      this.relatedModule = urlSegments[urlSegments.length - 1];
+    });
+  }
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
     this.balkEmailGridApi.sizeColumnsToFit();
@@ -37,13 +44,14 @@ export class EmailUploadComponent {
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: any[] = [
-    { field: "UserName", headerName: 'Email' },
-    { field: "Password", HeaderName: 'Password' },
-    { field: "RecoveryMail", HeaderName: 'Password' },
-    { field: "SourcingName", HeaderName: 'Source' }
+    { field: "mailUserName", headerName: 'Email' },
+    { field: "mailUserPassword", HeaderName: 'Password' },
+    { field: "mailRecoveryMail", HeaderName: 'Recovery Mail' },
+    // { field: "sourcingName", HeaderName: 'Source' }
   ];
 
   addBulkEmailBtn() {
+    this.GetSourcesInKeyValue();
     document.getElementById('modalOpen')?.click();
   }
 
@@ -59,10 +67,10 @@ export class EmailUploadComponent {
     this.toast.success("Sample File Downloaded Successfully!!", "success", { progressBar: true });
   }
 
-  public GetSourcesInKeyValue(relatedModule: any) {
+  public GetSourcesInKeyValue() {
     this.oEmailBaseInfos = AGGridHelper.GetRows(this.balkEmailGridApi);
     this.oEmailFormDto.mailBaseInfoList = this.oEmailBaseInfos;
-    this.service.Get('KeyValue/GetSourcesInKeyValue/' + relatedModule).subscribe((res: any) => {
+    this.service.Get('/KeyValue/GetSourcesInKeyValue/mail').subscribe((res: any) => {
       this.KeyValues = res;
     },
       (err: any) => {
@@ -86,19 +94,19 @@ export class EmailUploadComponent {
 
   public BulkEmailLoadData() {
 
-    if(this.oEmailFormDto.mailSourcingId==0){
+    if (this.oEmailFormDto.mailSourcingId == 0) {
       this.toast.warning("Please select source!!", "Warning", { progressBar: true });
-      return ;
+      return;
     }
 
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('file', this.selectedFile, this.selectedFile.name);
 
-      this.service.UploadFile('FileReader/ReadFreshMailFromExcel', formData).subscribe(response => {
+      this.service.UploadFile('/FileReader/ReadFreshMailFromExcel', formData).subscribe(response => {
         this.rowData = response as any[];
         if (this.rowData.length > 0) {
-          this.totalRecord = this.rowData.length; 
+          this.totalRecord = this.rowData.length;
         }
         document.getElementById("BulkemailCloseModal")?.click();
       }, error => {
