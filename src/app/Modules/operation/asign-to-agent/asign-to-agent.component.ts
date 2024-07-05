@@ -69,11 +69,15 @@ export class AsignToAgentComponent implements OnInit {
     this.confirmToAgentGridApi.setRowData([]);
   }
 
+  onSelectionChanged(event: GridReadyEvent) {
+    const selectedRows = AGGridHelper.GetSelectedRows(this.asignToAgentGridApi);
+    this.totalRecord=selectedRows.length;
+  }
+
   private GetEmailsByStatusTag( userSystemId: number, pageIndex: number, pageSize: number) {
 
     this.service.Get('/EmailOperation/GetEmailsByStatusTag/' + this.statusTag + '/' + userSystemId + '/' + pageIndex + '/' + pageSize).subscribe((res: any) => {
       this.oEmailGridDto = res;
-      this.totalRecord = res.noOfTotalRecord;
       this.asignToAgentGridApi.setRowData(res.emailList)
     },
       (err: any) => {
@@ -94,13 +98,14 @@ export class AsignToAgentComponent implements OnInit {
   }
 
   public AssignToAgent() {
+    
     // document.getElementById('modalOpen')?.click();
-    this.GetUsersCurrentWorkloadCount();
-    var data = AGGridHelper.GetSelectedRow(this.asignToAgentGridApi);
+    var data = AGGridHelper.GetSelectedRows(this.asignToAgentGridApi);
     if (data.length == 0) {
-      this.toast.warning("Please select item!!", "Warning", { progressBar: true });
+      this.toast.warning("Please select an item!!", "Warning", { progressBar: true });
       return;
     }
+    this.GetUsersCurrentWorkloadCount();
 
     document.getElementById("modalOpen")?.click();
 
@@ -108,15 +113,26 @@ export class AsignToAgentComponent implements OnInit {
 
   public ConfirmAssign() {
 
+    let selectedAgent= AGGridHelper.GetSelectedRow(this.confirmToAgentGridApi);
+    if(selectedAgent==null){
+      this.toast.warning("Please select  agent!!", "Warning", { progressBar: true });
+      return;
+    }
+    this.AssignEmailOperation(Number(selectedAgent.userSystemId));
+
   }
 
   private AssignEmailOperation(assignedTo: number) {
+    
     let payload: number[] = [];
-    var getSelectedRow = AGGridHelper.GetSelectedRow(this.asignToAgentGridApi);
+    var getSelectedRow = AGGridHelper.GetSelectedRows(this.asignToAgentGridApi);
     getSelectedRow.forEach((element:any) => {
-      payload.push(element.UserSystemId)
+      payload.push(element.mailSystemId)
     })
     this.service.Post('/EmailOperation/AssignEmailOperation/' + this.statusTag + '/' + assignedTo, payload).subscribe((res: any) => {
+      this.toast.success("Agent Email Assign Successfully!!", "success", { progressBar: true });
+      document.getElementById("assignToAgentCloseModal")?.click();
+      this.GetEmailsByStatusTag( 0, 1, 20);
 
     },
       (err: any) => {
