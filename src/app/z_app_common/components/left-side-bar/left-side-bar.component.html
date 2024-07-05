@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 100%;height: 88vh;">
+<!-- <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 100%;height: 88vh;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       <i class="fa-solid fa-bars me-2 mt-2 fs-4" style="width: 40px;height: 32px;"></i>
       <span class="fs-4">Menu </span>
@@ -35,5 +35,55 @@
             Assign Mail Claiming
         </a>
       </li>
+    </ul>
+  </div> -->
+
+  <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+      <i class="fa-solid fa-bars me-2 mt-2 fs-4" style="width: 40px;height: 32px;"></i>
+      <span class="fs-5 fw-semibold">Menu</span>
+    </a>
+    <ul class="list-unstyled ps-0">
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+          Operation
+        </button>
+        <div class="collapse show" id="home-collapse" style="">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a routerLink="/operation/fresh_email_upload" class="link-dark rounded">Fresh Email Upload</a></li>
+            <li><a routerLink="/operation/assign_to_change_mail_credential" class="link-dark rounded">Assign Change Mail Credential</a></li>
+            <li><a routerLink="/operation/change_mail_credential" class="link-dark rounded">Change Mail Credential</a></li>
+            <li><a routerLink="/operation/assign_for_mail_claiming" class="link-dark rounded">Assign Mail Claiming</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+          Dashboard
+        </button>
+        <div class="collapse" id="dashboard-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded">Overview</a></li>
+            <li><a href="#" class="link-dark rounded">Weekly</a></li>
+            <li><a href="#" class="link-dark rounded">Monthly</a></li>
+            <li><a href="#" class="link-dark rounded">Annually</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="mb-1">
+        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+          Orders
+        </button>
+        <div class="collapse" id="orders-collapse">
+          <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+            <li><a href="#" class="link-dark rounded">New</a></li>
+            <li><a href="#" class="link-dark rounded">Processed</a></li>
+            <li><a href="#" class="link-dark rounded">Shipped</a></li>
+            <li><a href="#" class="link-dark rounded">Returned</a></li>
+          </ul>
+        </div>
+      </li>
+
+
     </ul>
   </div>
