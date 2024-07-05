@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GridApi, GridReadyEvent } from 'ag-grid-community';
+import { GridApi, GridReadyEvent, RowDoubleClickedEvent, ValueFormatterParams } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
 import { EmailBaseInfo } from 'src/app/Models/EmailBaseInfo';
 import { EmailFormDto } from 'src/app/Models/EmailFormDto';
@@ -8,6 +8,7 @@ import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
 import { EmailOperationGridDto } from 'src/app/Models/EmailOperationGridDto';
 import { EmailIssueFormDto } from 'src/app/Models/EmailIssueFormDto';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-change-mail-credential',
@@ -33,14 +34,15 @@ export class ChangeMailCredentialComponent  implements OnInit {
   public sEmailUserName :string = "";
   public sEmailPassword :string = "";
   public sEmailRecoveryEmail :string = "";
+  public mailSystemId = 0;
 
   public sNewEmailPassword :string = "";
   public sNewRecoveryEmail :string = "";
   public totalRecord: number = 0;
 
-  constructor(private service: HttpCommonService, private toast: ToastrService,) { }
+  constructor(private service: HttpCommonService, private toast: ToastrService,private datePipe: DatePipe) { }
   ngOnInit(): void {
-    this.GetEmailsByOperationTag("");
+    this.GetEmailsByOperationTag("change_mail_credential");
   }
 
   ApiGridReady(event: GridReadyEvent) {
@@ -52,21 +54,47 @@ export class ChangeMailCredentialComponent  implements OnInit {
   colDefs: any[] = [
     { field: "mailUserName", headerName: 'Email' },
     { field: "mailOperationAssignedByFullName", headerName: 'Assign By' },
-    { field: "mailOperationAssignedAt", headerName: 'Assign At' },
-    { field: "SourcingName", headerName: 'Details' }
+    { field: "mailOperationAssignedAt", headerName: 'Assign At', cellRenderer: (params: ValueFormatterParams) => {
+      return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
+    }, },
+    { field: 'Details', minWidth: 120, headerName: 'Details', resizable: true, cellRenderer: this.detailToGrid.bind(this) },
   ];
 
+  detailToGrid(params: any) {
+    const eDiv = document.createElement('div');
+    eDiv.innerHTML = ' <button class="btn btn-success p-0 px-1"><i class="fa-solid fa-eye" aria-hidden="true"></i> Detail</button>'
+    eDiv.addEventListener('click', () => {
+      this.mailSystemId = params.data.bookingSystemId;
+      this.addBulkEmailBtn();
+    });
+    return eDiv;
+  }
+
+  public RowDoubleClick(params: RowDoubleClickedEvent){
+    console.log(params);
+    this.addBulkEmailBtn();
+  }
+
   addBulkEmailBtn() {
+    var oSelectedList = this.balkEmailGridApi.getSelectedRows();
+    if(oSelectedList.length <= 0){
+      this.toast.warning("Please Select One From List!!", "Warning", { progressBar: true });
+    }
+    this.mailSystemId = oSelectedList[0].mailSystemId;
+    this.GetEmailUsername(this.mailSystemId)
     document.getElementById('modalOpen')?.click();
     this.sEmailUserName = "";
     this.sEmailPassword = "";
     this.sEmailRecoveryEmail = "";
+    this.eyeIcon = '👁️';
+    this.eyeIconRecovery = '👁️';
   }
 
   public GetEmailsByOperationTag(relatedModule: any) {
     //{{baseURL}}/EmailOperation/GetEmailsByOperationTag/{operationTag}
     this.service.Get('/EmailOperation/GetEmailsByOperationTag/' + relatedModule).subscribe((res: any) => {
       this.oEmailOperationGridDtoList = res;
+      this.balkEmailGridApi.setRowData(this.oEmailOperationGridDtoList);
     },
       (err: any) => {
         console.log(err);
@@ -76,7 +104,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
   public GetEmailUsername(mailSystemId: any) {
   //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
     this.service.Get('/EmailManagement/GetEmailUsername/' + mailSystemId).subscribe((res: any) => {
-      this.sEmailUserName = res;
+      this.sEmailUserName = res.data;
     },
       (err: any) => {
         console.log(err);
@@ -86,7 +114,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
   public GetEmailPassword(mailSystemId: any) {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
       this.service.Get('/EmailManagement/GetEmailPassword/' + mailSystemId).subscribe((res: any) => {
-        this.sEmailPassword = res;
+        this.sEmailPassword = res.data;
       },
         (err: any) => {
           console.log(err);
@@ -96,8 +124,8 @@ export class ChangeMailCredentialComponent  implements OnInit {
     //{{baseURL}}/EmailManagement/GetEmailRcoveryEmail/{mailSystemId}
   public GetEmailRcoveryEmail(mailSystemId: any) {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
-      this.service.Get('/EmailManagement/GetEmailRcoveryEmail/' + mailSystemId).subscribe((res: any) => {
-        this.sEmailRecoveryEmail = res;
+      this.service.Get('/EmailManagement/GetEmailRecoveryMail/' + mailSystemId).subscribe((res: any) => {
+        this.sEmailRecoveryEmail = res.data;
       },
         (err: any) => {
           console.log(err);

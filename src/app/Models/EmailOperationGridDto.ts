@@ -5,6 +5,7 @@ export class EmailOperationGridDto {
         this.mailUserName = "";
         this.mailOperationAssignedByFullName = ""
         this.mailOperationAssignedAt = new Date();
+        this.mailOperationCompletionStatus = 0;
 
     }
     public mailOperationCompletionId: number;// PK DO NOT SHOW
@@ -12,4 +13,5 @@ export class EmailOperationGridDto {
     public mailUserName: string;// Email
     public mailOperationAssignedByFullName: string;// Assigned By
     public mailOperationAssignedAt: Date;// Assigned At
+    public mailOperationCompletionStatus :number ;
 }
