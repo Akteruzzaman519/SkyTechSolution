@@ -1,4 +1,4 @@
-<div class="login-wrapper">
+<!-- <div class="login-wrapper">
 	<div id="loginbox" class="row mx-0 align-items-center ">
 		<div class="container containertopmargin mt-5">
 			<div class="d-flex justify-content-center mt-5">
@@ -87,4 +87,30 @@
 
 		</div>
 	</div>
+</div> -->
+
+
+
+<div class="wrapper">
+    <div class="inner">
+        <div class="row g-0">
+            <div class="col p-5" style="height: 60vh;">
+                <div class="p-4">
+                    <h3>Sky Mail Manager</h3>
+                    <div class="form-wrapper">
+                        <label for="">User Name</label>
+                        <input type="text"   [(ngModel)]="user.username" name="password" autocomplete="off" class="form-control">
+                    </div>
+                    <div class="form-wrapper">
+                        <label for="">Password</label>
+                        <input type="password"  [(ngModel)]="user.password" name="password" autocomplete="off" class="form-control">
+                    </div>
+                    <button (click)="onLogin()">  <i class="fa fa-sign-in me-2"></i> Login</button>
+                </div>
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
 </div>
