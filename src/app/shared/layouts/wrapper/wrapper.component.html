@@ -1,6 +1,16 @@
 <app-menu-bar-v #menuBar></app-menu-bar-v>
-<div class="containe-fluid content-wrapper" [style.min-height.px]="contentHeight">
-    <router-outlet></router-outlet>
+<div >
+    <div class="row g-0">
+        <div class="col-2" [style.min-height.px]="contentHeight">
+            <app-left-side-bar></app-left-side-bar>
+        </div>
+        <div class="col">
+            <div class="containe-fluid content-wrapper" [style.min-height.px]="contentHeight">
+                <router-outlet></router-outlet>
+            </div>
+           
+        </div>
+    </div>
 </div>
 
 <app-footer #footer></app-footer>

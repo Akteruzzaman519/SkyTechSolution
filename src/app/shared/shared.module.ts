@@ -18,6 +18,7 @@ import { HighlightPipe } from './_pipes/highlight-text';
 import { MenuBarV2Component } from './layouts/menu-bar-v2/menu-bar-v.component';
 import { PdfService } from './services/pdf.service';
 import { CustomPinnedRowRendererComponent } from './custom-pinned-row-renderer/custom-pinned-row-renderer.component';
+import { LeftSideBarComponent } from '../z_app_common/components/left-side-bar/left-side-bar.component';
 
 @NgModule({
 
@@ -45,7 +46,8 @@ import { CustomPinnedRowRendererComponent } from './custom-pinned-row-renderer/c
 		MultiElementSelectionComponent,
 		SingleElementSelectionComponent,
       FooterComponent,
-      CustomPinnedRowRendererComponent
+      CustomPinnedRowRendererComponent,
+      LeftSideBarComponent
    ],
 
    exports: [
@@ -62,7 +64,8 @@ import { CustomPinnedRowRendererComponent } from './custom-pinned-row-renderer/c
 		MultiElementSelectionComponent,
 		SingleElementSelectionComponent,
       CustomPinnedRowRendererComponent,
-      NgStyle
+      NgStyle,
+      LeftSideBarComponent
    ],
    schemas: []
 })
