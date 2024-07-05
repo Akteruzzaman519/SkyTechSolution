@@ -102,6 +102,8 @@ export class ChangeMailCredentialComponent  implements OnInit {
     this.sEmailRecoveryEmail = "";
     this.sNewRecoveryEmail = "";
     this.sNewEmailPassword = "";
+    this.sMailIssueNote = "";
+    this.nReportIssueId = 0;
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
   }
