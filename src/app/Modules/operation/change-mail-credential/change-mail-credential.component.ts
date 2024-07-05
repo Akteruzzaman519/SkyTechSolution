@@ -31,6 +31,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
   public oEmailBaseInfo :EmailBaseInfo = new EmailBaseInfo();
   public oEmailIssueFormDto :EmailIssueFormDto = new EmailIssueFormDto();
   public oEmailOperationGridDtoList :EmailOperationGridDto[] = [];
+  public KeyValues: KeyValueDto[] = [];
   public oEmailFormDto = new EmailFormDto();
   public sEmailUserName :string = "";
   public sEmailPassword :string = "";
@@ -41,7 +42,9 @@ export class ChangeMailCredentialComponent  implements OnInit {
 
   public sNewEmailPassword :string = "";
   public sNewRecoveryEmail :string = "";
+  public sMailIssueNote:string = "";
   public totalRecord: number = 0;
+  public nReportIssueId: number = 0;
 
   constructor(private service: HttpCommonService, private toast: ToastrService,private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router) {
@@ -52,6 +55,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
 
   ngOnInit(): void {
     this.GetEmailsByOperationTag(this.statusTag);
+    this.GetIssuesInKeyValue()
   }
 
   ApiGridReady(event: GridReadyEvent) {
@@ -147,7 +151,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
     public GetIssuesInKeyValue() {
        //{{baseURL}}/KeyValue/GetIssuesInKeyValue/{operationTag}
         this.service.Get('/KeyValue/GetIssuesInKeyValue/' +  this.statusTag).subscribe((res: any) => {
-          this.sEmailRecoveryEmail = res.data;
+          this.KeyValues = res;
         },
           (err: any) => {
             console.log(err);
@@ -183,8 +187,15 @@ export class ChangeMailCredentialComponent  implements OnInit {
   }
 
   public ReportMailIssue(){
-    this.oEmailIssueFormDto
-    //{{baseURL}}/EmailManagement/ChangeEmailCredential/{mailSystemId}
+    this.oEmailIssueFormDto.mailIssueId = this.nReportIssueId;
+    this.oEmailIssueFormDto.mailSystemId = this.mailSystemId;
+    this.oEmailIssueFormDto.mailIssueNote = this.sMailIssueNote;
+
+    if(this.nReportIssueId <=  0){
+      this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
+      return;
+    }
+    //{{baseURL}}/EmailOperation/ReportMailIssue
     this.service.Post('/EmailOperation/ReportMailIssue', this.oEmailIssueFormDto, true).subscribe((res: any) => {
       this.toast.success("Email Uploaded Successfully!!", "Success", { progressBar: true });
       this.rowData = [];
