@@ -3,9 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GridApi, GridReadyEvent, ValueFormatterParams, RowDoubleClickedEvent } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
-import { EmailBaseInfo } from 'src/app/Models/EmailBaseInfo';
-import { EmailFormDto } from 'src/app/Models/EmailFormDto';
-import { EmailIssueFormDto } from 'src/app/Models/EmailIssueFormDto';
 import { EmailOperationGridDto } from 'src/app/Models/EmailOperationGridDto';
 import { KeyValueDto } from 'src/app/Models/KeyValueDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
@@ -225,7 +222,7 @@ export class MailClaimingComponent implements OnInit {
 
    
 
-  public ChangeEmailCredential(){
+  public ClaimEmailMaps(){
 
     if(this.sFirstMapLink == ""){
       this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
