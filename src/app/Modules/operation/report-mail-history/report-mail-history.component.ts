@@ -12,7 +12,7 @@ import { VActivityHistoryDto } from 'src/app/Models/VActivityHistoryDto';
 })
 export class ReportMailHistoryComponent implements OnInit {
 
-  mailSystemId: number = 1;
+  mailSystemId: number = 2;
   search: string = "";
 
   public oVMailLifecycleDtoList: VMailLifecycleDto[] = [
