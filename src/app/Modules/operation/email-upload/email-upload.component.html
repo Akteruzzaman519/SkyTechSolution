@@ -1,29 +1,20 @@
-<div class="row">
-  <div class="col-md-12 my-3">
-    <!-- Image and text -->
-    <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="#">
-          <i class="fa-solid fa-envelopes-bulk text-black ms-1 d-inline-block align-top" style="height: 30; width: 30;"></i>
-        Bootstrap
-      </a>
-    </nav>
-
-    <span class="fs-4"> <i class="fa-solid fa-envelopes-bulk text-black ms-1"></i> Upload Fresh Email </span>
+<div class="row g-0">
+  <div class="col-md-12 mb-3">
+    <span class="grid-header"><i aria-hidden="true" class="fa fa-list"></i> Upload Fresh Email </span>
     <button type="button" class="btn btn-info float-end " (click)="addBulkEmailBtn()">Add Bulk Email</button>
   </div>
 
-  <div class="col-md-12">
+  <div class="col-md-12 mb-3">
     <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; " [rowData]="rowData"
       [columnDefs]="colDefs" [pagination]="true" (gridReady)="ApiGridReady($event)"
       [paginationPageSize]="paginationPageSize" [defaultColDef]="DeafultCol">
     </ag-grid-angular>
   </div>
 
-  <div class="col-md-12 mt-3">
-    <span class="fs-5">Total Record : {{totalRecord}}</span>
+  <div class="ccol-md-12 mb-3">
+    <span class="">Total Record : {{totalRecord}}</span>
     <button type="button" class="btn btn-success float-end" (click)="BulkEmailSave()">Save Data</button>
   </div>
-
 </div>
 
 
