@@ -148,11 +148,6 @@ export class ChangeMapInfoComponent implements OnInit {
     this.service.Get('/EmailOperation/GetEmailsByOperationTag/' + relatedModule).subscribe((res: any) => {
       this.oEmailOperationGridDtoList = res;
       this.totalRecord =  this.oEmailOperationGridDtoList.length;
-      this.oEmailOperationGridDtoList.forEach((item: EmailOperationGridDto) => {
-        if(item.mailSystemId == 3) {
-          item.mailOperationCompletionStatus = 2;
-        }
-      })
       this.bIsDisable = this.oEmailOperationGridDtoList.find(x => x.mailOperationCompletionStatus == 2) ?  true : false;
       this.balkEmailGridApi.setRowData(this.oEmailOperationGridDtoList);
       this.balkEmailGridApi.forEachNode(node => {

@@ -26,6 +26,7 @@ export class MailClaimingComponent implements OnInit {
   public oEmailMapClaimFormDtoList: EmailMapClaimFormDto[] = [];
   public oEmailOperationGridDtoList :EmailOperationGridDto[] = [];
   public KeyValues: KeyValueDto[] = [];
+  public CategoryKeyValues: KeyValueDto[] = [];
   
   public statusTag :any= "";
   public mailSystemId = 0;
@@ -140,11 +141,6 @@ export class MailClaimingComponent implements OnInit {
     this.service.Get('/EmailOperation/GetEmailsByOperationTag/' + relatedModule).subscribe((res: any) => {
       this.oEmailOperationGridDtoList = res;
       this.totalRecord =  this.oEmailOperationGridDtoList.length;
-      this.oEmailOperationGridDtoList.forEach((item: EmailOperationGridDto) => {
-        if(item.mailSystemId == 3) {
-          item.mailOperationCompletionStatus = 2;
-        }
-      })
       this.bIsDisable = this.oEmailOperationGridDtoList.find(x => x.mailOperationCompletionStatus == 2) ?  true : false;
       this.balkEmailGridApi.setRowData(this.oEmailOperationGridDtoList);
       this.balkEmailGridApi.forEachNode(node => {
@@ -161,7 +157,7 @@ export class MailClaimingComponent implements OnInit {
   public GetEmailUsername() {
   //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
     this.service.Get('/EmailManagement/GetEmailUsername/' + this.mailSystemId +"/"+this.statusTag).subscribe((res: any) => {
-      //this.sEmailUserName = res.data;
+      this.sEmailUserName = res.data;
     },
       (err: any) => {
         console.log(err);
@@ -170,8 +166,8 @@ export class MailClaimingComponent implements OnInit {
 
   public GetMapCategoriesInKeyValue() {
     //{{baseURL}}/KeyValue/GetMapCategoriesInKeyValue/{relatedModule}
-      this.service.Get('/KeyValue/GetMapCategoriesInKeyValue/'+ this.statusTag).subscribe((res: any) => {
-        this.KeyValues = res;
+      this.service.Get('/KeyValue/GetMapCategoriesInKeyValue/mail').subscribe((res: any) => {
+        this.CategoryKeyValues = res;
       },
         (err: any) => {
           console.log(err);
@@ -192,7 +188,7 @@ export class MailClaimingComponent implements OnInit {
   public GetEmailPassword() {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
       this.service.Get('/EmailManagement/GetEmailPassword/' +  this.mailSystemId+"/"+this.statusTag).subscribe((res: any) => {
-        //this.sEmailPassword = res.data;
+        this.sEmailPassword = res.data;
       },
         (err: any) => {
           console.log(err);
@@ -203,7 +199,7 @@ export class MailClaimingComponent implements OnInit {
   public GetEmailRcoveryEmail() {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
       this.service.Get('/EmailManagement/GetEmailRecoveryMail/' +  this.mailSystemId+"/"+this.statusTag).subscribe((res: any) => {
-        //this.sEmailRecoveryEmail = res.data;
+        this.sEmailRecoveryEmail = res.data;
       },
         (err: any) => {
           console.log(err);
