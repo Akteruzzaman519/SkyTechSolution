@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { SharedModule } from 'shared/shared.module';
 import { IDValueModule } from 'src/app/cod/Modules/idvalue/idvalue.module';
+import { ReportMailHistoryComponent } from './report-mail-history/report-mail-history.component';
 
 const routes: Routes = [
   { path: "fresh_email_upload", component: EmailUploadComponent, title: "Email Upload" },
@@ -28,7 +29,8 @@ const routes: Routes = [
   { path: "assign_to_change_map_info", component: AssignChangeMapInfoComponent, title: "Assign To Change Map Info" },
   { path: "change_map_info", component: ChangeMapInfoComponent, title: "Change Map Info" },
   { path: "assign_for_review_on_map", component: AssignReviewMapComponent, title: "Assign For Review On Map" },
-  { path: "review_on_map", component: ReviewMapComponent, title: "Review On Map" }
+  { path: "review_on_map", component: ReviewMapComponent, title: "Review On Map" },
+  { path: "report/mail-history", component: ReportMailHistoryComponent, title: "Review On Map" },
 ]
 
 @NgModule({
@@ -43,7 +45,8 @@ const routes: Routes = [
     AssignChangeMapInfoComponent,
     ChangeMapInfoComponent,
     AssignReviewMapComponent,
-    ReviewMapComponent
+    ReviewMapComponent,
+    ReportMailHistoryComponent
   ],
   imports: [
     CommonModule,
