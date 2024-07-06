@@ -3,13 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GridApi, GridReadyEvent, ValueFormatterParams, RowDoubleClickedEvent } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
-import { EmailBaseInfo } from 'src/app/Models/EmailBaseInfo';
-import { EmailFormDto } from 'src/app/Models/EmailFormDto';
 import { EmailIssueFormDto } from 'src/app/Models/EmailIssueFormDto';
 import { EmailOperationGridDto } from 'src/app/Models/EmailOperationGridDto';
 import { KeyValueDto } from 'src/app/Models/KeyValueDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
+import { MapReviewFormDto } from 'src/app/Models/aaa';
 
 @Component({
   selector: 'app-review-map',
@@ -20,6 +19,7 @@ export class ReviewMapComponent implements OnInit {
   
   
   private balkEmailGridApi!: GridApi;
+  private taskEmailGridApi!: GridApi;
   passwordFieldType: string = 'password';
   recoveryFieldType: string = 'password';
   eyeIcon: string = '👁️';
@@ -28,11 +28,11 @@ export class ReviewMapComponent implements OnInit {
   public DeafultCol = AGGridHelper.DeafultCol;
   public rowData: any[] = [];
 
-  public oEmailBaseInfo :EmailBaseInfo = new EmailBaseInfo();
+  public oMapReviewFormDto :MapReviewFormDto = new MapReviewFormDto()
+  public oMapReviewFormDtoList :MapReviewFormDto[] = [];
   public oEmailIssueFormDto :EmailIssueFormDto = new EmailIssueFormDto();
   public oEmailOperationGridDtoList :EmailOperationGridDto[] = [];
   public KeyValues: KeyValueDto[] = [];
-  public oEmailFormDto = new EmailFormDto();
   public sEmailUserName :string = "";
   public sEmailPassword :string = "";
   public sEmailRecoveryEmail :string = "";
@@ -40,9 +40,7 @@ export class ReviewMapComponent implements OnInit {
   public mailSystemId = 0;
   public mailOperationCompletionId = 0;
 
-  public sNewEmailPassword :string = "";
-  public sNewRecoveryEmail :string = "";
-  public sMailIssueNote:string = "";
+
   public totalRecord: number = 0;
   public bIsDisable : boolean = false;
   public nReportIssueId: number = 0;
@@ -56,12 +54,15 @@ export class ReviewMapComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetEmailsByOperationTag(this.statusTag);
-    this.GetIssuesInKeyValue()
   }
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
     //this.balkEmailGridApi.sizeColumnsToFit();
+  }
+  ApiGridReadyTask(event: GridReadyEvent) {
+    this.taskEmailGridApi = event.api;
+    //this.taskEmailGridApi.sizeColumnsToFit();
   }
 
   // Column Definitions: Defines the columns to be displayed.
@@ -75,7 +76,29 @@ export class ReviewMapComponent implements OnInit {
     { field: 'Details', headerName: 'Details',width:100, resizable: true, cellRenderer: this.detailToGrid.bind(this) },
   ];
 
+  colDefsTask: any[] = [
+    { valueGetter: "node.rowIndex + 1", headerName: '', cellStyle: { 'border-right': '0.5px solid #e9ecef' }, filter:false, width: 20, editable: false},
+    { field: "mailTaskName", headerName: 'Task Name', width:200 },
+    { field: "mailTaskDescription", headerName: 'Description', width:180 },
+    { field: "mailTaskNote", headerName: 'Note',width:185},
+    { field: 'Details', headerName: 'Details',width:100, resizable: true, cellRenderer: this.TaskdetailToGrid.bind(this) },
+  ];
+
   detailToGrid(params: any) {
+    const eDiv = document.createElement('div');
+    var sDisableed = ''
+    if( this.bIsDisable ){
+      sDisableed =  params.data.mailOperationCompletionStatus  != 2 ? 'style= "display: None"' : ''
+    }
+    eDiv.innerHTML = ' <button class="btn btn-success p-0 px-1" '+sDisableed+'><i class="fa-solid fa-eye" aria-hidden="true"></i> Detail</button>'
+    eDiv.addEventListener('click', () => {
+      this.mailSystemId = params.data.mailSystemId;
+      this.mailOperationCompletionId = params.data.mailOperationCompletionId;
+      this.LoadDetails()
+    });
+    return eDiv;
+  }
+  TaskdetailToGrid(params: any) {
     const eDiv = document.createElement('div');
     var sDisableed = ''
     if( this.bIsDisable ){
@@ -103,9 +126,7 @@ export class ReviewMapComponent implements OnInit {
     this.sEmailUserName = "";
     this.sEmailPassword = "";
     this.sEmailRecoveryEmail = "";
-    this.sNewRecoveryEmail = "";
-    this.sNewEmailPassword = "";
-    this.sMailIssueNote = "";
+    
     this.nReportIssueId = 0;
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
@@ -115,9 +136,14 @@ export class ReviewMapComponent implements OnInit {
     this.sEmailUserName = "";
     this.sEmailPassword = "";
     this.sEmailRecoveryEmail = "";
-    this.sNewRecoveryEmail = "";
-    this.sNewEmailPassword = "";
-    this.sMailIssueNote = "";
+    this.nReportIssueId = 0;
+    this.eyeIcon = '👁️';
+    this.eyeIconRecovery = '👁️';
+  }
+  onSelectionChangedTask(){
+    this.sEmailUserName = "";
+    this.sEmailPassword = "";
+    this.sEmailRecoveryEmail = "";
     this.nReportIssueId = 0;
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
@@ -129,6 +155,7 @@ export class ReviewMapComponent implements OnInit {
       return;
     }
     document.getElementById('modalOpen')?.click();
+    this.oMapReviewFormDto =new MapReviewFormDto();
   }
 
   public GetEmailsByOperationTag(relatedModule: any) {
@@ -136,11 +163,6 @@ export class ReviewMapComponent implements OnInit {
     this.service.Get('/EmailOperation/GetEmailsByOperationTag/' + relatedModule).subscribe((res: any) => {
       this.oEmailOperationGridDtoList = res;
       this.totalRecord =  this.oEmailOperationGridDtoList.length;
-      this.oEmailOperationGridDtoList.forEach((item: EmailOperationGridDto) => {
-        if(item.mailSystemId == 3) {
-          item.mailOperationCompletionStatus = 2;
-        }
-      })
       this.bIsDisable = this.oEmailOperationGridDtoList.find(x => x.mailOperationCompletionStatus == 2) ?  true : false;
       this.balkEmailGridApi.setRowData(this.oEmailOperationGridDtoList);
       this.balkEmailGridApi.forEachNode(node => {
@@ -194,34 +216,18 @@ export class ReviewMapComponent implements OnInit {
         })
     }
 
-    public GetIssuesInKeyValue() {
-       //{{baseURL}}/KeyValue/GetIssuesInKeyValue/{operationTag}
-        this.service.Get('/KeyValue/GetIssuesInKeyValue/' +  this.statusTag).subscribe((res: any) => {
-          this.KeyValues = res;
-        },
-          (err: any) => {
-            console.log(err);
-          })
-      }
+  public TaskRoutineSubmit(){
+    this.oMapReviewFormDtoList = [];
 
-   
-
-  public ChangeEmailCredential(){
-
-    if(this.sNewEmailPassword == ""){
-      this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
-      return;
+    this.taskEmailGridApi.forEachNode(node => {
+      this.oMapReviewFormDtoList.push(node.data);
+    })
+    if (this.oMapReviewFormDtoList.length <= 0) {
+      this.toast.warning("Atleast One List Required!!", "Warning", { progressBar: true });
+      return
     }
-    if(this.sNewRecoveryEmail == ""){
-      this.toast.warning("Please Provide New Recovery Email!!", "Warning", { progressBar: true });
-      return;
-    }
-
-    this.oEmailBaseInfo.mailUserName = this.sEmailUserName;
-    this.oEmailBaseInfo.mailRecoveryMail = this.sNewRecoveryEmail;
-    this.oEmailBaseInfo.mailUserPassword = this.sNewEmailPassword;
-    //{{baseURL}}/EmailManagement/ChangeEmailCredential/{mailSystemId}
-    this.service.Post('/EmailManagement/ChangeEmailCredential/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oEmailBaseInfo, true).subscribe((res: any) => {
+    //{{baseURL}}/EmailManagement/AddMapReviews/{mailSystemId}/{mailOperationCompletionId}/{statusTag}
+    this.service.Post('/EmailManagement/AddMapReviews/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oMapReviewFormDtoList, true).subscribe((res: any) => {
       this.toast.success("Credential Changed Successfully!!", "Success", { progressBar: true });
       this.GetEmailsByOperationTag(this.statusTag)
       this.rowData = [];
@@ -233,24 +239,8 @@ export class ReviewMapComponent implements OnInit {
       })
   }
 
-  public ReportMailIssue(){
-    this.oEmailIssueFormDto.mailIssueId = this.nReportIssueId;
-    this.oEmailIssueFormDto.mailSystemId = this.mailSystemId;
-    this.oEmailIssueFormDto.mailIssueNote = this.sMailIssueNote;
-
-    if(this.nReportIssueId ==  -1 ){
-      this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
-      return;
-    }
-    //{{baseURL}}/EmailOperation/ReportMailIssue
-    this.service.Post('/EmailOperation/ReportMailIssue', this.oEmailIssueFormDto, true).subscribe((res: any) => {
-      this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
-      this.rowData = [];
-      this.totalRecord = 0;
-    },
-      (err: any) => {
-        this.toast.error(err, "Error", { progressBar: true });
-      })
+  public AddReviewIntoGrid(){
+   this.taskEmailGridApi.applyTransaction({add: [this.oMapReviewFormDto]}) 
   }
 
   togglePasswordVisibility(): void {
