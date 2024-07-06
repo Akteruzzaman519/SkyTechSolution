@@ -1,1 +1,123 @@
-<p>change-map-info works!</p>
+<div class="row">
+    <div class="col-md-12 my-3">
+      <span class="fs-4"> <i class="fa-solid fa-envelopes-bulk text-black ms-1"></i> Change Map Information</span>
+      <!-- <button type="button" class="btn btn-info float-end " (click)="addBulkEmailBtn()">View Details</button> -->
+    </div>
+
+    <div class="col-md-6">
+      <ag-grid-angular class="ag-theme-alpine" style="height: 67vh;width: 100%; overflow-x: hidden; " [rowData]="rowData"
+        [columnDefs]="colDefs"  (gridReady)="ApiGridReady($event)" rowSelection='single'  (selectionChanged)="onSelectionChanged()"
+        [defaultColDef]="DeafultCol">
+      </ag-grid-angular>
+    </div>
+    <div class="col-md-6 ps-2">
+      <div class="row g-0">
+          <div class="col-md-12 border">
+              <div class="row g-0">
+                  <div class="col-md-12 p-2" style="background-color: #f8f8f8; font-weight: bold; color: black;">
+                      Details
+                  </div>
+                  <hr>
+                  <div class="col-md-12  p-3">
+                    <div class="mb-3">
+                        <label for="mailRelatedTag" class="form-label">Email </label>
+                        <input type="text" class="form-control" [(ngModel)]="sEmailUserName" disabled name="mailRelatedTag"
+                            id="mailRelatedTag">
+                    </div>
+                </div>
+                <div class="col-md-6  p-3">
+                  <div class="mb-3">
+                      <label for="mailRelatedTag" class="form-label">Password </label>
+                      <div class="password-container">
+                          <input [type]="passwordFieldType" class="password-input"  disabled [(ngModel)]="sEmailPassword">
+                          <button type="button" class="toggle-button" (click)="togglePasswordVisibility()">
+                              <span>{{ eyeIcon }}</span>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="mb-3">
+                      <label for="mailRelatedTag" class="form-label">Recovery Email </label>
+                      <div class="password-container">
+                          <input [type]="recoveryFieldType" class="password-input" disabled [(ngModel)]="sEmailRecoveryEmail">
+                          <button type="button" class="toggle-button" (click)="toggleRecoveryEmailVisibility()">
+                              <span>{{ eyeIconRecovery }}</span>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+      
+              <hr>
+                <div class="mb-3  p-3">
+                  <label for="mailRelatedTag" class="form-label">New  Password</label>
+                  <input type="text" class="form-control" [(ngModel)]="sNewEmailPassword" name="mailRelatedTag"
+                    id="mailRelatedTag">
+                </div>
+      
+                <div class="mb-3  p-3">
+                  <label for="mailRelatedTag" class="form-label">New Recovery Email </label>
+                  <input type="text" class="form-control" [(ngModel)]="sNewRecoveryEmail" name="mailRelatedTag"
+                    id="mailRelatedTag">
+                </div>
+                  <div class="modal-footer" style="justify-content: space-between;">
+                    <button type="button" class="btn btn-danger" (click)="addBulkEmailBtn()">Report Issue</button>
+                    <button type="button" class="btn btn-success" (click)="ChangeEmailCredential()">Process
+                      Data</button>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+    </div>
+    <div class="col-md-12 mt-2">
+      <label for="mailRelatedTag" class="form-label">No of Record : {{totalRecord}}</label>
+    </div>
+  </div>
+
+  
+  
+
+  
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" hidden id="modalOpen" data-bs-toggle="modal"
+data-bs-target="#staticBackdrop">
+Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-envelopes-bulk text-black ms-1"></i> Report Issue</h5>
+      <button type="button" class="btn-close" id="BulkemailCloseModal" data-bs-dismiss="modal"
+        aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+          <div class="mb-3">
+            <label for="nReportIssueId" class="form-label">Select Issue</label>
+            <select class="form-select form-select mb-3" [(ngModel)]="nReportIssueId" name="nReportIssueId"
+              id="mailSourcingId" aria-label=".form-select-lg example">
+              <option value="0"> --- Select Issue ---</option>
+              <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
+              <option value="0">Custom</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="mailIssueNote" class="form-label">Custom Issue Note</label>
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="sMailIssueNote" name="mailIssueNote"
+              id="mailIssueNote">
+            </textarea>
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-bs-dismiss="modal"   (click)="ReportMailIssue()">Submit Issue</button>
+    </div>
+  </div>
+</div>
+  

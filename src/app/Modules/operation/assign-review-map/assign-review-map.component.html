@@ -1,1 +1,73 @@
-<p>assign-review-map works!</p>
+<div class="row">
+    <div class="col-md-12 my-3">
+      <span class="fs-4"> <i class="fa-solid fa-envelopes-bulk text-black ms-1"></i> Assign To Add Review On Map</span>
+    </div>
+  
+    <div class="col-md-12">
+      <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; " [rowMultiSelectWithClick]="true"
+    [columnDefs]="colDefs" [pagination]="true" [rowSelection]="'multiple'"    (selectionChanged)="onSelectionChanged($event)"
+        (gridReady)="onGridReadyAsignToAgent($event)" [paginationPageSize]="paginationPageSize"
+        [defaultColDef]="DeafultCol">
+      </ag-grid-angular>
+    </div>
+  
+    <div class="col-md-12 mt-3">
+      <span class="fs-5">Total Record : {{totalRecord}}</span>
+      <button type="button" class="btn btn-success float-end" (click)="AssignToAgent()">Assign To Agent</button>
+    </div>
+  
+  </div>
+  
+  
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" hidden id="modalOpen" data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop">
+    Launch static backdrop modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Email Confirm</h5>
+          <button type="button" class="btn-close" id="assignToAgentCloseModal" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+  
+          <div class="row">
+            <div class="col-md-12">
+              <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; "
+                [columnDefs]="colDefsConfirmAssign" [rowSelection]="'single'"
+                (gridReady)="onGridReadyConfirmToAgent($event)" [paginationPageSize]="paginationPageSize"
+                [defaultColDef]="DeafultCol">
+              </ag-grid-angular>
+            </div>
+          </div>
+  
+          <!-- <div class="mb-4">
+          <label for="mailSourcingId" class="form-label">Select Source </label>
+          <select class="form-select form-select mb-3" [(ngModel)]="oEmailFormDto.mailSourcingId" name="mailSourcingId"
+            id="mailSourcingId" aria-label=".form-select-lg example">
+            <option selected> --- Select ---</option>
+            <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
+          </select>
+        </div>
+  
+        <div class="mb-3">
+          <label for="mailRelatedTag" class="form-label">Tag </label>
+          <input type="text" class="form-control" [(ngModel)]="oEmailFormDto.mailRelatedTag" name="mailRelatedTag"
+            id="mailRelatedTag" placeholder="Please select tag">
+        </div> -->
+  
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-primary" (click)="ConfirmAssign()">Confirm Assign</button>
+        </div>
+      </div>
+    </div>
+  </div>
