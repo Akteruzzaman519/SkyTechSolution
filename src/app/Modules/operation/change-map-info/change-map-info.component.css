@@ -1,0 +1,25 @@
+.password-container {
+    position: relative;
+    width: fit-content;
+}
+
+.password-input {
+    padding-right: 40px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.toggle-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#eye-icon {
+    font-size: 20px;
+}
+
