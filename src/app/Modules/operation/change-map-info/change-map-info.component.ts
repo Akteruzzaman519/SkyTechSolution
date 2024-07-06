@@ -10,6 +10,7 @@ import { EmailOperationGridDto } from 'src/app/Models/EmailOperationGridDto';
 import { KeyValueDto } from 'src/app/Models/KeyValueDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
+import { EmailMapGridDto, EmailMapInfoChangeFormDto } from 'src/app/Models/EmailMapGridDto';
 
 @Component({
   selector: 'app-change-map-info',
@@ -24,11 +25,21 @@ export class ChangeMapInfoComponent implements OnInit {
   recoveryFieldType: string = 'password';
   eyeIcon: string = '👁️';
   eyeIconRecovery: string = '👁️';
+  public nFirstMapCategory: number = 0;
+  public sFirstMapNumber:string = "";
+  public sFirstMapLink:string = "";
   public paginationPageSize = 20;
   public DeafultCol = AGGridHelper.DeafultCol;
   public rowData: any[] = [];
 
-  public oEmailBaseInfo :EmailBaseInfo = new EmailBaseInfo();
+  public oEmailMapGridDto :EmailMapGridDto = new EmailMapGridDto();
+  public oEmailMap2GridDto :EmailMapGridDto = new EmailMapGridDto();
+  public oEmailMapGridDtoList :EmailMapGridDto[] = [];
+
+  public EmailMapInfoChangeFormDto :EmailMapInfoChangeFormDto = new EmailMapInfoChangeFormDto();
+  public EmailMap2InfoChangeFormDto :EmailMapInfoChangeFormDto = new EmailMapInfoChangeFormDto();
+  public EmailMapInfoChangeFormDtoList :EmailMapInfoChangeFormDto[] = [];
+
   public oEmailIssueFormDto :EmailIssueFormDto = new EmailIssueFormDto();
   public oEmailOperationGridDtoList :EmailOperationGridDto[] = [];
   public KeyValues: KeyValueDto[] = [];
@@ -100,6 +111,7 @@ export class ChangeMapInfoComponent implements OnInit {
   LoadDetails(){
     this.GetEmailUsername();
     this.TrackOperationStart();
+    this.GetEmailMaps();
     this.sEmailUserName = "";
     this.sEmailPassword = "";
     this.sEmailRecoveryEmail = "";
@@ -204,9 +216,27 @@ export class ChangeMapInfoComponent implements OnInit {
           })
       }
 
+    public GetEmailMaps() {
+      //{{baseURL}}/EmailManagement/GetEmailMaps/{mailSystemId}
+      this.oEmailMapGridDto = new EmailMapGridDto();
+      this.oEmailMap2GridDto = new EmailMapGridDto();
+        this.service.Get('/EmailManagement/GetEmailMaps/' +  this.mailSystemId).subscribe((res: any) => {
+          this.oEmailMapGridDtoList =  res;
+          if(this.oEmailMapGridDtoList.length > 0){
+            this.oEmailMapGridDto =  this.oEmailMapGridDtoList[0];
+          }
+          if(this.oEmailMapGridDtoList.length > 1){
+            this.oEmailMap2GridDto =  this.oEmailMapGridDtoList[1];
+          }
+        },
+          (err: any) => {
+            console.log(err);
+          })
+      }
+
    
 
-  public ChangeEmailCredential(){
+  public ChangeMapInfo(){
 
     if(this.sNewEmailPassword == ""){
       this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
@@ -217,12 +247,13 @@ export class ChangeMapInfoComponent implements OnInit {
       return;
     }
 
-    this.oEmailBaseInfo.mailUserName = this.sEmailUserName;
-    this.oEmailBaseInfo.mailRecoveryMail = this.sNewRecoveryEmail;
-    this.oEmailBaseInfo.mailUserPassword = this.sNewEmailPassword;
-    //{{baseURL}}/EmailManagement/ChangeEmailCredential/{mailSystemId}
-    this.service.Post('/EmailManagement/ChangeEmailCredential/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oEmailBaseInfo, true).subscribe((res: any) => {
-      this.toast.success("Credential Changed Successfully!!", "Success", { progressBar: true });
+    this.EmailMapInfoChangeFormDtoList.push(this.EmailMapInfoChangeFormDto);
+    this.EmailMapInfoChangeFormDtoList.push(this.EmailMap2InfoChangeFormDto);
+
+
+    //{{baseURL}}/ChangeEmailMapInfo/{mailSystemId}/{mailOperationCompletionId}/{statusTag}
+    this.service.Post('/EmailManagement/ChangeEmailMapInfo/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.EmailMapInfoChangeFormDtoList, true).subscribe((res: any) => {
+      this.toast.success("Map Info Changed Successfully!!", "Success", { progressBar: true });
       this.GetEmailsByOperationTag(this.statusTag)
       this.rowData = [];
       this.totalRecord = 0;
