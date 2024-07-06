@@ -1,30 +1,81 @@
 <div class="row">
-    <div class="col-md-3 left_bar">
-        <h3>Daily Activety</h3>
-        <div class="left_content">
-            <div class="time_text float-start">
-                09:50
+    <div class="col-md-12 mb-3">
+        <span class="grid-header"><i aria-hidden="true" class="fa fa-list"></i> Mail History </span>
+    </div>
+
+    <div class="col-md-5 mb-3">
+        <div class="">
+            <input type="text" class="form-control" [(ngModel)]="search" placeholder="type email here ...">
+        </div>
+    </div>
+    <div class="col mb-3">
+        <button type="submit" class="btn btn-success" (click)="searchEmail()">Search</button>
+    </div>
+    <div class="w-100 mt-2">
+
+    </div>
+
+    <div class="col-md-6 pe-2">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title"><i class="fa-regular fa-life-ring ms-1"></i>
+                    LifeCycle History </h5>
             </div>
-            <div class="circle_logo"></div>
-            <div class="discription_text">
-                metting With John
-            </div>
-            <div class="dari">
+            <div class="card-body">
+
+                <div *ngFor="let item of oVMailLifecycleDtoList;let isLast = last" class="mb-3 left_content">
+
+                    <div class="row g-0">
+                        <div class="col-2">
+                            {{item.mailLifecycleDatetime | date:'h:mm a'}}
+                        </div>
+                        <div class="col-1 position-relative">
+                            <div class="circle_logo"></div>
+                            <div class="dari">
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            {{item.mailLifecycleNote}} cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+                            fgdfgdfg
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
     </div>
-    <div class="col-md-8">
-        <h3>Product Perfamance</h3>
-        <div class="right_content">
-            <div class="col-md-12">
-                <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; "
-                    [rowMultiSelectWithClick]="true" [columnDefs]="colDefs" [pagination]="true"
-                    [rowSelection]="'multiple'" (selectionChanged)="onSelectionChanged($event)"
-                    (gridReady)="onGridReadyAsignToAgent($event)" [paginationPageSize]="paginationPageSize"
-                    [defaultColDef]="DeafultCol">
-                </ag-grid-angular>
+    <div class="col-md-6 ps-2">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title"> <i class="fa-solid fa-chart-line ms-1"></i>
+                    Activity History </h5>
+            </div>
+            <div class="card-body">
+
+                <div *ngFor="let item of oVActivityHistoryDtoList" class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+
+                                <div class="row">
+                                    <div class="col-3">
+                                        fadfasdfadfasdf
+                                    </div>
+
+                                    <div class="col">dfjadkfjalkdjflkdfkjadfkjjjjjjjjjjjjjjjjjjjjjjjjasdj</div>
+                                    <div class="col-3">
+                                        fadfasdfadfasdf
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
+
 </div>

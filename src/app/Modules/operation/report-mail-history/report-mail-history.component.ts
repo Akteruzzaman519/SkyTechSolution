@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpCommonService } from '../../Common/http-common.service';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AGGridHelper } from '../../Common/AGGridHelper';
+import { VMailLifecycleDto } from 'src/app/Models/VMailLifecycleDto';
+import { VActivityHistoryDto } from 'src/app/Models/VActivityHistoryDto';
 
 @Component({
   selector: 'app-report-mail-history',
@@ -10,46 +12,99 @@ import { AGGridHelper } from '../../Common/AGGridHelper';
 })
 export class ReportMailHistoryComponent implements OnInit {
 
-  private asignToAgentGridApi!: GridApi;
-  public DeafultCol = AGGridHelper.DeafultCol;
-  public totalRecord = 0;
-  public paginationPageSize = 20;
+  mailSystemId: number = 0;
+  search: string = "";
 
-constructor(private httpServices: HttpCommonService){}
+  public oVMailLifecycleDtoList: VMailLifecycleDto[] = [
+    {
+      lifecycleName:"Peding",
+    mailLifecycleNote:"dfafadf note here data test data",
+    mailLifecycleDatetime:new Date(),
+    mailLifecycleOccuredByUniqueCode:"UUUHHT!@",
+    mailLifecycleOccuredByFullName:" Full Name"
+    },
+    {
+      lifecycleName:"Peding",
+    mailLifecycleNote:"dfafadf note here data test data",
+    mailLifecycleDatetime:new Date(),
+    mailLifecycleOccuredByUniqueCode:"UUUHHT!@",
+    mailLifecycleOccuredByFullName:" Full Name"
+    },
+    {
+      lifecycleName:"Peding",
+    mailLifecycleNote:"dfafadf note here data test data",
+    mailLifecycleDatetime:new Date(),
+    mailLifecycleOccuredByUniqueCode:"UUUHHT!@",
+    mailLifecycleOccuredByFullName:" Full Name"
+    },
+    {
+      lifecycleName:"Peding",
+    mailLifecycleNote:"dfafadf note here data test data",
+    mailLifecycleDatetime:new Date(),
+    mailLifecycleOccuredByUniqueCode:"UUUHHT!@",
+    mailLifecycleOccuredByFullName:" Full Name"
+    },
+  ]
+  public oVActivityHistoryDtoList: VActivityHistoryDto[] = [
+    {
+      activityRelatedMailId: 0,
+      activityByUniqueCode:"IUOIUOIfdlkf",
+      activityByFullName: "Status",
+      activityName: "Test name",
+      activityNote: "note data here to do well in the",
+      activityAt: new Date()
+    },
+    {
+      activityRelatedMailId: 0,
+      activityByUniqueCode:"IUOIUOIfdlkf",
+      activityByFullName: "Status",
+      activityName: "Test name",
+      activityNote: "note data here to do well in the",
+      activityAt: new Date()
+    },
+    {
+      activityRelatedMailId: 0,
+      activityByUniqueCode:"IUOIUOIfdlkf",
+      activityByFullName: "Status q",
+      activityName: "Test name d",
+      activityNote: "note data here to do well in the",
+      activityAt: new Date()
+    }
+  ]
+  constructor(private httpServices: HttpCommonService) { }
 
 
   ngOnInit(): void {
-   
+
   }
 
 
+  GetMailLifecycleHistory() {
+    this.httpServices.Get("/EmailReport/GetMailLifecycleHistory/" + this.mailSystemId).subscribe(
+      (res: any) => {
+        this.oVMailLifecycleDtoList = res;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    )
+  }
 
+  GetMailActivityHistory() {
+    this.httpServices.Get("/EmailReport/GetMailActivityHistory/" + this.mailSystemId).subscribe(
+      (res: any) => {
+        this.oVActivityHistoryDtoList = res;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    )
+  }
 
-
-Get_mail_history(){
-
-}
-
-public colDefs: ColDef[] = [
-  { field: 'mailUploadedByFullName', headerName: 'Id' },
-  { field: 'mailUploadedByUniqueCode', headerName: 'Assinged' },
-  { field: 'sourceName', headerName: 'Project' },
-  { field: 'mailBatch', headerName: 'Priority' },
-  { field: 'mailUserName', headerName: 'Budget' },
-];
-
-onGridReadyAsignToAgent(params: GridReadyEvent) {
-  params.api.sizeColumnsToFit();
-  this.asignToAgentGridApi = params.api;
-  this.asignToAgentGridApi.setRowData([]);
-}
-
-onSelectionChanged(event: GridReadyEvent) {
-  const selectedRows = AGGridHelper.GetSelectedRows(this.asignToAgentGridApi);
-  this.totalRecord=selectedRows.length;
-}
-
-
+  searchEmail() {
+    this.GetMailLifecycleHistory();
+    this.GetMailActivityHistory();
+  }
 
 
 }
