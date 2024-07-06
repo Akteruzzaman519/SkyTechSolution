@@ -26,8 +26,11 @@
                 <div *ngFor="let item of oVMailLifecycleDtoList;let isLast = last" class="mb-3 left_content">
 
                     <div class="row g-0">
-                        <div class="col-2">
-                            {{item.mailLifecycleDatetime | date:'h:mm a'}}
+                        <div class="col-3 fw-bold">
+
+                            {{item.mailLifecycleDatetime | date:'EE, MMMM d, y'}} <br>
+                            {{item.mailLifecycleDatetime | date:'h:mm a' }}
+
                         </div>
                         <div class="col-1 position-relative">
                             <div class="circle_logo"></div>
@@ -36,8 +39,15 @@
                             </div>
                         </div>
                         <div class="col">
-                            {{item.mailLifecycleNote}} cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-                            fgdfgdfg
+                            <b>{{item.lifecycleName}} </b>
+                            <br>
+                            <div style="font-size: small; color: #979393;"> {{item.mailLifecycleNote}}</div>
+                        </div>
+                        <div class="col-2 ">
+                            <b>{{item.mailLifecycleOccuredByFullName}}</b>
+                            <br>
+                            <div style="font-size: small; color: #979393;"> {{item.mailLifecycleOccuredByUniqueCode}}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -60,12 +70,22 @@
 
                                 <div class="row">
                                     <div class="col-3">
-                                        fadfasdfadfasdf
+                                        <b> {{item.activityByFullName}}</b>
+                                        <br>
+                                        <div style="font-size: small; color: #979393;"> {{item.activityByUniqueCode}}
+                                        </div>
                                     </div>
 
-                                    <div class="col">dfjadkfjalkdjflkdfkjadfkjjjjjjjjjjjjjjjjjjjjjjjjasdj</div>
-                                    <div class="col-3">
-                                        fadfasdfadfasdf
+                                    <div class="col">
+                                        <b> {{item.activityName}}</b>
+                                        <br>
+                                        <div class="" style="font-size: small; color: #979393;"> {{item.activityNote}}
+                                        </div>
+
+                                    </div>
+                                    <div class="col-3 fw-bold">
+                                        {{item.activityAt | date:'EE, MMMM d, y' }} <br>
+                                        {{item.activityAt | date:'h:mm a' }}
                                     </div>
                                 </div>
                             </div>

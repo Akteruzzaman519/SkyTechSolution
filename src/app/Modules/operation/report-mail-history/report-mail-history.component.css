@@ -1,6 +1,6 @@
 .circle_logo {
     border-radius: 50%;
-    border: 3px solid red;
+    border: 3px solid #00aeef;
     height: 20px;
     width: 20px;
 }
@@ -19,7 +19,7 @@
 .dari {
     height: 45px;
     width: 3px;
-    background-color: gray;
+    background-color: rgb(175, 175, 175);
     position: relative;
     left: 9px;
     top: 7px !important;
