@@ -111,6 +111,7 @@ export class ChangeMapInfoComponent implements OnInit {
   LoadDetails(){
     this.GetEmailUsername();
     this.TrackOperationStart();
+    this.GetEmailMaps();
     this.sEmailUserName = "";
     this.sEmailPassword = "";
     this.sEmailRecoveryEmail = "";
@@ -217,8 +218,16 @@ export class ChangeMapInfoComponent implements OnInit {
 
     public GetEmailMaps() {
       //{{baseURL}}/EmailManagement/GetEmailMaps/{mailSystemId}
+      this.oEmailMapGridDto = new EmailMapGridDto();
+      this.oEmailMap2GridDto = new EmailMapGridDto();
         this.service.Get('/EmailManagement/GetEmailMaps/' +  this.mailSystemId).subscribe((res: any) => {
           this.oEmailMapGridDtoList =  res;
+          if(this.oEmailMapGridDtoList.length > 0){
+            this.oEmailMapGridDto =  this.oEmailMapGridDtoList[0];
+          }
+          if(this.oEmailMapGridDtoList.length > 1){
+            this.oEmailMap2GridDto =  this.oEmailMapGridDtoList[1];
+          }
         },
           (err: any) => {
             console.log(err);
