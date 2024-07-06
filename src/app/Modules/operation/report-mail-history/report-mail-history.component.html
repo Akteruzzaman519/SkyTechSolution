@@ -1,1 +1,30 @@
-<p>report-mail-history works!</p>
+<div class="row">
+    <div class="col-md-3 left_bar">
+        <h3>Daily Activety</h3>
+        <div class="left_content">
+            <div class="time_text float-start">
+                09:50
+            </div>
+            <div class="circle_logo"></div>
+            <div class="discription_text">
+                metting With John
+            </div>
+            <div class="dari">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h3>Product Perfamance</h3>
+        <div class="right_content">
+            <div class="col-md-12">
+                <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; "
+                    [rowMultiSelectWithClick]="true" [columnDefs]="colDefs" [pagination]="true"
+                    [rowSelection]="'multiple'" (selectionChanged)="onSelectionChanged($event)"
+                    (gridReady)="onGridReadyAsignToAgent($event)" [paginationPageSize]="paginationPageSize"
+                    [defaultColDef]="DeafultCol">
+                </ag-grid-angular>
+            </div>
+        </div>
+    </div>
+</div>

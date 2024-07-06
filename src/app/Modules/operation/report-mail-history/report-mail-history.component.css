@@ -1,0 +1,34 @@
+
+
+.circle_logo{
+    position: relative;
+    left: 60px;
+    top: 26px;
+    border-radius: 50%;
+    border: 3px solid red;
+    height: 20px;
+    width: 20px;
+}
+.left_content{
+    height: 200px;
+}
+.time_text{
+    position: relative;
+    top: 25px;
+}
+.discription_text{
+    position: relative;
+    left: 54px;
+    top: 2px;
+}
+.dari{
+    height: 48px;
+    width: 3px;
+    background-color: gray;
+    position: relative;
+    left: 68px;
+    top: 10px;
+}
+.left_bar{
+    margin-right: 20px;
+}
