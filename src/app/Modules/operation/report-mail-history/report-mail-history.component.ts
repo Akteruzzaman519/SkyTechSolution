@@ -12,43 +12,43 @@ import { VActivityHistoryDto } from 'src/app/Models/VActivityHistoryDto';
 })
 export class ReportMailHistoryComponent implements OnInit {
 
-  mailSystemId: number = 0;
+  mailSystemId: number = 1;
   search: string = "";
 
   public oVMailLifecycleDtoList: VMailLifecycleDto[] = [
     {
-      lifecycleName:"Peding",
-    mailLifecycleNote:"dfafadf note here data test data",
-    mailLifecycleDatetime:new Date(),
-    mailLifecycleOccuredByUniqueCode:"UUUHHT!@",
-    mailLifecycleOccuredByFullName:" Full Name"
+      lifecycleName: "Peding",
+      mailLifecycleNote: "dfafadf note here data test data",
+      mailLifecycleDatetime: new Date(),
+      mailLifecycleOccuredByUniqueCode: "UUUHHT!@",
+      mailLifecycleOccuredByFullName: " Full Name"
     },
     {
-      lifecycleName:"Peding",
-    mailLifecycleNote:"dfafadf note here data test data",
-    mailLifecycleDatetime:new Date(),
-    mailLifecycleOccuredByUniqueCode:"UUUHHT!@",
-    mailLifecycleOccuredByFullName:" Full Name"
+      lifecycleName: "Peding",
+      mailLifecycleNote: "dfafadf note here data test data",
+      mailLifecycleDatetime: new Date(),
+      mailLifecycleOccuredByUniqueCode: "UUUHHT!@",
+      mailLifecycleOccuredByFullName: " Full Name"
     },
     {
-      lifecycleName:"Peding",
-    mailLifecycleNote:"dfafadf note here data test data",
-    mailLifecycleDatetime:new Date(),
-    mailLifecycleOccuredByUniqueCode:"UUUHHT!@",
-    mailLifecycleOccuredByFullName:" Full Name"
+      lifecycleName: "Peding",
+      mailLifecycleNote: "dfafadf note here data test data",
+      mailLifecycleDatetime: new Date(),
+      mailLifecycleOccuredByUniqueCode: "UUUHHT!@",
+      mailLifecycleOccuredByFullName: " Full Name"
     },
     {
-      lifecycleName:"Peding",
-    mailLifecycleNote:"dfafadf note here data test data",
-    mailLifecycleDatetime:new Date(),
-    mailLifecycleOccuredByUniqueCode:"UUUHHT!@",
-    mailLifecycleOccuredByFullName:" Full Name"
+      lifecycleName: "Peding",
+      mailLifecycleNote: "dfafadf note here data test data",
+      mailLifecycleDatetime: new Date(),
+      mailLifecycleOccuredByUniqueCode: "UUUHHT!@",
+      mailLifecycleOccuredByFullName: " Full Name"
     },
   ]
   public oVActivityHistoryDtoList: VActivityHistoryDto[] = [
     {
       activityRelatedMailId: 0,
-      activityByUniqueCode:"IUOIUOIfdlkf",
+      activityByUniqueCode: "IUOIUOIfdlkf",
       activityByFullName: "Status",
       activityName: "Test name",
       activityNote: "note data here to do well in the",
@@ -56,7 +56,7 @@ export class ReportMailHistoryComponent implements OnInit {
     },
     {
       activityRelatedMailId: 0,
-      activityByUniqueCode:"IUOIUOIfdlkf",
+      activityByUniqueCode: "IUOIUOIfdlkf",
       activityByFullName: "Status",
       activityName: "Test name",
       activityNote: "note data here to do well in the",
@@ -64,7 +64,7 @@ export class ReportMailHistoryComponent implements OnInit {
     },
     {
       activityRelatedMailId: 0,
-      activityByUniqueCode:"IUOIUOIfdlkf",
+      activityByUniqueCode: "IUOIUOIfdlkf",
       activityByFullName: "Status q",
       activityName: "Test name d",
       activityNote: "note data here to do well in the",
