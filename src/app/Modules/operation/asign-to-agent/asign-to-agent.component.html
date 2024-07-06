@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-md-12 my-3">
-    <span class="fs-4"> <i class="fa-solid fa-envelopes-bulk text-black ms-1"></i> Assign To Change Mail Credentials</span>
+    <span class="grid-header"><i aria-hidden="true" class="fa fa-list"></i> Assign To Change Mail Credentials </span>
   </div>
 
   <div class="col-md-12">
     <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; " [rowMultiSelectWithClick]="true"
-  [columnDefs]="colDefs" [pagination]="true" [rowSelection]="'multiple'"    (selectionChanged)="onSelectionChanged($event)"
-      (gridReady)="onGridReadyAsignToAgent($event)" [paginationPageSize]="paginationPageSize"
-      [defaultColDef]="DeafultCol">
+      [columnDefs]="colDefs" [pagination]="true" [rowSelection]="'multiple'"
+      (selectionChanged)="onSelectionChanged($event)" (gridReady)="onGridReadyAsignToAgent($event)"
+      [paginationPageSize]="paginationPageSize" [defaultColDef]="DeafultCol">
     </ag-grid-angular>
   </div>
 
