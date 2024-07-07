@@ -8,7 +8,7 @@ import { EmailOperationGridDto } from 'src/app/Models/EmailOperationGridDto';
 import { KeyValueDto } from 'src/app/Models/KeyValueDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
-import { MapReviewFormDto } from 'src/app/Models/aaa';
+import { MapReviewFormDto } from 'src/app/Models/MapReviewFormDto';
 
 @Component({
   selector: 'app-review-map',

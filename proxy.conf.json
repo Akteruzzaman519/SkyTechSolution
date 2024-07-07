@@ -1,0 +1,6 @@
+{
+    "/api": {
+      "target": "http://mailapi.skytechsolutionsbd.com",  
+      "secure": false
+    }
+  }

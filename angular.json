@@ -85,6 +85,7 @@
             }
           },
           "options": {
+            "proxyConfig": "proxy.conf.json",
             "port": 4215
           },
           "defaultConfiguration": "development"
