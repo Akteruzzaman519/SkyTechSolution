@@ -9,6 +9,7 @@ import { KeyValueDto } from 'src/app/Models/KeyValueDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
 import { MapReviewFormDto } from 'src/app/Models/MapReviewFormDto';
+import { EmailMapGridDto } from 'src/app/Models/EmailMapGridDto';
 
 @Component({
   selector: 'app-review-map',
@@ -20,10 +21,12 @@ export class ReviewMapComponent implements OnInit {
   
   private balkEmailGridApi!: GridApi;
   private taskEmailGridApi!: GridApi;
+  private taskMap2EmailGridApi!: GridApi;
   passwordFieldType: string = 'password';
   recoveryFieldType: string = 'password';
   eyeIcon: string = '👁️';
   eyeIconRecovery: string = '👁️';
+  public tabID =1;
   public paginationPageSize = 20;
   public DeafultCol = AGGridHelper.DeafultCol;
   public rowData: any[] = [];
@@ -39,6 +42,10 @@ export class ReviewMapComponent implements OnInit {
   public statusTag :any= "";
   public mailSystemId = 0;
   public mailOperationCompletionId = 0;
+
+  public oEmailMapGridDto :EmailMapGridDto = new EmailMapGridDto();
+  public oEmailMap2GridDto :EmailMapGridDto = new EmailMapGridDto();
+  public oEmailMapGridDtoList :EmailMapGridDto[] = [];
 
 
   public totalRecord: number = 0;
@@ -64,6 +71,10 @@ export class ReviewMapComponent implements OnInit {
     this.taskEmailGridApi = event.api;
     //this.taskEmailGridApi.sizeColumnsToFit();
   }
+  ApiGridReadyTaskMap2(event: GridReadyEvent) {
+    this.taskMap2EmailGridApi = event.api;
+    //this.taskEmailGridApi.sizeColumnsToFit();
+  }
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: any[] = [
@@ -78,10 +89,17 @@ export class ReviewMapComponent implements OnInit {
 
   colDefsTask: any[] = [
     { valueGetter: "node.rowIndex + 1", headerName: '', cellStyle: { 'border-right': '0.5px solid #e9ecef' }, filter:false, width: 20, editable: false},
-    { field: "mailTaskName", headerName: 'Task Name', width:200 },
-    { field: "mailTaskDescription", headerName: 'Description', width:180 },
-    { field: "mailTaskNote", headerName: 'Note',width:185},
+    { field: "mapReviewName", headerName: 'Review Name', width:200 },
+    { field: "mapReviewDetails", headerName: 'Review Details', width:180 },
+    { field: "mapReviewNote", headerName: 'Note',width:185},
     { field: 'Details', headerName: 'Details',width:100, resizable: true, cellRenderer: this.TaskdetailToGrid.bind(this) },
+  ];
+  colDefsReviewMap2: any[] = [
+    { valueGetter: "node.rowIndex + 1", headerName: '', cellStyle: { 'border-right': '0.5px solid #e9ecef' }, filter:false, width: 20, editable: false},
+    { field: "mapReviewName", headerName: 'Review Name', width:200 },
+    { field: "mapReviewDetails", headerName: 'Review Details', width:180 },
+    { field: "mapReviewNote", headerName: 'Note',width:185},
+    { field: 'Details', headerName: 'Details',width:100, resizable: true, cellRenderer: this.TaskdetailToGridMap2.bind(this) },
   ];
 
   detailToGrid(params: any) {
@@ -100,15 +118,20 @@ export class ReviewMapComponent implements OnInit {
   }
   TaskdetailToGrid(params: any) {
     const eDiv = document.createElement('div');
-    var sDisableed = ''
-    if( this.bIsDisable ){
-      sDisableed =  params.data.mailOperationCompletionStatus  != 2 ? 'style= "display: None"' : ''
-    }
-    eDiv.innerHTML = ' <button class="btn btn-success p-0 px-1" '+sDisableed+'><i class="fa-solid fa-eye" aria-hidden="true"></i> Detail</button>'
+    eDiv.innerHTML = ' <button class="btn btn-success p-0 px-1" ><i class="fa-solid fa-eye" aria-hidden="true"></i> Detail</button>'
     eDiv.addEventListener('click', () => {
-      this.mailSystemId = params.data.mailSystemId;
-      this.mailOperationCompletionId = params.data.mailOperationCompletionId;
-      this.LoadDetails()
+      // this.mailSystemId = params.data.mailSystemId;
+      // this.mailOperationCompletionId = params.data.mailOperationCompletionId;
+      // this.LoadDetails()
+    });
+    return eDiv;
+  }
+  TaskdetailToGridMap2(params: any) {
+    const eDiv = document.createElement('div');
+  
+    eDiv.innerHTML = ' <button class="btn btn-success p-0 px-1"><i class="fa-solid fa-eye" aria-hidden="true"></i> Detail</button>'
+    eDiv.addEventListener('click', () => {
+      //this.LoadDetails()
     });
     return eDiv;
   }
@@ -149,11 +172,12 @@ export class ReviewMapComponent implements OnInit {
     this.eyeIconRecovery = '👁️';
   }
 
-  addBulkEmailBtn() {
+  addBulkEmailBtn(nTabID:number) {
     if(this.mailSystemId <= 0){
       this.toast.warning("Select a mail from listt!!", "Warning", { progressBar: true });
       return;
     }
+    this.tabID = nTabID;
     document.getElementById('modalOpen')?.click();
     this.oMapReviewFormDto =new MapReviewFormDto();
   }
@@ -216,9 +240,12 @@ export class ReviewMapComponent implements OnInit {
         })
     }
 
-  public TaskRoutineSubmit(){
+  public MapReviewSubmit(){
     this.oMapReviewFormDtoList = [];
 
+    this.taskEmailGridApi.forEachNode(node => {
+      this.oMapReviewFormDtoList.push(node.data);
+    })
     this.taskEmailGridApi.forEachNode(node => {
       this.oMapReviewFormDtoList.push(node.data);
     })

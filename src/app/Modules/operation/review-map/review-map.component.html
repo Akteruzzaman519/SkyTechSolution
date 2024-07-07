@@ -57,7 +57,7 @@
                 </ul>
               </div>
     
-              <!-- <div class="col-md-12 mb-3">
+              <div class="col-md-12 mb-3">
                 <div class="card">
                   <div class="card-body">
                     <div id="myTabContent" class="tab-content">
@@ -68,11 +68,13 @@
                             <input type="text" class="form-control" [(ngModel)]="oEmailMapGridDto.mapCurrentCategoryName"
                               disabled name="sNumber" id="sNumber">
                           </div>
+
                           <div class="col-md-6">
                             <label for="mailRelatedTag" class="form-label">Number </label>
                             <input type="text" class="form-control" [(ngModel)]="oEmailMapGridDto.mapCurrentNumber" disabled
                               name="sNumber" id="sNumber">
                           </div>
+
                           <div class="col-md-12 mb-2">
                             <label for="mailIssueNote" class="form-label">Link</label>
                             <textarea rows="2" type="text" class="form-control"
@@ -81,37 +83,20 @@
                                           </textarea>
                           </div>
                           <hr>
-                          <div class="col-md-6">
-                            <label for="nCategoryId" class="form-label">New Category</label>
-                            <select class="form-select form-select mb-3"
-                              [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
-                              id="mailSourcingId" aria-label=".form-select-lg example">
-                              <option value="0"> ---Select Category---</option>
-                              <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
-                            </select>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="mapNewWebsite" class="form-label">New Website </label>
-                            <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewWebsite"
-                              name="mapNewWebsite" id="mapNewWebsite">
-                          </div>
-                          <div class="col-md-12 mb-2">
-                            <label for="mapNewBusinessName" class="form-label">New Business</label>
-                            <input type="text" class="form-control"
-                              [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessName" name="mapNewBusinessName" id="mapNewBusinessName">
-                          </div>
-    
-                          <div class="col-md-12 mb-2">
-                            <label for="mapNewBusinessAddress" class="form-label">New Address </label>
-                            <input type="text" class="form-control"
-                              [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress" id="mapNewBusinessAddress">
-                          </div>
-    
-                          <div class="col-md-12 mb-2">
-                            <label for="mapNewPhone" class="form-label">New Number </label>
-                            <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewPhone"
-                              name="mapNewPhone" id="mapNewPhone">
-                          </div>
+                            <div class="col-md-12 mb-1">
+                              <button type="button" class="btn btn-success float-end" (click)="addBulkEmailBtn(1)"><i
+                                  class="fa-solid fa-plus"></i></button>
+                            </div>
+                            
+                            <div class="col-md-12 mb-3">
+                              <div class="card">
+                                <ag-grid-angular class="ag-theme-alpine" style="height: 40vh;width: 100%; overflow-x: hidden; " [rowData]="rowData"
+                                  [columnDefs]="colDefsTask" (gridReady)="ApiGridReadyTask($event)" rowSelection='single'
+                                  (selectionChanged)="onSelectionChangedTask()" [defaultColDef]="DeafultCol">
+                                </ag-grid-angular>
+                              </div>
+                            </div>
+                  
                         </div>
                       </div>
     
@@ -123,11 +108,13 @@
                             <input type="text" class="form-control" [(ngModel)]="oEmailMap2GridDto.mapCurrentCategoryName"
                               disabled name="sNumber" id="sNumber">
                           </div>
+
                           <div class="col-md-6 mb-2">
                             <label for="mailRelatedTag" class="form-label">Number </label>
                             <input type="text" class="form-control" [(ngModel)]="oEmailMap2GridDto.mapCurrentNumber"
                               disabled name="sNumber" id="sNumber">
                           </div>
+
                           <div class="col-md-12 mb-2">
                             <label for="mailIssueNote" class="form-label">Link</label>
                             <textarea rows="2" type="text" class="form-control"
@@ -135,37 +122,22 @@
                               id="mailIssueNote">
                                           </textarea>
                           </div>
+
                           <hr>
-                          <div class="col-md-6 mb-2">
-                            <label for="nCategoryId" class="form-label">New Category</label>
-                            <select class="form-select form-select mb-3"
-                              [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
-                              id="mailSourcingId" aria-label=".form-select-lg example">
-                              <option value="0"> ---Select Category---</option>
-                              <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
-                            </select>
-                          </div>
-                          <div class="col-md-6">
-                            <label for="mapNewWebsite" class="form-label">New Website </label>
-                            <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewWebsite"
-                              name="mapNewWebsite" id="mapNewWebsite">
-                          </div>
-                          <div class="col-md-12">
-                            <label for="mapNewBusinessName" class="form-label">New Business</label>
-                            <input type="text" class="form-control"
-                              [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessName" name="mapNewBusinessName" id="mapNewBusinessName">
-                          </div>
-    
-                          <div class="col-md-12">
-                            <label for="mapNewBusinessAddress" class="form-label">New Address </label>
-                            <input type="text" class="form-control"
-                              [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress" id="mapNewBusinessAddress">
-                          </div>
-    
-                          <div class="col-md-12">
-                            <label for="mailRelatedTag" class="form-label">New Number </label>
-                            <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewPhone"
-                              name="sNumber" id="sNumber">
+
+                            <div class="col-md-12 mb-1">
+                              <button type="button" class="btn btn-success float-end" (click)="addBulkEmailBtn(2)"><i
+                                  class="fa-solid fa-plus"></i></button>
+                            </div>
+                            
+                            <div class="col-md-12 mb-3">
+                              <div class="card">
+                                <ag-grid-angular class="ag-theme-alpine" style="height: 40vh;width: 100%; overflow-x: hidden; " [rowData]="rowData"
+                                  [columnDefs]="colDefsReviewMap2" (gridReady)="ApiGridReadyTaskMap2($event)" rowSelection='single'
+                                  (selectionChanged)="onSelectionChangedTask()" [defaultColDef]="DeafultCol">
+                                </ag-grid-angular>
+                              </div>
+
                           </div>
                         </div>
     
@@ -173,23 +145,9 @@
                     </div>
                   </div>
                 </div>
-              </div> -->
-            <div class="col-md-12 mb-3">
-                <button type="button" class="btn btn-success float-end" (click)="addBulkEmailBtn()" ><i class="fa-solid fa-plus"></i></button> 
-            </div>
-  
-            <div class="col-md-12 mb-3">
-              <div class="card">
-                <ag-grid-angular class="ag-theme-alpine" style="height: 40vh;width: 100%; overflow-x: hidden; " [rowData]="rowData"
-                [columnDefs]="colDefsTask"  (gridReady)="ApiGridReadyTask($event)" rowSelection='single'  (selectionChanged)="onSelectionChangedTask()"
-                [defaultColDef]="DeafultCol">
-              </ag-grid-angular>
               </div>
-  
-            </div>
-  
             <div class="modal-footer">
-               <button type="button" class="btn btn-success" (click)="TaskRoutineSubmit()" >Submit</button> 
+               <button type="button" class="btn btn-success" (click)="MapReviewSubmit()" >Submit</button> 
             </div>
           </div>
   

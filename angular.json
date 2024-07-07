@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "elixir": {
+    "skytechsolution": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/elixir",
+            "outputPath": "dist/skytechsolution",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -76,24 +76,25 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "browserTarget": "elixir:build:production"
-            },
-            "development": {
-              "browserTarget": "elixir:build:development"
-            }
-          },
           "options": {
-            "proxyConfig": "proxy.conf.json",
+            "proxyConfig": "proxy.conf.js",
             "port": 4215
           },
+          "configurations": {
+            "production": {
+              "browserTarget": "skytechsolution:build:production"
+            },
+            "development": {
+              "browserTarget": "skytechsolution:build:development"
+            }
+          },
+         
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "elixir:build"
+            "browserTarget": "skytechsolution:build"
           }
         },
         "test": {
