@@ -246,11 +246,17 @@ export class ReviewMapComponent implements OnInit {
     this.taskEmailGridApi.forEachNode(node => {
       this.oMapReviewFormDtoList.push(node.data);
     })
+    if (this.oMapReviewFormDtoList.length <= 0) {
+      this.toast.warning("Atleast One List Required For Map1!!", "Warning", { progressBar: true });
+      return
+    }
+    var Map3List =[];
     this.taskMap2EmailGridApi.forEachNode(node => {
       this.oMapReviewFormDtoList.push(node.data);
+      Map3List.push(node.data);
     })
-    if (this.oMapReviewFormDtoList.length <= 0) {
-      this.toast.warning("Atleast One List Required!!", "Warning", { progressBar: true });
+    if (Map3List.length <= 0) {
+      this.toast.warning("Atleast One List Required for Map2!!", "Warning", { progressBar: true });
       return
     }
     //{{baseURL}}/EmailManagement/AddMapReviews/{mailSystemId}/{mailOperationCompletionId}/{statusTag}
