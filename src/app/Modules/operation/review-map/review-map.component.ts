@@ -246,7 +246,7 @@ export class ReviewMapComponent implements OnInit {
     this.taskEmailGridApi.forEachNode(node => {
       this.oMapReviewFormDtoList.push(node.data);
     })
-    this.taskEmailGridApi.forEachNode(node => {
+    this.taskMap2EmailGridApi.forEachNode(node => {
       this.oMapReviewFormDtoList.push(node.data);
     })
     if (this.oMapReviewFormDtoList.length <= 0) {
