@@ -44,124 +44,140 @@
             </div>
 
           </div>
+
+
+          <div class="col-md-12">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#map1">Map 1</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#map2">Map 2</a>
+              </li>
+            </ul>
+          </div>
+
           <div class="col-md-12 mb-3">
             <div class="card">
-              <div class="card-header">
-                <ul class="nav nav-tabs">
-                  <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#map1">Map 1</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#map2">Map 2</a>
-                  </li>
-                </ul>
-              </div>
               <div class="card-body">
-
-
                 <div id="myTabContent" class="tab-content">
                   <div class="tab-pane fade show active" id="map1">
-                    <div class="row my-2 py-2">
+                    <div class="row g-2">
                       <div class="col-md-6">
                         <label for="nCategoryId" class="form-label">Category</label>
-                        <input type="text" class="form-control" [(ngModel)]="oEmailMapGridDto.mapCurrentCategoryName" disabled name="sNumber" id="sNumber">
+                        <input type="text" class="form-control" [(ngModel)]="oEmailMapGridDto.mapCurrentCategoryName"
+                          disabled name="sNumber" id="sNumber">
                       </div>
                       <div class="col-md-6">
                         <label for="mailRelatedTag" class="form-label">Number </label>
-                        <input type="text" class="form-control" [(ngModel)]="oEmailMapGridDto.mapCurrentNumber" disabled name="sNumber" id="sNumber">
+                        <input type="text" class="form-control" [(ngModel)]="oEmailMapGridDto.mapCurrentNumber" disabled
+                          name="sNumber" id="sNumber">
                       </div>
                       <div class="col-md-12 mb-2">
                         <label for="mailIssueNote" class="form-label">Link</label>
-                        <textarea rows="2" type="text" class="form-control" [(ngModel)]="oEmailMapGridDto.mapCurrentMapLink" disabled name="mailIssueNote"
+                        <textarea rows="2" type="text" class="form-control"
+                          [(ngModel)]="oEmailMapGridDto.mapCurrentMapLink" disabled name="mailIssueNote"
                           id="mailIssueNote">
                                       </textarea>
                       </div>
                       <hr>
                       <div class="col-md-6">
                         <label for="nCategoryId" class="form-label">New Category</label>
-                        <select class="form-select form-select mb-3" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
+                        <select class="form-select form-select mb-3"
+                          [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
                           id="mailSourcingId" aria-label=".form-select-lg example">
                           <option value="0"> ---Select Category---</option>
                           <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
                         </select>
                       </div>
                       <div class="col-md-6">
-                        <label for="mailRelatedTag" class="form-label">New Website </label>
-                        <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewWebsite"  name="sNumber" id="sNumber">
+                        <label for="mapNewWebsite" class="form-label">New Website </label>
+                        <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewWebsite"
+                          name="mapNewWebsite" id="mapNewWebsite">
                       </div>
-                      <div class="col-md-12">
-                        <label for="mailRelatedTag" class="form-label">New Business</label>
-                        <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessName"  name="sNumber" id="sNumber">
-                      </div>
-
-                      <div class="col-md-12">
-                        <label for="mailRelatedTag" class="form-label">New Address </label>
-                        <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessAddress"  name="sNumber" id="sNumber">
+                      <div class="col-md-12 mb-2">
+                        <label for="mapNewBusinessName" class="form-label">New Business</label>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessName" name="mapNewBusinessName" id="mapNewBusinessName">
                       </div>
 
-                      <div class="col-md-12">
-                        <label for="mailRelatedTag" class="form-label">New Number </label>
-                        <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewPhone" name="sNumber" id="sNumber">
+                      <div class="col-md-12 mb-2">
+                        <label for="mapNewBusinessAddress" class="form-label">New Address </label>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress" id="mapNewBusinessAddress">
+                      </div>
+
+                      <div class="col-md-12 mb-2">
+                        <label for="mapNewPhone" class="form-label">New Number </label>
+                        <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewPhone"
+                          name="mapNewPhone" id="mapNewPhone">
                       </div>
                     </div>
                   </div>
 
                   <div class="tab-pane fade " id="map2">
-                    <div class="row my-2 py-2">
-                      <div class="row my-2 py-2">
-                        <div class="col-md-6">
-                          <label for="nCategoryId" class="form-label">Category</label>
-                          <input type="text" class="form-control" [(ngModel)]="oEmailMap2GridDto.mapCurrentCategoryName" disabled name="sNumber" id="sNumber">
-                        </div>
-                        <div class="col-md-6">
-                          <label for="mailRelatedTag" class="form-label">Number </label>
-                          <input type="text" class="form-control" [(ngModel)]="oEmailMap2GridDto.mapCurrentNumber" disabled name="sNumber" id="sNumber">
-                        </div>
-                        <div class="col-md-12 mb-2">
-                          <label for="mailIssueNote" class="form-label">Link</label>
-                          <textarea rows="2" type="text" class="form-control" [(ngModel)]="oEmailMap2GridDto.mapCurrentMapLink" disabled name="mailIssueNote"
-                            id="mailIssueNote">
-                                        </textarea>
-                        </div>
-                        <hr>
-                        <div class="col-md-6">
-                          <label for="nCategoryId" class="form-label">New Category</label>
-                          <select class="form-select form-select mb-3" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
-                            id="mailSourcingId" aria-label=".form-select-lg example">
-                            <option value="0"> ---Select Category---</option>
-                            <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
-                          </select>
-                        </div>
-                        <div class="col-md-6">
-                          <label for="mailRelatedTag" class="form-label">New Website </label>
-                          <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewWebsite"  name="sNumber" id="sNumber">
-                        </div>
-                        <div class="col-md-12">
-                          <label for="mailRelatedTag" class="form-label">New Business</label>
-                          <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessName"  name="sNumber" id="sNumber">
-                        </div>
-  
-                        <div class="col-md-12">
-                          <label for="mailRelatedTag" class="form-label">New Address </label>
-                          <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessAddress"  name="sNumber" id="sNumber">
-                        </div>
-  
-                        <div class="col-md-12">
-                          <label for="mailRelatedTag" class="form-label">New Number </label>
-                          <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewPhone" name="sNumber" id="sNumber">
-                        </div>
+       
+                    <div class="row g-2">
+                      <div class="col-md-6 mb-2">
+                        <label for="nCategoryId" class="form-label">Category</label>
+                        <input type="text" class="form-control" [(ngModel)]="oEmailMap2GridDto.mapCurrentCategoryName"
+                          disabled name="sNumber" id="sNumber">
+                      </div>
+                      <div class="col-md-6 mb-2">
+                        <label for="mailRelatedTag" class="form-label">Number </label>
+                        <input type="text" class="form-control" [(ngModel)]="oEmailMap2GridDto.mapCurrentNumber"
+                          disabled name="sNumber" id="sNumber">
+                      </div>
+                      <div class="col-md-12 mb-2">
+                        <label for="mailIssueNote" class="form-label">Link</label>
+                        <textarea rows="2" type="text" class="form-control"
+                          [(ngModel)]="oEmailMap2GridDto.mapCurrentMapLink" disabled name="mailIssueNote"
+                          id="mailIssueNote">
+                                      </textarea>
+                      </div>
+                      <hr>
+                      <div class="col-md-6 mb-2">
+                        <label for="nCategoryId" class="form-label">New Category</label>
+                        <select class="form-select form-select mb-3"
+                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
+                          id="mailSourcingId" aria-label=".form-select-lg example">
+                          <option value="0"> ---Select Category---</option>
+                          <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label for="mapNewWebsite" class="form-label">New Website </label>
+                        <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewWebsite"
+                          name="mapNewWebsite" id="mapNewWebsite">
+                      </div>
+                      <div class="col-md-12">
+                        <label for="mapNewBusinessName" class="form-label">New Business</label>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessName" name="mapNewBusinessName" id="mapNewBusinessName">
+                      </div>
+
+                      <div class="col-md-12">
+                        <label for="mapNewBusinessAddress" class="form-label">New Address </label>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress" id="mapNewBusinessAddress">
+                      </div>
+
+                      <div class="col-md-12">
+                        <label for="mailRelatedTag" class="form-label">New Number </label>
+                        <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewPhone"
+                          name="sNumber" id="sNumber">
                       </div>
                     </div>
+
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer" >
-            <!-- <button type="button" class="btn btn-danger" (click)="addBulkEmailBtn()">Report Issue</button> -->
-            <button type="button" class="btn btn-success" (click)="ChangeMapInfo()">Submit</button>
-          </div>
         </div>
+      </div>
+      <div class="card-footer text-end">
+        <button type="button" class="btn btn-success" (click)="ChangeMapInfo()">Submit</button>
       </div>
 
     </div>
