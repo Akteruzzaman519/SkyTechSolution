@@ -261,7 +261,7 @@ export class ReviewMapComponent implements OnInit {
     }
     //{{baseURL}}/EmailManagement/AddMapReviews/{mailSystemId}/{mailOperationCompletionId}/{statusTag}
     this.service.Post('/EmailManagement/AddMapReviews/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oMapReviewFormDtoList, true).subscribe((res: any) => {
-      this.toast.success("Credential Changed Successfully!!", "Success", { progressBar: true });
+      this.toast.success("Map Review Added Successfully!!", "Success", { progressBar: true });
       this.GetEmailsByOperationTag(this.statusTag)
       this.rowData = [];
       this.totalRecord = 0;
