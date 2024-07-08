@@ -7,7 +7,7 @@
   <div class="col-md-6">
     <ag-grid-angular class="ag-theme-alpine" style="height: 67vh;width: 100%; overflow-x: hidden; " [rowData]="rowData"
       [columnDefs]="colDefs" (gridReady)="ApiGridReady($event)" rowSelection='single'
-      (selectionChanged)="onSelectionChanged()" [defaultColDef]="DeafultCol">
+       [defaultColDef]="DeafultCol">
     </ag-grid-angular>
     <div class="mt-2">
       <label class="form-label"> No of Record : {{totalRecord}}</label>
@@ -95,13 +95,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel"><i class="fa-solid fa-envelopes-bulk text-black ms-1"></i>
-          Report Issue</h5>
+          {{sTaskTitle}} Task</h5>
         <button type="button" class="btn-close" id="BulkemailCloseModal" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        <div class="row">
-
+      <div class="modal-body p-4">
           <div class="mb-2">
             <label for="mailIssueNote" class="form-label">Task Name</label>
             <input type="text" class="form-control" [(ngModel)]="oMailTasksManualFormDto.mailTaskName"
@@ -120,13 +118,13 @@
               name="mailTaskNote" id="mailTaskNote">
           </div>
         </div>
-      </div>
-      <div class="modal-footer" style="justify-content: space-between;">
+      <div class="card-footer" >
         <button *ngIf="bIsEdit" type="button" class="btn btn-danger" data-bs-dismiss="modal"
           (click)="DeleteReviewIntoGrid()">Delete</button>
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="AddReviewIntoGrid()">Add</button>
+        <button type="button" class="btn btn-success float-end" data-bs-dismiss="modal" (click)="AddReviewIntoGrid()">{{sTaskTitle}}</button>
       </div>
     </div>
+  </div>
   </div>
 
 
@@ -175,3 +173,4 @@
         </div>
       </div>
     </div>
+  </div>

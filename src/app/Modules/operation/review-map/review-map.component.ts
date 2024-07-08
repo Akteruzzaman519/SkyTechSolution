@@ -40,6 +40,7 @@ export class ReviewMapComponent implements OnInit {
   public sEmailPassword :string = "";
   public sEmailRecoveryEmail :string = "";
   public statusTag :any= "";
+  public sTitle :any= "Add";
   public mailSystemId = 0;
   public mailOperationCompletionId = 0;
   public bIsEdit = false;
@@ -138,11 +139,18 @@ export class ReviewMapComponent implements OnInit {
     this.oMapReviewFormDto =params.data;
     this.tabID = 2;
     this.bIsEdit = true;
+    this.sTitle = "Update";
+    this.oMapReviewFormDto =params.data;
+    document.getElementById('modalOpen')?.click();
+    
   }
   public RowDoubleClickTask(params: RowDoubleClickedEvent){
     this.oMapReviewFormDto =params.data;
     this.tabID = 1;
     this.bIsEdit = true;
+    this.sTitle = "Update";
+    this.oMapReviewFormDto =params.data;
+    document.getElementById('modalOpen')?.click();
   }
 
   LoadDetails(){
@@ -173,6 +181,8 @@ export class ReviewMapComponent implements OnInit {
     this.nReportIssueId = 0;
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
+    this.oEmailMapGridDto =new EmailMapGridDto();
+    this.oEmailMap2GridDto =new EmailMapGridDto();
   }
 
 
@@ -183,8 +193,16 @@ export class ReviewMapComponent implements OnInit {
     }
     this.tabID = nTabID;
     this.bIsEdit = false;
+    this.sTitle = "Add";
     document.getElementById('modalOpen')?.click();
     this.oMapReviewFormDto =new MapReviewFormDto();
+    if( this.tabID == 1){
+    this.oMapReviewFormDto.mapClaimingId = this.oEmailMapGridDto.mapClaimingId;
+    }
+    else{
+      this.oMapReviewFormDto.mapClaimingId = this.oEmailMap2GridDto.mapClaimingId;
+    }
+    
   }
 
   public GetEmailsByOperationTag(relatedModule: any) {
@@ -236,6 +254,7 @@ export class ReviewMapComponent implements OnInit {
     //{{baseURL}}/EmailOperation/TrackOperationStart/{mailOperationCompletionId}
     this.service.Get('/EmailOperation/TrackOperationStart/' + this.mailOperationCompletionId).subscribe((res: any) => {
       console.log(res)
+      this.GetEmailsByOperationTag(this.statusTag);
     },
       (err: any) => {
         console.log(err);
@@ -286,6 +305,7 @@ export class ReviewMapComponent implements OnInit {
     this.service.Post('/EmailManagement/AddMapReviews/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oMapReviewFormDtoList, true).subscribe((res: any) => {
       this.toast.success("Map Review Added Successfully!!", "Success", { progressBar: true });
       this.GetEmailsByOperationTag(this.statusTag)
+      this.onSelectionChanged();
       this.rowData = [];
       this.totalRecord = 0;
     },
@@ -308,11 +328,24 @@ export class ReviewMapComponent implements OnInit {
       this.toast.warning("Map Review Note Required!!", "Warning", { progressBar: true });
       return
     }
+    
     if (this.tabID == 1) {
-      this.taskEmailGridApi.applyTransaction({ add: [this.oMapReviewFormDto] })
+      if(this.bIsEdit){
+        this.taskEmailGridApi.applyTransaction({ update: [this.oMapReviewFormDto] })  
+      }
+      else{
+        this.taskEmailGridApi.applyTransaction({ add: [this.oMapReviewFormDto] })
+      }
+      
     } else {
-      this.taskMap2EmailGridApi.applyTransaction({ add: [this.oMapReviewFormDto] })
+      if(this.bIsEdit){
+        this.taskMap2EmailGridApi.applyTransaction({ update: [this.oMapReviewFormDto] })
+      }
+      else{
+        this.taskMap2EmailGridApi.applyTransaction({ add: [this.oMapReviewFormDto] })
+      }      
     }
+    document.getElementById("BulkemailCloseModal")?.click();
   }
   public DeleteReviewIntoGrid(){
     if (this.tabID == 1) {

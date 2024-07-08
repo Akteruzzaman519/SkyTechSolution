@@ -81,7 +81,7 @@ export class ReportMailHistoryComponent implements OnInit {
 
 
   GetMailLifecycleHistory() {
-    this.httpServices.Get("/EmailReport/GetMailLifecycleHistory/" + this.mailSystemId).subscribe(
+    this.httpServices.Get("/EmailReport/GetMailLifecycleHistory/" + this.search).subscribe(
       (res: any) => {
         this.oVMailLifecycleDtoList = res;
       },
@@ -92,7 +92,7 @@ export class ReportMailHistoryComponent implements OnInit {
   }
 
   GetMailActivityHistory() {
-    this.httpServices.Get("/EmailReport/GetMailActivityHistory/" + this.mailSystemId).subscribe(
+    this.httpServices.Get("/EmailReport/GetMailActivityHistory/" + this.search).subscribe(
       (res: any) => {
         this.oVActivityHistoryDtoList = res;
       },

@@ -37,6 +37,7 @@ export class RoutineCheckComponent implements OnInit {
   public sEmailPassword :string = "";
   public sEmailRecoveryEmail :string = "";
   public statusTag :any= "";
+  public sTaskTitle :any= "Add";
   public mailSystemId = 0;
   public bIsEdit = false;
   public mailOperationCompletionId = 0;
@@ -55,7 +56,19 @@ export class RoutineCheckComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetEmailsByOperationTag(this.statusTag);
+    this.GetIssuesInKeyValue();
   }
+
+  
+  public GetIssuesInKeyValue() {
+    //{{baseURL}}/KeyValue/GetIssuesInKeyValue/{operationTag}
+     this.service.Get('/KeyValue/GetIssuesInKeyValue/' +  this.statusTag).subscribe((res: any) => {
+       this.KeyValues = res;
+     },
+       (err: any) => {
+         console.log(err);
+       })
+   }
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
@@ -101,6 +114,7 @@ export class RoutineCheckComponent implements OnInit {
   public RowDoubleClickTask(params: RowDoubleClickedEvent){
     this.oMailTasksManualFormDto = params.data;
     this.bIsEdit = true;
+    this.sTaskTitle = "Update";
     document.getElementById('modalOpen')?.click();
   }
 
@@ -131,6 +145,7 @@ export class RoutineCheckComponent implements OnInit {
     }
     document.getElementById('modalOpen')?.click();
     this.bIsEdit = false;
+    this.sTaskTitle = "Add";
     this.oMailTasksManualFormDto = new MailTasksManualFormDto();
   }
 
@@ -176,6 +191,7 @@ export class RoutineCheckComponent implements OnInit {
     //{{baseURL}}/EmailOperation/TrackOperationStart/{mailOperationCompletionId}
     this.service.Get('/EmailOperation/TrackOperationStart/' + this.mailOperationCompletionId).subscribe((res: any) => {
       console.log(res)
+      this.GetEmailsByOperationTag(this.statusTag);
     },
       (err: any) => {
         console.log(err);
@@ -210,13 +226,14 @@ export class RoutineCheckComponent implements OnInit {
       this.oMailTasksManualFormDtoList.push(node.data);
     })
     if (this.oMailTasksManualFormDtoList.length <= 0) {
-      this.toast.warning("Atleast One List Required!!", "Warning", { progressBar: true });
+      this.toast.warning("add at least one task!!", "Warning", { progressBar: true });
       return
     }
     //{{baseURL}}/EmailManagement/AddMailTasksManual/{mailSystemId}/{mailOperationCompletionId}/{statusTag}
     this.service.Post('/EmailManagement/AddMailTasksManual/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oMailTasksManualFormDtoList, true).subscribe((res: any) => {
-      this.toast.success("Credential Changed Successfully!!", "Success", { progressBar: true });
+      this.toast.success("Routine Task Submitted Successfully!!", "Success", { progressBar: true });
       this.GetEmailsByOperationTag(this.statusTag)
+      this.onSelectionChanged();
       this.rowData = [];
       this.totalRecord = 0;
     },
@@ -227,7 +244,13 @@ export class RoutineCheckComponent implements OnInit {
   }
 
   public AddReviewIntoGrid(){
-   this.taskEmailGridApi.applyTransaction({add: [this.oMailTasksManualFormDto]}) 
+    if(this.bIsEdit){
+      this.taskEmailGridApi.applyTransaction({update: [this.oMailTasksManualFormDto]}) 
+    }
+    else{
+      this.taskEmailGridApi.applyTransaction({add: [this.oMailTasksManualFormDto]}) 
+    }
+   
   }
   public DeleteReviewIntoGrid(){
    this.taskEmailGridApi.applyTransaction({remove: [this.oMailTasksManualFormDto]}) 

@@ -120,15 +120,7 @@ export class MailClaimingComponent implements OnInit {
     this.sSecondMapLink = "";
   }
 
-  onSelectionChanged(){
-    this.sFirstMapNumber = "";
-    this.sSecondMapNumber = "";
-    this.nFirstMapCategory = 0;
-    this.nSecondMapCategory = 0;
-    this.sFirstMapLink = "";
-    this.sSecondMapLink = "";
-    
-  }
+
 
   addBulkEmailBtn() {
     if(this.mailSystemId <= 0){
@@ -181,6 +173,7 @@ export class MailClaimingComponent implements OnInit {
     //{{baseURL}}/EmailOperation/TrackOperationStart/{mailOperationCompletionId}
     this.service.Get('/EmailOperation/TrackOperationStart/' + this.mailOperationCompletionId).subscribe((res: any) => {
       console.log(res)
+      this.GetEmailsByOperationTag(this.statusTag);
     },
       (err: any) => {
         console.log(err);
@@ -262,7 +255,12 @@ export class MailClaimingComponent implements OnInit {
     //{{baseURL}}/EmailManagement/ClaimEmailMaps/{mailSystemId}/{mailOperationCompletionId}/{statusTag}
     this.service.Post('/EmailManagement/ClaimEmailMaps/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oEmailMapClaimFormDtoList, true).subscribe((res: any) => {
       this.toast.success("Map Climing Info Saved!!", "Success", { progressBar: true });
-      this.onSelectionChanged();
+      this.sFirstMapNumber = "";
+      this.sSecondMapNumber = "";
+      this.nFirstMapCategory = 0;
+      this.nSecondMapCategory = 0;
+      this.sFirstMapLink = "";
+      this.sSecondMapLink = "";
       this.GetEmailsByOperationTag(this.statusTag)
       
       this.rowData = [];
@@ -294,8 +292,6 @@ export class MailClaimingComponent implements OnInit {
     //{{baseURL}}/EmailOperation/ReportMailIssue
     this.service.Post('/EmailOperation/ReportMailIssue/'+this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
       this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
-      this.rowData = [];
-      this.totalRecord = 0;
       document.getElementById("BulkemailCloseModal")?.click();
     },
       (err: any) => {

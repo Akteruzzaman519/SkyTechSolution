@@ -85,7 +85,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
     eDiv.addEventListener('click', () => {
       this.mailSystemId = params.data.mailSystemId;
       this.mailOperationCompletionId = params.data.mailOperationCompletionId;
-      this.LoadDetails()
+      this.LoadDetails();
     });
     return eDiv;
   }
@@ -100,6 +100,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
   LoadDetails(){
     this.GetEmailUsername();
     this.TrackOperationStart();
+  
     this.sEmailUserName = "";
     this.sEmailPassword = "";
     this.sEmailRecoveryEmail = "";
@@ -111,17 +112,6 @@ export class ChangeMailCredentialComponent  implements OnInit {
     this.eyeIconRecovery = '👁️';
   }
 
-  onSelectionChanged(){
-    this.sEmailUserName = "";
-    this.sEmailPassword = "";
-    this.sEmailRecoveryEmail = "";
-    this.sNewRecoveryEmail = "";
-    this.sNewEmailPassword = "";
-    this.sMailIssueNote = "";
-    this.nReportIssueId = -1;
-    this.eyeIcon = '👁️';
-    this.eyeIconRecovery = '👁️';
-  }
 
   addBulkEmailBtn() {
     if(this.mailSystemId <= 0){
@@ -161,7 +151,8 @@ export class ChangeMailCredentialComponent  implements OnInit {
   public TrackOperationStart() {
     //{{baseURL}}/EmailOperation/TrackOperationStart/{mailOperationCompletionId}
     this.service.Get('/EmailOperation/TrackOperationStart/' + this.mailOperationCompletionId).subscribe((res: any) => {
-      console.log(res)
+      console.log(res);
+      this.GetEmailsByOperationTag(this.statusTag);
     },
       (err: any) => {
         console.log(err);
@@ -219,6 +210,15 @@ export class ChangeMailCredentialComponent  implements OnInit {
     this.service.Post('/EmailManagement/ChangeEmailCredential/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oEmailBaseInfo, true).subscribe((res: any) => {
       this.toast.success("Credential Changed Successfully!!", "Success", { progressBar: true });
       this.GetEmailsByOperationTag(this.statusTag)
+      this.sEmailUserName = "";
+      this.sEmailPassword = "";
+      this.sEmailRecoveryEmail = "";
+      this.sNewRecoveryEmail = "";
+      this.sNewEmailPassword = "";
+      this.sMailIssueNote = "";
+      this.nReportIssueId = -1;
+      this.eyeIcon = '👁️';
+      this.eyeIconRecovery = '👁️';
       this.rowData = [];
       this.totalRecord = 0;
     },
@@ -227,6 +227,8 @@ export class ChangeMailCredentialComponent  implements OnInit {
         this.toast.error(err, "Error", { progressBar: true });
       })
   }
+
+  
 
   public ReportMailIssue(){
     this.oEmailIssueFormDto.mailIssueId = this.nReportIssueId;
@@ -243,12 +245,14 @@ export class ChangeMailCredentialComponent  implements OnInit {
         return;
       }
     }
+    if(this.nReportIssueId != 0){
+      this.oEmailIssueFormDto.mailIssueNote="" 
+    }
     //{{baseURL}}/EmailOperation/ReportMailIssue
     this.service.Post('/EmailOperation/ReportMailIssue/'+this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
       this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
-      this.rowData = [];
-      this.totalRecord = 0;
       document.getElementById("BulkemailCloseModal")?.click();
+      this.GetEmailsByOperationTag(this.statusTag);
     },
       (err: any) => {
         this.toast.error(err, "Error", { progressBar: true });

@@ -135,6 +135,10 @@ export class ChangeMapInfoComponent implements OnInit {
     this.nReportIssueId = -1;
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
+    this.oEmailMapGridDto = new EmailMapGridDto();
+    this.oEmailMap2GridDto = new EmailMapGridDto();
+    this.EmailMapInfoChangeFormDto = new EmailMapInfoChangeFormDto();
+    this.EmailMap2InfoChangeFormDto = new EmailMapInfoChangeFormDto();
   }
 
   addBulkEmailBtn() {
@@ -245,15 +249,16 @@ export class ChangeMapInfoComponent implements OnInit {
 
   public ChangeMapInfo(){
 
-    if(this.sNewEmailPassword == ""){
-      this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
-      return;
-    }
-    if(this.sNewRecoveryEmail == ""){
-      this.toast.warning("Please Provide New Recovery Email!!", "Warning", { progressBar: true });
-      return;
-    }
-
+    // if(this.EmailMapInfoChangeFormDto.mapNewBusinessName == ""){
+    //   this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
+    //   return;
+    // }
+    // if(this.sNewRecoveryEmail == ""){
+    //   this.toast.warning("Please Provide New Recovery Email!!", "Warning", { progressBar: true });
+    //   return;
+    // }
+    this.EmailMapInfoChangeFormDto.mapClaimingId = this.oEmailMapGridDto.mapClaimingId;
+    this.EmailMap2InfoChangeFormDto.mapClaimingId = this.oEmailMap2GridDto.mapClaimingId;
     this.EmailMapInfoChangeFormDtoList.push(this.EmailMapInfoChangeFormDto);
     this.EmailMapInfoChangeFormDtoList.push(this.EmailMap2InfoChangeFormDto);
 
@@ -262,8 +267,7 @@ export class ChangeMapInfoComponent implements OnInit {
     this.service.Post('/EmailManagement/ChangeEmailMapInfo/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.EmailMapInfoChangeFormDtoList, true).subscribe((res: any) => {
       this.toast.success("Map Info Changed Successfully!!", "Success", { progressBar: true });
       this.GetEmailsByOperationTag(this.statusTag)
-      this.rowData = [];
-      this.totalRecord = 0;
+      this.onSelectionChanged();
     },
       (err: any) => {
         console.log(err);
