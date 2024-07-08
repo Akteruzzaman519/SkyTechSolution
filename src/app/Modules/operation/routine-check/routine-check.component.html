@@ -120,7 +120,7 @@ aria-labelledby="staticBackdropLabel" aria-hidden="true">
       </div>
     </div>
     <div class="modal-footer" style="justify-content: space-between;">
-      <button type="button" class="btn btn-danger" data-bs-dismiss="modal"   (click)="DeleteReviewIntoGrid()">Delete</button>
+      <button *ngIf="bIsEdit" type="button" class="btn btn-danger" data-bs-dismiss="modal"   (click)="DeleteReviewIntoGrid()">Delete</button>
       <button type="button" class="btn btn-success" data-bs-dismiss="modal"   (click)="AddReviewIntoGrid()">Add</button>
     </div>
   </div>
