@@ -216,7 +216,7 @@ export class ChangeMapInfoComponent implements OnInit {
       this.oEmailMapGridDto = new EmailMapGridDto();
       this.oEmailMap2GridDto = new EmailMapGridDto();
         this.service.Get('/EmailManagement/GetEmailMaps/' +  this.mailSystemId).subscribe((res: any) => {
-          this.oEmailMapGridDtoList =  res;
+          this.oEmailMapGridDtoList =  res.data;
           if(this.oEmailMapGridDtoList.length > 0){
             this.oEmailMapGridDto =  this.oEmailMapGridDtoList[0];
           }

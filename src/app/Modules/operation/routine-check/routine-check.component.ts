@@ -242,7 +242,7 @@ export class RoutineCheckComponent implements OnInit {
       return;
     }
     //{{baseURL}}/EmailOperation/ReportMailIssue
-    this.service.Post('/EmailOperation/ReportMailIssue', this.oEmailIssueFormDto, true).subscribe((res: any) => {
+    this.service.Post('/EmailOperation/ReportMailIssue/'+this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
       this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
       this.rowData = [];
       this.totalRecord = 0;
