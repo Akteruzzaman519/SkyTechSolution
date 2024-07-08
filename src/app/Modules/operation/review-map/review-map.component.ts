@@ -65,15 +65,15 @@ export class ReviewMapComponent implements OnInit {
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
-    //this.balkEmailGridApi.sizeColumnsToFit();
+    this.balkEmailGridApi.sizeColumnsToFit();
   }
   ApiGridReadyTask(event: GridReadyEvent) {
     this.taskEmailGridApi = event.api;
-    //this.taskEmailGridApi.sizeColumnsToFit();
+    this.taskEmailGridApi.sizeColumnsToFit();
   }
   ApiGridReadyTaskMap2(event: GridReadyEvent) {
     this.taskMap2EmailGridApi = event.api;
-    //this.taskEmailGridApi.sizeColumnsToFit();
+    this.taskEmailGridApi.sizeColumnsToFit();
   }
 
   // Column Definitions: Defines the columns to be displayed.
@@ -92,14 +92,12 @@ export class ReviewMapComponent implements OnInit {
     { field: "mapReviewName", headerName: 'Review Name', width:200 },
     { field: "mapReviewDetails", headerName: 'Review Details', width:180 },
     { field: "mapReviewNote", headerName: 'Note',width:185},
-    { field: 'Details', headerName: 'Details',width:100, resizable: true, cellRenderer: this.TaskdetailToGrid.bind(this) },
   ];
   colDefsReviewMap2: any[] = [
     { valueGetter: "node.rowIndex + 1", headerName: '', cellStyle: { 'border-right': '0.5px solid #e9ecef' }, filter:false, width: 20, editable: false},
     { field: "mapReviewName", headerName: 'Review Name', width:200 },
     { field: "mapReviewDetails", headerName: 'Review Details', width:180 },
     { field: "mapReviewNote", headerName: 'Note',width:185},
-    { field: 'Details', headerName: 'Details',width:100, resizable: true, cellRenderer: this.TaskdetailToGridMap2.bind(this) },
   ];
 
   detailToGrid(params: any) {
@@ -331,11 +329,20 @@ export class ReviewMapComponent implements OnInit {
       this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
       return;
     }
+
+    if(this.oEmailIssueFormDto.mailIssueId == 0) {
+      if(this.oEmailIssueFormDto.mailIssueNote ==  "" ){
+        this.toast.warning("Custom issue note required!!", "Warning", { progressBar: true });
+        return;
+      }
+    }
+
     //{{baseURL}}/EmailOperation/ReportMailIssue
     this.service.Post('/EmailOperation/ReportMailIssue/'+this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
       this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
       this.rowData = [];
       this.totalRecord = 0;
+      document.getElementById("reportCloseModal")?.click();
     },
       (err: any) => {
         this.toast.error(err, "Error", { progressBar: true });

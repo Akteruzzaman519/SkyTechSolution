@@ -4,10 +4,27 @@
     <button type="button" class="btn btn-info float-end " (click)="addBulkEmailBtn()">Add Bulk Email</button>
   </div>
 
+  <div class="col-md-12">
+    <div>
+      <button (click)="onBtFirst()">To First</button>
+      <button (click)="onBtLast()" id="btLast">To Last</button>
+      <button (click)="onBtPrevious()">To Previous</button>
+      <button (click)="onBtNext()">To Next</button>
+      <button (click)="onBtPageFive()">To Page 5</button>
+      <button (click)="onBtPageFifty()">To Page 50</button>
+    </div>
+  </div>
+
   <div class="col-md-12 mb-3">
     <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; " [rowData]="rowData"
-      [columnDefs]="colDefs" [pagination]="true" (gridReady)="ApiGridReady($event)"
-      [paginationPageSize]="paginationPageSize" [defaultColDef]="DeafultCol">
+      [columnDefs]="colDefs" (gridReady)="ApiGridReady($event)"
+      [paginationPageSize]="paginationPageSize"
+      [pagination]="true"
+
+      [rowData]="rowData"
+      [class]="themeClass"
+      (paginationChanged)="onPaginationChanged()"
+       [defaultColDef]="defaultColDef">
     </ag-grid-angular>
   </div>
 

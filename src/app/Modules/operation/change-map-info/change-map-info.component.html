@@ -210,28 +210,28 @@
         <button type="button" class="btn-close" id="BulkemailCloseModal" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <div class="modal-body p-0">
-        <div class="row">
-          <div class="mb-3">
+      <div class="modal-body p-4">
+  
+          <div class="mb-2">
             <label for="nReportIssueId" class="form-label">Select Issue</label>
             <select class="form-select form-select mb-3" [(ngModel)]="nReportIssueId" name="nReportIssueId"
               id="mailSourcingId" aria-label=".form-select-lg example">
-              <option value="0"> --- Select Issue ---</option>
+              <option value="-1"> --- Select Issue ---</option>
               <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
               <option value="0">Custom</option>
             </select>
           </div>
 
-          <div class="mb-3">
+          <div *ngIf="nReportIssueId==0" class="mb-2">
             <label for="mailIssueNote" class="form-label">Custom Issue Note</label>
             <textarea rows="3" type="text" class="form-control" [(ngModel)]="sMailIssueNote" name="mailIssueNote"
               id="mailIssueNote">
             </textarea>
           </div>
-        </div>
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="ReportMailIssue()">Submit
+        <button type="button" class="btn btn-danger" (click)="ReportMailIssue()">Submit
           Issue</button>
       </div>
     </div>

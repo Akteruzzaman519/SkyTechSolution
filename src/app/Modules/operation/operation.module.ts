@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule, DatePipe, NgStyle } from '@angular/common';
 import { EmailUploadComponent } from './email-upload/email-upload.component';
 import { AsignToAgentComponent } from './asign-to-agent/asign-to-agent.component';
@@ -58,6 +58,7 @@ const routes: Routes = [
     SharedModule,
     NgStyle
   ],
+  schemas: [NO_ERRORS_SCHEMA], // Use NO_ERRORS_SCHEMA here
   exports: [
     EmailUploadComponent,
     AsignToAgentComponent,

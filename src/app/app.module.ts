@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -42,6 +42,7 @@ import { getDatepickerConfig, getDaterangepickerConfig } from 'shared/_constants
          enableHtml: true
       }),
    ],
+   schemas: [NO_ERRORS_SCHEMA], // Use NO_ERRORS_SCHEMA her
    providers: [
 		HttpInterceptorsProvider,
 		{ provide: BsDatepickerConfig, useFactory: getDatepickerConfig },

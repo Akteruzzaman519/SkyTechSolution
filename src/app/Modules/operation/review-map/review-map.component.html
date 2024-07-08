@@ -199,7 +199,7 @@
       </div>
       <div class="modal-footer">
         <button *ngIf="bIsEdit" type="button" class="btn btn-danger" data-bs-dismiss="modal"   (click)="DeleteReviewIntoGrid()">Delete</button>
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal"   (click)="AddReviewIntoGrid()">Add</button>
+        <button type="button" class="btn btn-success"  (click)="AddReviewIntoGrid()">Add</button>
       </div>
     </div>
   </div>
@@ -222,7 +222,7 @@ aria-labelledby="staticRportBackdropLabel" aria-hidden="true">
     <div class="modal-header">
       <h5 class="modal-title" id="staticRportBackdropLabel"><i class="fa-solid fa-envelopes-bulk text-black ms-1"></i>
         Report Issue</h5>
-      <button type="button" class="btn-close" id="BulkemailCloseModal" data-bs-dismiss="modal"
+      <button type="button" class="btn-close" id="reportCloseModal" data-bs-dismiss="modal"
         aria-label="Close"></button>
     </div>
     <div class="modal-body p-0">
@@ -231,13 +231,13 @@ aria-labelledby="staticRportBackdropLabel" aria-hidden="true">
           <label for="nReportIssueId" class="form-label">Select Issue</label>
           <select class="form-select form-select mb-3" [(ngModel)]="oEmailIssueFormDto.mailIssueId" name="nReportIssueId"
             id="mailSourcingId" aria-label=".form-select-lg example">
-            <option value="0"> --- Select Issue ---</option>
+            <option value="-1"> --- Select Issue ---</option>
             <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
             <option value="0">Custom</option>
           </select>
         </div>
 
-        <div class="mb-3">
+        <div *ngIf="oEmailIssueFormDto.mailIssueId==0" class="mb-3">
           <label for="mailIssueNote" class="form-label">Custom Issue Note</label>
           <textarea rows="3" type="text" class="form-control" [(ngModel)]="oEmailIssueFormDto.mailIssueNote" name="mailIssueNote"
             id="mailIssueNote">
@@ -246,7 +246,7 @@ aria-labelledby="staticRportBackdropLabel" aria-hidden="true">
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="ReportMailIssue()">Submit
+      <button type="button" class="btn btn-danger"  (click)="ReportMailIssue()">Submit
         Issue</button>
     </div>
   </div>

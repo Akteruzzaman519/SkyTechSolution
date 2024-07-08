@@ -73,7 +73,7 @@ export class MailClaimingComponent implements OnInit {
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
-    //this.balkEmailGridApi.sizeColumnsToFit();
+    this.balkEmailGridApi.sizeColumnsToFit();
   }
 
   // Column Definitions: Defines the columns to be displayed.
@@ -283,11 +283,20 @@ export class MailClaimingComponent implements OnInit {
       this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
       return;
     }
+
+    if(this.oEmailIssueFormDto.mailIssueId == 0) {
+      if(this.oEmailIssueFormDto.mailIssueNote ==  "" ){
+        this.toast.warning("Custom issue note required!!", "Warning", { progressBar: true });
+        return;
+      }
+    }
+
     //{{baseURL}}/EmailOperation/ReportMailIssue
     this.service.Post('/EmailOperation/ReportMailIssue/'+this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
       this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
       this.rowData = [];
       this.totalRecord = 0;
+      document.getElementById("BulkemailCloseModal")?.click();
     },
       (err: any) => {
         this.toast.error(err, "Error", { progressBar: true });

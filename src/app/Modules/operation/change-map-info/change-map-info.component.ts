@@ -57,7 +57,7 @@ export class ChangeMapInfoComponent implements OnInit {
   public sMailIssueNote:string = "";
   public totalRecord: number = 0;
   public bIsDisable : boolean = false;
-  public nReportIssueId: number = 0;
+  public nReportIssueId: number = -1;
 
   constructor(private service: HttpCommonService, private toast: ToastrService,private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router) {
@@ -74,7 +74,7 @@ export class ChangeMapInfoComponent implements OnInit {
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
-    //this.balkEmailGridApi.sizeColumnsToFit();
+    this.balkEmailGridApi.sizeColumnsToFit();
   }
 
   // Column Definitions: Defines the columns to be displayed.
@@ -120,7 +120,7 @@ export class ChangeMapInfoComponent implements OnInit {
     this.sNewRecoveryEmail = "";
     this.sNewEmailPassword = "";
     this.sMailIssueNote = "";
-    this.nReportIssueId = 0;
+    this.nReportIssueId = -1;
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
   }
@@ -132,7 +132,7 @@ export class ChangeMapInfoComponent implements OnInit {
     this.sNewRecoveryEmail = "";
     this.sNewEmailPassword = "";
     this.sMailIssueNote = "";
-    this.nReportIssueId = 0;
+    this.nReportIssueId = -1;
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
   }
@@ -280,11 +280,19 @@ export class ChangeMapInfoComponent implements OnInit {
       this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
       return;
     }
+    if(this.oEmailIssueFormDto.mailIssueId == 0) {
+      if(this.oEmailIssueFormDto.mailIssueNote ==  "" ){
+        this.toast.warning("Custom issue note required!!", "Warning", { progressBar: true });
+        return;
+      }
+    }
+
     //{{baseURL}}/EmailOperation/ReportMailIssue
     this.service.Post('/EmailOperation/ReportMailIssue', this.oEmailIssueFormDto, true).subscribe((res: any) => {
       this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
       this.rowData = [];
       this.totalRecord = 0;
+      document.getElementById("BulkemailCloseModal")?.click();
     },
       (err: any) => {
         this.toast.error(err, "Error", { progressBar: true });
