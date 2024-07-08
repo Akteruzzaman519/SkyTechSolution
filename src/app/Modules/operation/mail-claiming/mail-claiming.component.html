@@ -107,21 +107,14 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" (click)="ClaimEmailMaps()">SUBMIT</button>
+          <div class="card-footer">
+            <button type="button" class="btn btn-danger" (click)="addBulkEmailBtn()">Report Issue</button>
+            <button type="button" class="btn btn-success float-end" (click)="ClaimEmailMaps()">SUBMIT</button>
           </div>
         </div>
 
       </div>
     </div>
-
-
-
-
-
-
-
-
   </div>
 </div>
 
@@ -147,11 +140,21 @@
         <button type="button" class="btn-close" id="BulkemailCloseModal" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body p-0">
         <div class="row">
           <div class="mb-3">
+            <label for="nReportIssueId" class="form-label">Select Issue</label>
+            <select class="form-select form-select mb-3" [(ngModel)]="oEmailIssueFormDto.mailIssueId" name="nReportIssueId"
+              id="mailSourcingId" aria-label=".form-select-lg example">
+              <option value="0"> --- Select Issue ---</option>
+              <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
+              <option value="0">Custom</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
             <label for="mailIssueNote" class="form-label">Custom Issue Note</label>
-            <textarea rows="3" type="text" class="form-control" [(ngModel)]="sNumber" name="mailIssueNote"
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="oEmailIssueFormDto.mailIssueNote" name="mailIssueNote"
               id="mailIssueNote">
             </textarea>
           </div>

@@ -38,6 +38,7 @@ export class RoutineCheckComponent implements OnInit {
   public sEmailRecoveryEmail :string = "";
   public statusTag :any= "";
   public mailSystemId = 0;
+  public bIsEdit = false;
   public mailOperationCompletionId = 0;
 
 
@@ -81,7 +82,6 @@ export class RoutineCheckComponent implements OnInit {
     { field: "mailTaskName", headerName: 'Task Name', width:200 },
     { field: "mailTaskDescription", headerName: 'Description', width:180 },
     { field: "mailTaskNote", headerName: 'Note',width:185},
-    { field: 'Details', headerName: 'Details',width:100, resizable: true, cellRenderer: this.TaskdetailToGrid.bind(this) },
   ];
 
   detailToGrid(params: any) {
@@ -98,26 +98,10 @@ export class RoutineCheckComponent implements OnInit {
     });
     return eDiv;
   }
-  TaskdetailToGrid(params: any) {
-    const eDiv = document.createElement('div');
-    var sDisableed = ''
-    if( this.bIsDisable ){
-      sDisableed =  params.data.mailOperationCompletionStatus  != 2 ? 'style= "display: None"' : ''
-    }
-    eDiv.innerHTML = ' <button class="btn btn-success p-0 px-1" '+sDisableed+'><i class="fa-solid fa-eye" aria-hidden="true"></i> Detail</button>'
-    eDiv.addEventListener('click', () => {
-      this.mailSystemId = params.data.mailSystemId;
-      this.mailOperationCompletionId = params.data.mailOperationCompletionId;
-      this.LoadDetails()
-    });
-    return eDiv;
-  }
-
-  public RowDoubleClick(params: RowDoubleClickedEvent){
-    console.log(params.data)
-    this.mailSystemId = params.data.mailSystemId;
-    this.mailOperationCompletionId = params.data.mailOperationCompletionId;
-    this.LoadDetails();
+  public RowDoubleClickTask(params: RowDoubleClickedEvent){
+    this.oMailTasksManualFormDto = params.data;
+    this.bIsEdit = true;
+    document.getElementById('modalOpen')?.click();
   }
 
   LoadDetails(){
@@ -140,23 +124,26 @@ export class RoutineCheckComponent implements OnInit {
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
   }
-  onSelectionChangedTask(){
-    this.sEmailUserName = "";
-    this.sEmailPassword = "";
-    this.sEmailRecoveryEmail = "";
-    this.nReportIssueId = 0;
-    this.eyeIcon = '👁️';
-    this.eyeIconRecovery = '👁️';
-  }
-
   addBulkEmailBtn() {
     if(this.mailSystemId <= 0){
       this.toast.warning("Select a mail from listt!!", "Warning", { progressBar: true });
       return;
     }
     document.getElementById('modalOpen')?.click();
-    this.oMailTasksManualFormDto =new MailTasksManualFormDto();
+    this.bIsEdit = false;
+    this.oMailTasksManualFormDto = new MailTasksManualFormDto();
   }
+
+  AddReportIssue(){
+    if(this.mailSystemId <= 0){
+      this.toast.warning("Select a mail from listt!!", "Warning", { progressBar: true });
+      return;
+    }
+    document.getElementById('reportmodalOpen')?.click();
+    this.oEmailIssueFormDto =new EmailIssueFormDto();
+    
+  }
+
 
   public GetEmailsByOperationTag(relatedModule: any) {
     //{{baseURL}}/EmailOperation/GetEmailsByOperationTag/{operationTag}
@@ -241,6 +228,28 @@ export class RoutineCheckComponent implements OnInit {
 
   public AddReviewIntoGrid(){
    this.taskEmailGridApi.applyTransaction({add: [this.oMailTasksManualFormDto]}) 
+  }
+  public DeleteReviewIntoGrid(){
+   this.taskEmailGridApi.applyTransaction({remove: [this.oMailTasksManualFormDto]}) 
+  }
+
+  
+  public ReportMailIssue(){
+
+    this.oEmailIssueFormDto.mailSystemId = this.mailSystemId;
+    if(this.oEmailIssueFormDto.mailIssueId ==  -1 ){
+      this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
+      return;
+    }
+    //{{baseURL}}/EmailOperation/ReportMailIssue
+    this.service.Post('/EmailOperation/ReportMailIssue', this.oEmailIssueFormDto, true).subscribe((res: any) => {
+      this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
+      this.rowData = [];
+      this.totalRecord = 0;
+    },
+      (err: any) => {
+        this.toast.error(err, "Error", { progressBar: true });
+      })
   }
 
   togglePasswordVisibility(): void {

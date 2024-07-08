@@ -8,6 +8,7 @@ import { KeyValueDto } from 'src/app/Models/KeyValueDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
 import { EmailMapClaimFormDto } from 'src/app/Models/EmailMapClaimFormDto';
+import { EmailIssueFormDto } from 'src/app/Models/EmailIssueFormDto';
 
 @Component({
   selector: 'app-mail-claiming',
@@ -23,6 +24,7 @@ export class MailClaimingComponent implements OnInit {
   public rowData: any[] = [];
 
   public oEmailMapClaimFormDto: EmailMapClaimFormDto = new EmailMapClaimFormDto();
+  public oEmailIssueFormDto :EmailIssueFormDto = new EmailIssueFormDto();
   public oEmailMapClaimFormDtoList: EmailMapClaimFormDto[] = [];
   public oEmailOperationGridDtoList :EmailOperationGridDto[] = [];
   public KeyValues: KeyValueDto[] = [];
@@ -220,12 +222,28 @@ export class MailClaimingComponent implements OnInit {
 
   public ClaimEmailMaps(){
 
-    if(this.sFirstMapLink == ""){
-      this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
+    if(this.nFirstMapCategory <= 0){
+      this.toast.warning("Please Provide Map 1 Category!!", "Warning", { progressBar: true });
       return;
     }
     if(this.sFirstMapNumber == ""){
-      this.toast.warning("Please Provide New Recovery Email!!", "Warning", { progressBar: true });
+      this.toast.warning("Please Provide Map 1 Number!!", "Warning", { progressBar: true });
+      return;
+    }
+    if(this.sFirstMapLink == ""){
+      this.toast.warning("Please Provide Map 1 Link!!", "Warning", { progressBar: true });
+      return;
+    }
+    if(this.nSecondMapCategory <= 0){
+      this.toast.warning("Please Provide Map 2 Category!!", "Warning", { progressBar: true });
+      return;
+    }
+    if(this.sSecondMapNumber == ""){
+      this.toast.warning("Please Provide Map 2 Number!!", "Warning", { progressBar: true });
+      return;
+    }
+    if(this.sSecondMapLink == ""){
+      this.toast.warning("Please Provide Map 2 Link!!", "Warning", { progressBar: true });
       return;
     }
     this.oEmailMapClaimFormDto = new EmailMapClaimFormDto();
@@ -243,8 +261,10 @@ export class MailClaimingComponent implements OnInit {
 
     //{{baseURL}}/EmailManagement/ClaimEmailMaps/{mailSystemId}/{mailOperationCompletionId}/{statusTag}
     this.service.Post('/EmailManagement/ClaimEmailMaps/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oEmailMapClaimFormDtoList, true).subscribe((res: any) => {
-      this.toast.success("Credential Changed Successfully!!", "Success", { progressBar: true });
+      this.toast.success("Map Climing Info Saved!!", "Success", { progressBar: true });
+      this.onSelectionChanged();
       this.GetEmailsByOperationTag(this.statusTag)
+      
       this.rowData = [];
       this.totalRecord = 0;
     },
@@ -255,24 +275,25 @@ export class MailClaimingComponent implements OnInit {
   }
 
   public ReportMailIssue(){
-    // this.oEmailIssueFormDto.mailIssueId = this.nReportIssueId;
-    // this.oEmailIssueFormDto.mailSystemId = this.mailSystemId;
-    // this.oEmailIssueFormDto.mailIssueNote = this.sMailIssueNote;
 
-    // if(this.nReportIssueId ==  -1 ){
-    //   this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
-    //   return;
-    // }
+    this.oEmailIssueFormDto.mailSystemId = this.mailSystemId;
+    
+
+    if(this.oEmailIssueFormDto.mailIssueId ==  -1 ){
+      this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
+      return;
+    }
     //{{baseURL}}/EmailOperation/ReportMailIssue
-    // this.service.Post('/EmailOperation/ReportMailIssue', this.oEmailIssueFormDto, true).subscribe((res: any) => {
-    //   this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
-    //   this.rowData = [];
-    //   this.totalRecord = 0;
-    // },
-    //   (err: any) => {
-    //     this.toast.error(err, "Error", { progressBar: true });
-    //   })
+    this.service.Post('/EmailOperation/ReportMailIssue', this.oEmailIssueFormDto, true).subscribe((res: any) => {
+      this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
+      this.rowData = [];
+      this.totalRecord = 0;
+    },
+      (err: any) => {
+        this.toast.error(err, "Error", { progressBar: true });
+      })
   }
+  
   togglePasswordVisibility(): void {
     if (this.passwordFieldType === 'password') {
       this.passwordFieldType = 'text';
