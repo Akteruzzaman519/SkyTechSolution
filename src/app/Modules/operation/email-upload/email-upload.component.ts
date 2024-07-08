@@ -18,8 +18,8 @@ export class EmailUploadComponent {
 
   selectedFile: File | null = null;
   private balkEmailGridApi!: GridApi;
-  public paginationPageSize = 500;
-  public paginationPageSizeSelector: any[] = [5,10,15,20,25,30,50,100,500];
+  public paginationPageSize = 1000;
+
 
   public defaultColDef: ColDef = {
     editable: true,
@@ -58,45 +58,6 @@ export class EmailUploadComponent {
     });
   }
 
-
-  onBtFirst() {
-    this.balkEmailGridApi.paginationGoToFirstPage();
-  }
-
-  onBtLast() {
-    this.balkEmailGridApi.paginationGoToLastPage();
-  }
-
-  onBtNext() {
-    this.balkEmailGridApi.paginationGoToNextPage();
-  }
-
-  onBtPrevious() {
-    this.balkEmailGridApi.paginationGoToPreviousPage();
-  }
-
-  onBtPageFive() {
-    // we say page 4, as the first page is zero
-    this.balkEmailGridApi.paginationGoToPage(4);
-  }
-
-  onBtPageFifty() {
-    // we say page 49, as the first page is zero
-    this.balkEmailGridApi.paginationGoToPage(49);
-  }
-
-  onPaginationChanged() {
-    console.log("onPaginationPageLoaded");
-    // Workaround for bug in events order
-    if (this.balkEmailGridApi) {
-      setText("#lbLastPageFound", this.balkEmailGridApi.paginationIsLastPageFound());
-      setText("#lbPageSize", this.balkEmailGridApi.paginationGetPageSize());
-      // we +1 to current page, as pages are zero based
-      setText("#lbCurrentPage", this.balkEmailGridApi.paginationGetCurrentPage() + 1);
-      setText("#lbTotalPages", this.balkEmailGridApi.paginationGetTotalPages());
-      setLastButtonDisabled(!this.balkEmailGridApi.paginationIsLastPageFound());
-    }
-  }
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
@@ -184,12 +145,4 @@ export class EmailUploadComponent {
     }
   }
 
-}
-
-
-function setText(selector: string, text: any) {
-  (document.querySelector(selector) as any).innerHTML = text;
-}
-function setLastButtonDisabled(disabled: boolean) {
-  (document.querySelector("#btLast") as any).disabled = disabled;
 }

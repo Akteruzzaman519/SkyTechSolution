@@ -17,6 +17,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { SharedModule } from 'shared/shared.module';
 import { IDValueModule } from 'src/app/cod/Modules/idvalue/idvalue.module';
 import { ReportMailHistoryComponent } from './report-mail-history/report-mail-history.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 const routes: Routes = [
   { path: "fresh_email_upload", component: EmailUploadComponent, title: "Email Upload" },
@@ -46,7 +47,8 @@ const routes: Routes = [
     ChangeMapInfoComponent,
     AssignReviewMapComponent,
     ReviewMapComponent,
-    ReportMailHistoryComponent
+    ReportMailHistoryComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,

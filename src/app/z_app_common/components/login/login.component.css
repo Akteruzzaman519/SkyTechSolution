@@ -55,8 +55,8 @@ a:hover {
   padding-top: 68px;
   padding-bottom: 48px;
   background: url(../../../../assets/logo/Background-SkyTech-task-Management-0023.jpg);
-  background-repeat: no-repeat;
-  
+  background-repeat: round;
+  background-clip: padding-box;
 }
 
 .inner h3 {
