@@ -95,7 +95,7 @@
                               <div class="card">
                                 <ag-grid-angular class="ag-theme-alpine" style="height: 40vh;width: 100%; overflow-x: hidden; " [rowData]="rowData"
                                   [columnDefs]="colDefsTask" (gridReady)="ApiGridReadyTask($event)" rowSelection='single'
-                                  (selectionChanged)="onSelectionChangedTask()" [defaultColDef]="DeafultCol">
+                                   [defaultColDef]="DeafultCol"  (rowDoubleClicked)="RowDoubleClickTask($event)">
                                 </ag-grid-angular>
                               </div>
                             </div>
@@ -137,7 +137,7 @@
                               <div class="card">
                                 <ag-grid-angular class="ag-theme-alpine" style="height: 40vh;width: 100%; overflow-x: hidden; " [rowData]="rowData"
                                   [columnDefs]="colDefsReviewMap2" (gridReady)="ApiGridReadyTaskMap2($event)" rowSelection='single'
-                                  (selectionChanged)="onSelectionChangedTask()" [defaultColDef]="DeafultCol">
+                                  [defaultColDef]="DeafultCol" (rowDoubleClicked)="RowDoubleClickTaskMap2($event)">
                                 </ag-grid-angular>
                               </div>
 

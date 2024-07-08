@@ -136,11 +136,15 @@ export class ReviewMapComponent implements OnInit {
     return eDiv;
   }
 
-  public RowDoubleClick(params: RowDoubleClickedEvent){
-    console.log(params.data)
-    this.mailSystemId = params.data.mailSystemId;
-    this.mailOperationCompletionId = params.data.mailOperationCompletionId;
-    this.LoadDetails();
+  public RowDoubleClickTaskMap2(params: RowDoubleClickedEvent){
+    this.oMapReviewFormDto =params.data;
+    this.tabID = 2;
+    this.bIsEdit = true;
+  }
+  public RowDoubleClickTask(params: RowDoubleClickedEvent){
+    this.oMapReviewFormDto =params.data;
+    this.tabID = 1;
+    this.bIsEdit = true;
   }
 
   LoadDetails(){
@@ -172,14 +176,7 @@ export class ReviewMapComponent implements OnInit {
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
   }
-  onSelectionChangedTask(){
-    this.sEmailUserName = "";
-    this.sEmailPassword = "";
-    this.sEmailRecoveryEmail = "";
-    this.nReportIssueId = 0;
-    this.eyeIcon = '👁️';
-    this.eyeIconRecovery = '👁️';
-  }
+
 
   addBulkEmailBtn(nTabID:number) {
     if(this.mailSystemId <= 0){
@@ -187,6 +184,7 @@ export class ReviewMapComponent implements OnInit {
       return;
     }
     this.tabID = nTabID;
+    this.bIsEdit = false;
     document.getElementById('modalOpen')?.click();
     this.oMapReviewFormDto =new MapReviewFormDto();
   }
