@@ -75,7 +75,8 @@ export class ReportMailHistoryComponent implements OnInit {
 
 
   ngOnInit(): void {
-
+    this.GetMailLifecycleHistory();
+    this.GetMailActivityHistory();
   }
 
 
