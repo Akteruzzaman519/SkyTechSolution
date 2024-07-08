@@ -298,10 +298,30 @@ export class ReviewMapComponent implements OnInit {
   }
 
   public AddReviewIntoGrid(){
-   this.taskEmailGridApi.applyTransaction({add: [this.oMapReviewFormDto]}) 
+    if(this.oMapReviewFormDto.mapReviewName == ""){
+      this.toast.warning("Map Review Name Required!!", "Warning", { progressBar: true });
+      return
+    }
+    if(this.oMapReviewFormDto.mapReviewDetails == ""){
+      this.toast.warning("Map Review Details Required!!", "Warning", { progressBar: true });
+      return
+    }
+    if(this.oMapReviewFormDto.mapReviewNote == ""){
+      this.toast.warning("Map Review Note Required!!", "Warning", { progressBar: true });
+      return
+    }
+    if (this.tabID == 1) {
+      this.taskEmailGridApi.applyTransaction({ add: [this.oMapReviewFormDto] })
+    } else {
+      this.taskMap2EmailGridApi.applyTransaction({ add: [this.oMapReviewFormDto] })
+    }
   }
   public DeleteReviewIntoGrid(){
-   this.taskEmailGridApi.applyTransaction({remove: [this.oMapReviewFormDto]}) 
+    if (this.tabID == 1) {
+      this.taskEmailGridApi.applyTransaction({ remove: [this.oMapReviewFormDto] })
+    } else {
+      this.taskMap2EmailGridApi.applyTransaction({ remove: [this.oMapReviewFormDto] })
+    }
   }
 
   public ReportMailIssue(){
