@@ -9,6 +9,9 @@
       [columnDefs]="colDefs" (gridReady)="ApiGridReady($event)" rowSelection='single'
       (selectionChanged)="onSelectionChanged()" [defaultColDef]="DeafultCol">
     </ag-grid-angular>
+    <div class="mt-2">
+      <label class="form-label"> No of Record : {{totalRecord}}</label>
+    </div>
   </div>
   <div class="col-md-6 ps-2">
 
@@ -87,7 +90,7 @@
                           [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
                           id="mailSourcingId" aria-label=".form-select-lg example">
                           <option value="0"> ---Select Category---</option>
-                          <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
+                          <option *ngFor="let item of KeyValuesCategory" value="{{item.key}}">{{item.value}}</option>
                         </select>
                       </div>
                       <div class="col-md-6">
@@ -103,8 +106,9 @@
 
                       <div class="col-md-12 mb-2">
                         <label for="mapNewBusinessAddress" class="form-label">New Address </label>
-                        <input type="text" class="form-control"
+                        <textarea type="text" class="form-control"
                           [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress" id="mapNewBusinessAddress">
+                          </textarea>
                       </div>
 
                       <div class="col-md-12 mb-2">
@@ -142,7 +146,7 @@
                           [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
                           id="mailSourcingId" aria-label=".form-select-lg example">
                           <option value="0"> ---Select Category---</option>
-                          <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
+                          <option *ngFor="let item of KeyValuesCategory" value="{{item.key}}">{{item.value}}</option>
                         </select>
                       </div>
                       <div class="col-md-6">
@@ -158,8 +162,9 @@
 
                       <div class="col-md-12">
                         <label for="mapNewBusinessAddress" class="form-label">New Address </label>
-                        <input type="text" class="form-control"
+                        <textarea rows="2" type="text" class="form-control"
                           [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress" id="mapNewBusinessAddress">
+                        </textarea>
                       </div>
 
                       <div class="col-md-12">
@@ -176,17 +181,14 @@
           </div>
         </div>
       </div>
-      <div class="card-footer text-end">
-        <button type="button" class="btn btn-success" (click)="ChangeMapInfo()">Submit</button>
+      <div class="card-footer">
+        <button type="button" class="btn btn-danger" (click)="addBulkEmailBtn()">Report Issue</button>
+        <button type="button" class="btn btn-success float-end" (click)="ChangeMapInfo()">Submit</button>
       </div>
 
     </div>
   </div>
-  <div class="col-md-12 mt-2">
-    <label for="mailRelatedTag" class="form-label">No of Record : {{totalRecord}}</label>
-  </div>
 </div>
-
 
 
 
@@ -208,7 +210,7 @@
         <button type="button" class="btn-close" id="BulkemailCloseModal" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body p-0">
         <div class="row">
           <div class="mb-3">
             <label for="nReportIssueId" class="form-label">Select Issue</label>

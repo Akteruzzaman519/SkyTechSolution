@@ -43,6 +43,7 @@ export class ChangeMapInfoComponent implements OnInit {
   public oEmailIssueFormDto :EmailIssueFormDto = new EmailIssueFormDto();
   public oEmailOperationGridDtoList :EmailOperationGridDto[] = [];
   public KeyValues: KeyValueDto[] = [];
+  public KeyValuesCategory: KeyValueDto[] = [];
   public oEmailFormDto = new EmailFormDto();
   public sEmailUserName :string = "";
   public sEmailPassword :string = "";
@@ -68,6 +69,7 @@ export class ChangeMapInfoComponent implements OnInit {
   ngOnInit(): void {
     this.GetEmailsByOperationTag(this.statusTag);
     this.GetIssuesInKeyValue()
+    this.GetMapCategoriesInKeyValue();
   }
 
   ApiGridReady(event: GridReadyEvent) {
@@ -141,6 +143,7 @@ export class ChangeMapInfoComponent implements OnInit {
       return;
     }
     document.getElementById('modalOpen')?.click();
+    this.oEmailIssueFormDto = new EmailIssueFormDto ();
   }
 
   public GetEmailsByOperationTag(relatedModule: any) {
@@ -205,6 +208,15 @@ export class ChangeMapInfoComponent implements OnInit {
        //{{baseURL}}/KeyValue/GetIssuesInKeyValue/{operationTag}
         this.service.Get('/KeyValue/GetIssuesInKeyValue/' +  this.statusTag).subscribe((res: any) => {
           this.KeyValues = res;
+        },
+          (err: any) => {
+            console.log(err);
+          })
+      }
+    public GetMapCategoriesInKeyValue() {
+       //{{baseURL}}/KeyValue/GetMapCategoriesInKeyValue/{operationTag}
+        this.service.Get('/KeyValue/GetMapCategoriesInKeyValue/mail' ).subscribe((res: any) => {
+          this.KeyValuesCategory = res;
         },
           (err: any) => {
             console.log(err);
