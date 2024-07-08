@@ -42,7 +42,7 @@ export class ReviewMapComponent implements OnInit {
   public statusTag :any= "";
   public mailSystemId = 0;
   public mailOperationCompletionId = 0;
-
+  public bIsEdit = false;
   public oEmailMapGridDto :EmailMapGridDto = new EmailMapGridDto();
   public oEmailMap2GridDto :EmailMapGridDto = new EmailMapGridDto();
   public oEmailMapGridDtoList :EmailMapGridDto[] = [];
@@ -155,7 +155,15 @@ export class ReviewMapComponent implements OnInit {
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
   }
-
+  AddReportIssue(){
+    if(this.mailSystemId <= 0){
+      this.toast.warning("Select a mail from listt!!", "Warning", { progressBar: true });
+      return;
+    }
+    document.getElementById('reportmodalOpen')?.click();
+    this.oEmailIssueFormDto =new EmailIssueFormDto();
+    
+  }
   onSelectionChanged(){
     this.sEmailUserName = "";
     this.sEmailPassword = "";
@@ -206,7 +214,7 @@ export class ReviewMapComponent implements OnInit {
     this.oEmailMapGridDto = new EmailMapGridDto();
     this.oEmailMap2GridDto = new EmailMapGridDto();
       this.service.Get('/EmailManagement/GetEmailMaps/' +  this.mailSystemId).subscribe((res: any) => {
-        this.oEmailMapGridDtoList =  res;
+        this.oEmailMapGridDtoList =  res.data;
         if(this.oEmailMapGridDtoList.length > 0){
           this.oEmailMapGridDto =  this.oEmailMapGridDtoList[0];
         }
@@ -293,6 +301,27 @@ export class ReviewMapComponent implements OnInit {
 
   public AddReviewIntoGrid(){
    this.taskEmailGridApi.applyTransaction({add: [this.oMapReviewFormDto]}) 
+  }
+  public DeleteReviewIntoGrid(){
+   this.taskEmailGridApi.applyTransaction({remove: [this.oMapReviewFormDto]}) 
+  }
+
+  public ReportMailIssue(){
+
+    this.oEmailIssueFormDto.mailSystemId = this.mailSystemId;
+    if(this.oEmailIssueFormDto.mailIssueId ==  -1 ){
+      this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
+      return;
+    }
+    //{{baseURL}}/EmailOperation/ReportMailIssue
+    this.service.Post('/EmailOperation/ReportMailIssue/'+this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
+      this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
+      this.rowData = [];
+      this.totalRecord = 0;
+    },
+      (err: any) => {
+        this.toast.error(err, "Error", { progressBar: true });
+      })
   }
 
   togglePasswordVisibility(): void {

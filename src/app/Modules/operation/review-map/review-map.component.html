@@ -149,8 +149,9 @@
                   </div>
                 </div>
               </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-success" (click)="MapReviewSubmit()" >Submit</button> 
+              <div class="card-footer">
+                <button type="button" class="btn btn-danger" (click)="AddReportIssue()">Report Issue</button>
+               <button type="button" class="btn btn-success  float-end" (click)="MapReviewSubmit()" >Submit</button> 
             </div>
           </div>
   
@@ -197,8 +198,56 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"   (click)="AddReviewIntoGrid()">Add</button>
+        <button *ngIf="bIsEdit" type="button" class="btn btn-danger" data-bs-dismiss="modal"   (click)="DeleteReviewIntoGrid()">Delete</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"   (click)="AddReviewIntoGrid()">Add</button>
       </div>
     </div>
   </div>
     
+
+
+
+  
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" hidden id="reportmodalOpen" data-bs-toggle="modal"
+data-bs-target="#staticRportBackdrop">
+Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticRportBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+aria-labelledby="staticRportBackdropLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="staticRportBackdropLabel"><i class="fa-solid fa-envelopes-bulk text-black ms-1"></i>
+        Report Issue</h5>
+      <button type="button" class="btn-close" id="BulkemailCloseModal" data-bs-dismiss="modal"
+        aria-label="Close"></button>
+    </div>
+    <div class="modal-body p-0">
+      <div class="row">
+        <div class="mb-3">
+          <label for="nReportIssueId" class="form-label">Select Issue</label>
+          <select class="form-select form-select mb-3" [(ngModel)]="oEmailIssueFormDto.mailIssueId" name="nReportIssueId"
+            id="mailSourcingId" aria-label=".form-select-lg example">
+            <option value="0"> --- Select Issue ---</option>
+            <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
+            <option value="0">Custom</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="mailIssueNote" class="form-label">Custom Issue Note</label>
+          <textarea rows="3" type="text" class="form-control" [(ngModel)]="oEmailIssueFormDto.mailIssueNote" name="mailIssueNote"
+            id="mailIssueNote">
+          </textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="ReportMailIssue()">Submit
+        Issue</button>
+    </div>
+  </div>
+</div>
