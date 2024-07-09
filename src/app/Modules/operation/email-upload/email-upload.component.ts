@@ -20,14 +20,6 @@ export class EmailUploadComponent {
   private balkEmailGridApi!: GridApi;
   public paginationPageSize = 1000;
 
-
-  public defaultColDef: ColDef = {
-    editable: true,
-    filter: true,
-    flex: 1,
-    minWidth: 190,
-  };
-
   public themeClass: string =
   "ag-theme-quartz";
   public paginationNumberFormatter: (
