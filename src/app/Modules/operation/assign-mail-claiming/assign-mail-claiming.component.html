@@ -3,15 +3,35 @@
       <span class="fs-4"> <i class="fa-solid fa-envelopes-bulk text-black ms-1"></i> Assign For Map Claiming</span>
     </div>
   
-    <div class="col-md-12">
+    <div class="col-md-12 position-relative">
       <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; " [rowMultiSelectWithClick]="true"
     [columnDefs]="colDefs" [pagination]="true" [rowSelection]="'multiple'"    (selectionChanged)="onSelectionChanged($event)"
         (gridReady)="onGridReadyAsignToAgent($event)" [paginationPageSize]="paginationPageSize"
         [defaultColDef]="DeafultCol">
       </ag-grid-angular>
+      <div style="width: 250px;position: absolute;left: 0px;bottom: -2px;z-index: 222;">
+        <div class="row g-0 p-2 justify-content-center">
+          <div class="col-6 pt-2">Page Size</div>
+          <div class="col-6">
+            <select class="form-select" [(ngModel)]="paginationPageSize" name="paginationPageSize" aria-label="Default select example">
+              <option  selected>Page Size</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="25">25</option>
+              <option value="30">30</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="500">500</option>
+              <option value="1000">1000</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
   
-    <div class="col-md-12 mt-3">
+    <div class="col-md-12 my-3">
       <span class="fs-5">Total Record : {{totalRecord}}</span>
       <button type="button" class="btn btn-success float-end" (click)="AssignToAgent()">Assign To Agent</button>
     </div>

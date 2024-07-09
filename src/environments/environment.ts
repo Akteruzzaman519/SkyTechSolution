@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   version: '1.0.1',
-  //apiBaseUrl: 'http://api.ajrgroupbd.net/api'
   apiBaseUrl: 'http://mailapi.skytechsolutionsbd.com/api'
 };
 // apiBaseUrl: 'http://erpapi.ajrgroupbd.net/api'
