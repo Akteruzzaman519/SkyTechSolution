@@ -60,8 +60,8 @@ export class EmailUploadComponent {
   colDefs: any[] = [
     {valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 40, },
     { field: "mailUserName", headerName: 'Email' },
-    { field: "mailUserPassword", HeaderName: 'Password' },
-    { field: "mailRecoveryMail", HeaderName: 'Recovery Mail' },
+    { field: "mailUserPassword", headerName: 'Email Password' },
+    { field: "mailRecoveryMail", headerName: 'Email Recovery Mail' },
     // { field: "sourcingName", HeaderName: 'Source' }
   ];
 

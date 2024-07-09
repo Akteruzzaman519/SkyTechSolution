@@ -3,7 +3,16 @@
         <span class="grid-header"><i aria-hidden="true" class="fa fa-list"></i> Mail History </span>
     </div>
 
-    <div class="col-md-5 mb-3">
+    <div class="col-md-3 mb-3">
+        <div class="">
+            <select class="form-select" aria-label="Default select example">
+                <option selected value="1">Mail</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
         <div class="">
             <input type="text" class="form-control" [(ngModel)]="search" placeholder="type email here ...">
         </div>
@@ -15,21 +24,25 @@
 
     </div>
 
-    <div class="col-md-6 pe-2">
+    <div class="col-md-5 pe-2">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title"><i class="fa-regular fa-life-ring ms-1"></i>
-                    LifeCycle History </h5>
+                    Lifecycle History </h5>
             </div>
             <div class="card-body">
 
                 <div *ngFor="let item of oVMailLifecycleDtoList;let isLast = last" class="mb-3 left_content">
 
                     <div class="row g-0">
-                        <div class="col-3 fw-bold">
+                        <div class="col-2 ">
 
-                            {{item.mailLifecycleDatetime | date:'EE, MMMM d, y'}} <br>
-                            {{item.mailLifecycleDatetime | date:'h:mm a' }}
+
+                            <div class="text-black">
+                                {{item.mailLifecycleDatetime | date:'MMMM d, y'}}
+                            </div>
+                            <div class="" style="font-size: small"> {{item.mailLifecycleDatetime | date:'h:mm a' }}
+                            </div>
 
                         </div>
                         <div class="col-1 position-relative">
@@ -39,14 +52,13 @@
                             </div>
                         </div>
                         <div class="col">
-                            <b>{{item.lifecycleName}} </b>
-                            <br>
-                            <div style="font-size: small; color: #979393;"> {{item.mailLifecycleNote}}</div>
+                            <div class="text-black fw-bold">{{item.lifecycleName}} </div>
+                            <div style="font-size: small;"> {{item.mailLifecycleNote}}</div>
                         </div>
-                        <div class="col-2 ">
-                            <b>{{item.mailLifecycleOccuredByFullName}}</b>
-                            <br>
-                            <div style="font-size: small; color: #979393;"> {{item.mailLifecycleOccuredByUniqueCode}}
+                        <div class="col-3 ">
+
+                            <div class="text-black"> {{item.mailLifecycleOccuredByFullName}}</div>
+                            <div style="font-size: small;"> {{item.mailLifecycleOccuredByUniqueCode}}
                             </div>
                         </div>
                     </div>
@@ -55,7 +67,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6 ps-2">
+    <div class="col-md-4 ps-2">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title"> <i class="fa-solid fa-chart-line ms-1"></i>
@@ -70,22 +82,22 @@
 
                                 <div class="row">
                                     <div class="col-3">
-                                        <b> {{item.activityByFullName}}</b>
-                                        <br>
-                                        <div style="font-size: small; color: #979393;"> {{item.activityByUniqueCode}}
+                                        <div class="text-black">{{item.activityByFullName}}</div>
+                                        <div style="font-size: small;"> {{item.activityByUniqueCode}}
                                         </div>
                                     </div>
 
                                     <div class="col">
-                                        <b> {{item.activityName}}</b>
-                                        <br>
-                                        <div class="" style="font-size: small; color: #979393;"> {{item.activityNote}}
-                                        </div>
+                                        <div class="text-black fw-bold"> {{item.activityName}}</div>
+
+                                        <div class="" style="font-size: small;"> {{item.activityNote}} </div>
 
                                     </div>
-                                    <div class="col-3 fw-bold">
-                                        {{item.activityAt | date:'EE, MMMM d, y' }} <br>
-                                        {{item.activityAt | date:'h:mm a' }}
+                                    <div class="col-3">
+
+                                        <div class="text-black"> {{item.activityAt | date:'MMMM d, y' }} </div>
+                                        <div class="" style="font-size: small;">{{item.activityAt | date:'h:mm a' }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -96,6 +108,19 @@
 
             </div>
         </div>
+    </div>
+
+    <div class="col-md-3 ps-2">
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title"> <i class="fa-solid fa-chart-line ms-1"></i>
+                    Activity History </h5>
+            </div>
+            <div class="card-body">
+            </div>
+        </div>
+
     </div>
 
 </div>

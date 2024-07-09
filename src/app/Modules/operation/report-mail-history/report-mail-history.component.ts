@@ -38,6 +38,16 @@ export class ReportMailHistoryComponent implements OnInit {
       }
     )
   }
+  GetMailHistory() {
+    this.httpServices.Get("/EmailReport/GetMailHistory/" + this.mailSystemId).subscribe(
+      (res: any) => {
+        this.oVMailLifecycleDtoList = res;
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    )
+  }
   
   GetMailBySearch() {
     this.httpServices.Post("/EmailReport/GetMailBySearch", this.oEmailOptimizedDto).subscribe(
