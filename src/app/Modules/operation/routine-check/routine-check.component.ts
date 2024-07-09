@@ -244,12 +244,28 @@ export class RoutineCheckComponent implements OnInit {
   }
 
   public AddReviewIntoGrid(){
+
+    if(this.oMailTasksManualFormDto.mailTaskName == ""){
+      this.toast.warning("Task Name Required!!", "Warning", { progressBar: true });
+      return
+    }
+    if(this.oMailTasksManualFormDto.mailTaskDescription == ""){
+      this.toast.warning("Task Description Required!!", "Warning", { progressBar: true });
+      return
+    }
+    if(this.oMailTasksManualFormDto.mailTaskNote == ""){
+      this.toast.warning("Task Note Required!!", "Warning", { progressBar: true });
+      return
+    }
+
     if(this.bIsEdit){
       this.taskEmailGridApi.applyTransaction({update: [this.oMailTasksManualFormDto]}) 
     }
     else{
       this.taskEmailGridApi.applyTransaction({add: [this.oMailTasksManualFormDto]}) 
     }
+
+    document.getElementById("BulkemailCloseModal")?.click();
    
   }
   public DeleteReviewIntoGrid(){
