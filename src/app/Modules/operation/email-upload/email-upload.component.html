@@ -1,11 +1,11 @@
 <div class="row g-0">
-  <div class="col-md-12 mb-3">
+  <div class="col-md-12 my-3">
     <span class="grid-header"><i aria-hidden="true" class="fa fa-list"></i> Upload Fresh Email </span>
     <button type="button" class="btn btn-info float-end " (click)="addBulkEmailBtn()">Add Bulk Email</button>
   </div>
 
   <div class="col-md-12 position-relative">
-    <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; " [rowData]="rowData"
+    <ag-grid-angular class="ag-theme-alpine" style="height: 67vh;width: 100%; " [rowData]="rowData"
       [columnDefs]="colDefs" (gridReady)="ApiGridReady($event)" [paginationPageSize]="paginationPageSize"
       [pagination]="true" [rowData]="rowData" [class]="themeClass" [defaultColDef]="DeafultCol">
     </ag-grid-angular>

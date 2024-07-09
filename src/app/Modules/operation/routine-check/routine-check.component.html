@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12 my-3">
-    <span class="fs-4"> <i class="fa-solid fa-envelopes-bulk text-black ms-1"></i> Manage Routine Task</span>
-    <!-- <button type="button" class="btn btn-info float-end " (click)="addBulkEmailBtn()">View Details</button> -->
+
+    <span class="grid-header"><i aria-hidden="true" class="fa fa-list"></i> Manage Routine Task </span>
   </div>
 
   <div class="col-md-6">
@@ -10,7 +10,16 @@
        [defaultColDef]="DeafultCol">
     </ag-grid-angular>
     <div class="mt-2">
-      <label class="form-label"> No of Record : {{totalRecord}}</label>
+      <div class="col-md-12 my-3">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group mb-3" style="width: 220px!important;">
+              <span class="input-group-text" id="basic-addon1">No of selected rows </span>
+              <input type="text" class="form-control" [(ngModel)]="totalRecord" aria-describedby="basic-addon1">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="col-md-6 ps-2">
