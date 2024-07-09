@@ -6,43 +6,45 @@
 
   <div class="col-md-12 position-relative">
     <ag-grid-angular class="ag-theme-alpine" style="height: 60vh;width: 100%; " [rowData]="rowData"
-      [columnDefs]="colDefs" (gridReady)="ApiGridReady($event)"
-      [paginationPageSize]="paginationPageSize"
-      [pagination]="true"
-      [rowData]="rowData"
-      [class]="themeClass"
-       [defaultColDef]="DeafultCol">
+      [columnDefs]="colDefs" (gridReady)="ApiGridReady($event)" [paginationPageSize]="paginationPageSize"
+      [pagination]="true" [rowData]="rowData" [class]="themeClass" [defaultColDef]="DeafultCol">
     </ag-grid-angular>
 
-    <div style="width: 250px;position: absolute;left: 0px;bottom: -2px;z-index: 222;">
-      <div class="row g-0 p-2 justify-content-center">
-        <div class="col-6 pt-2">Page Size</div>
-        <div class="col-6">
-          <select class="form-select" [(ngModel)]="paginationPageSize" name="paginationPageSize" aria-label="Default select example">
-            <option  selected>Page Size</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="25">25</option>
-            <option value="30">30</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="500">500</option>
-            <option value="1000">1000</option>
-          </select>
-        </div>
-      </div>
+    <div style="width: 100px; position: absolute; left: 10px; bottom: 9px; z-index: 222; display: -webkit-inline-box;">
+      <div class="pt-1 ">show</div>
+      <select class="form-select ms-2 fw-bold" style="font-size: 10px;" [(ngModel)]="paginationPageSize"
+        name="paginationPageSize" aria-label="Default select example">
+        <option selected>--Page Size--</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+      </select>
     </div>
 
 
   </div>
-  
 
-  <div class="ccol-md-12 my-3">
-    <span class="">Total Record : {{totalRecord}}</span>
-    <button type="button" class="btn btn-success float-end" (click)="BulkEmailSave()">Save Data</button>
+  <div class="col-md-12 my-3">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group mb-3" style="width: 220px!important;">
+          <span class="input-group-text" id="basic-addon1">No of selected rows </span>
+          <input type="text" class="form-control" [(ngModel)]="totalRecord" aria-describedby="basic-addon1">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <button type="button" class="btn btn-success float-end" (click)="BulkEmailSave()">Save Data</button>
+      </div>
+    </div>
   </div>
+
 </div>
 
 

@@ -35,7 +35,7 @@ export class AsignToAgentComponent implements OnInit {
     { field: 'mailUploadedByFullName', headerName: 'Uploaded By' },
     { field: 'mailUploadedByUniqueCode', headerName: 'Code' },
     { field: 'sourceName', headerName: 'Source' },
-    { field: 'mailBatch', headerName: 'Batch' },
+    // { field: 'mailBatch', headerName: 'Batch' },
     { field: 'mailUserName', headerName: 'Email' },
     { field: 'lifecycleRelatedName', headerName: 'Status' },
   ];
