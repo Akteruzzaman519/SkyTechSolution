@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpCommonService } from '../../Common/http-common.service';
-import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { ColDef, GridApi, GridReadyEvent, RowDoubleClickedEvent } from 'ag-grid-community';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { VMailLifecycleDto } from 'src/app/Models/VMailLifecycleDto';
 import { VActivityHistoryDto } from 'src/app/Models/VActivityHistoryDto';
 import { EmailOptimizedDto } from 'src/app/Models/EmailOptimizedDto';
-import { MailHistoryReportDto, MailTaskReportDto } from 'src/app/Models/MailReviewReportDto';
+import { MailHistoryReportDto, MailReviewReportDto, MailTaskReportDto } from 'src/app/Models/MailReviewReportDto';
 import { MailTasksManualFormDto } from 'src/app/Models/MailTasksManualFormDto';
 
 @Component({
@@ -37,6 +37,7 @@ export class ReportMailHistoryComponent implements OnInit {
 
 
   oMailTasksManualFormDto= new MailTasksManualFormDto();
+  oMailReviewReportDto= new MailReviewReportDto();
 
 
   constructor(private httpServices: HttpCommonService) { }
@@ -188,6 +189,19 @@ export class ReportMailHistoryComponent implements OnInit {
         console.log(err);
       }
     )
+  }
+
+
+  public RowDoubleClickReview(params: RowDoubleClickedEvent){
+    debugger
+    this.oMailReviewReportDto = params.data;
+    document.getElementById('reviewModalOpen')?.click();
+    console.log(params.data);
+  }
+
+  public RowDoubleClickTask(params: RowDoubleClickedEvent){
+    this.oMailTasksManualFormDto = params.data;
+    document.getElementById('taskModalOpen')?.click();
   }
 
 

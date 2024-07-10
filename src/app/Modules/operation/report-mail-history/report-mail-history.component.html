@@ -28,7 +28,7 @@
 
     <div class="col-md-9 my-2 mb-4">
         <ag-grid-angular class="ag-theme-alpine" style="height: 22vh;width: 100%; " [columnDefs]="colDefsEmail"
-            [rowSelection]="'multiple'" (gridReady)="emailGridReady($event)" [defaultColDef]="DeafultCol">
+           (gridReady)="emailGridReady($event)" [defaultColDef]="DeafultCol">
         </ag-grid-angular>
     </div>
 
@@ -118,7 +118,8 @@
                                         </div>
                                         <div class="col-md-12 my-2">
                                             <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; "
-                                                [columnDefs]="colDefs" [rowSelection]="'multiple'"
+                                                [columnDefs]="colDefs"
+                                                (rowDoubleClicked)="RowDoubleClickReview($event)"
                                                 (gridReady)="Review1GridReady($event)" [defaultColDef]="DeafultCol">
                                             </ag-grid-angular>
                                         </div>
@@ -184,7 +185,8 @@
                                         </div>
                                         <div class="col-md-12 my-2">
                                             <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; "
-                                                [columnDefs]="colDefs" [rowSelection]="'multiple'"
+                                                [columnDefs]="colDefs"
+                                                (rowDoubleClicked)="RowDoubleClickReview($event)"
                                                 (gridReady)="Review2GridReady($event)" [defaultColDef]="DeafultCol">
                                             </ag-grid-angular>
                                         </div>
@@ -203,7 +205,7 @@
                                         <div class="col-md-12 my-2">
 
                                             <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; "
-                                                [columnDefs]="colDefstask" [rowSelection]="'multiple'"
+                                                [columnDefs]="colDefstask" (rowDoubleClicked)="RowDoubleClickTask($event)"
                                                 (gridReady)="Task1GridReady($event)" [defaultColDef]="DeafultCol">
                                             </ag-grid-angular>
 
@@ -382,27 +384,27 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel"><i
                         class="fa-solid fa-envelopes-bulk text-black ms-1"></i>
-                    Task</h5>
+                    Review </h5>
                 <button type="button" class="btn-close" id="reviewModalClose" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
                 <div class="mb-2">
-                    <label for="mailIssueNote" class="form-label">Task Name</label>
-                    <input type="text" class="form-control" [(ngModel)]="oMailTasksManualFormDto.mailTaskName"
-                        name="mailTaskName" id="mailTaskName">
+                    <label for="mapReviewName" class="form-label">Review Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="oMailReviewReportDto.mapReviewName"
+                        name="mapReviewName" id="mapReviewName">
                 </div>
                 <div class="mb-2">
-                    <label for="Description" class="form-label">Description</label>
+                    <label for="mapReviewDetails" class="form-label">Description</label>
                     <textarea rows="3" type="text" class="form-control"
-                        [(ngModel)]="oMailTasksManualFormDto.mailTaskDescription" name="Description" id="Description">
+                        [(ngModel)]="oMailReviewReportDto.mapReviewDetails" name="mapReviewDetails" id="mapReviewDetails">
             </textarea>
                 </div>
 
                 <div class="mb-2">
-                    <label for="mailIssueNote" class="form-label">Note</label>
-                    <input type="text" class="form-control" [(ngModel)]="oMailTasksManualFormDto.mailTaskNote"
-                        name="mailTaskNote" id="mailTaskNote">
+                    <label for="mapReviewNote" class="form-label">Note</label>
+                    <input type="text" class="form-control" [(ngModel)]="oMailReviewReportDto.mapReviewNote"
+                        name="mapReviewNote" id="mapReviewNote">
                 </div>
             </div>
         </div>
