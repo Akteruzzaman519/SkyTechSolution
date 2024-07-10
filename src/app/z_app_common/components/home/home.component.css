@@ -1,0 +1,32 @@
+
+.text_size{
+    font-size: 25px;
+    padding-left: 9px;
+}
+
+.bordera{
+    border: 1px solid #00aeef;
+}
+.value_text{
+    background-color: #00aeef;
+    color: white;
+}
+.start_text{
+    color: #00aeef;
+}
+
+.left_bar{
+    width: 90%;
+}
+.right_site{
+    width: 10%;
+}
+
+
+
+
+
+
+
+
+
