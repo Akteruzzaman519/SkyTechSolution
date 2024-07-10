@@ -1,0 +1,31 @@
+
+.text_size{
+    font-size: 25px;
+}
+
+.bordera{
+    border: 1px solid #00aeef;
+}
+.value_text{
+    background-color: #00aeef;
+    color: white;
+}
+.start_text{
+    color: #00aeef;
+}
+
+.left_bar{
+    width: 80%;
+}
+.right_site{
+    width: 20%;
+}
+
+
+
+
+
+
+
+
+

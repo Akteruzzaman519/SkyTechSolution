@@ -1,5 +1,6 @@
 import { AuthService, Roles } from 'shared/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { HttpCommonService } from 'src/app/Modules/Common/http-common.service';
 
 @Component({
     templateUrl: './home.component.html',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private authService: AuthService) { }
+
+    public VLifecycleWorkloadSummaryDto: any;
+
+    constructor(private authService: AuthService ,private service: HttpCommonService) { }
 
     ngOnInit(): void {
+    
+    this.GetRequest();
       this.authService.isLoggedIn
         .subscribe(state => {
           if (state) {
@@ -40,6 +46,28 @@ export class HomeComponent implements OnInit {
             }
         }
     }
+
+
+
+    private GetRequest() {
+
+        this.service.Get('/EmailReport/GetLifecycleWorkloadSummary').subscribe((res: any) => {
+          this.VLifecycleWorkloadSummaryDto = res;
+          console.log("Helo" +res.LifecycleName)
+        },
+          (err: any) => {
+            console.log(err);
+          })
+    
+      }
+    
+
+
+
+
+
+
+
 
 
 

@@ -1,1 +1,18 @@
-<h2>Dashboard</h2>
+<h2 class="my-1">PENDING LIST</h2>
+<div class="main_contant">
+
+    <div class="col-md-6">
+        <div class="card p-4">
+            <div class="d-inline bordera mt-3" *ngFor="let Item of VLifecycleWorkloadSummaryDto">
+                <div class="left_bar float-start p-2">
+                    <span class="text_size start_text">{{Item.lifecycleName}}</span>
+                </div>
+                <div class="right_site float-end bordera p-2 value_text">
+                    <span class="text_size">{{Item.noOfRecord}}</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
