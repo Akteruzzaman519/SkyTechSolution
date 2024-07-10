@@ -3,23 +3,226 @@
         <span class="grid-header"><i aria-hidden="true" class="fa fa-list"></i> Mail History </span>
     </div>
 
-    <div class="col-md-3 mb-3">
-        <div class="">
-            <select class="form-select" [(ngModel)]="searchBy" aria-label="Default select example">
-                <option value="mail">Email</option>
-                <option value="map">Map URL</option>
-            </select>
+    <div class="col-md-3 my-2 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <select class="form-select" [(ngModel)]="searchBy" aria-label="Default select example">
+                            <option value="mail">Email</option>
+                            <option value="map">Map URL</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <input type="text" class="form-control" name="search" [(ngModel)]="search"
+                            placeholder="type email here ...">
+                    </div>
+                    <div class="col-md-12 text-end">
+                        <button type="submit" class="btn btn-success" (click)="GetMailBySearch()">Search</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="">
-            <input type="text" class="form-control" [(ngModel)]="search" placeholder="type email here ...">
+
+    <div class="col-md-9 my-2 mb-4">
+        <ag-grid-angular class="ag-theme-alpine" style="height: 22vh;width: 100%; " [columnDefs]="colDefsEmail"
+            [rowSelection]="'multiple'" (gridReady)="emailGridReady($event)" [defaultColDef]="DeafultCol">
+        </ag-grid-angular>
+    </div>
+
+    <div class="col-md-3 ps-2">
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title"> <i class="fa-solid fa-chart-line ms-1"></i>
+                    Mail History </h5>
+            </div>
+            <div class="card-body">
+
+                <!-- Start Tab data  -->
+
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#map1">Map 1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="Map2()" data-bs-toggle="tab" href="#map2">Map 2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="GetMailTasks()" data-bs-toggle="tab" href="#tasks">Tasks</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade show active" id="map1">
+                                    <div class="row g-2" *ngIf="oMailHistoryReportDto?.mailMapDetails">
+                                        <div class="col-md-9 my-2 pe-2">
+                                            <div class=" fw-bold text-black">
+                                                <!-- SkyTeck Solution Limited For Parts and Wholesale Accessory -->
+                                                {{oMailHistoryReportDto.mailMapDetails.mapNewBusinessName}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 fs-4 ">
+                                            <div class="fw-bold text-black"> <a style="cursor: pointer;"
+                                                    (click)="openNewWindow(oMailHistoryReportDto.mailMapDetails.mapNewWebsite)"><i
+                                                        class="fa-solid fa-globe me-3"></i></a>
+                                                <a style="cursor: pointer;"
+                                                    (click)="openNewWindow(oMailHistoryReportDto.mailMapDetails.mapCurrentMapLink)"><i
+                                                        class="fa-solid fa-map-location-dot"></i></a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 pe-2 my-2">
+                                            <div class="text-black">
+                                                {{oMailHistoryReportDto.mailMapDetails.mapNewBusinessCategoryName}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 pe-2 my-2">
+                                            <div class="text-black" style="text-decoration-line: line-through;">
+                                                {{oMailHistoryReportDto.mailMapDetails.mapCurrentCategoryName}}</div>
+                                        </div>
+
+
+
+                                        <div class="col-md-12 my-2 ">
+                                            <div style="font-size: small;">
+                                                {{oMailHistoryReportDto.mailMapDetails.mapNewBusinessAddress}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 my-2 pe-2">
+                                            <div class="" style="font-size: small;">
+                                                {{oMailHistoryReportDto.mailMapDetails.mapNewPhone}}</div>
+                                        </div>
+                                        <div class="col-md-6 my-2 ps-2">
+                                            <div class="" style="font-size: small; text-decoration-line: line-through;">
+                                                {{oMailHistoryReportDto.mailMapDetails.mapCurrentNumber}}
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-12">
+                                            <hr>
+                                        </div>
+                                        <div class="col-md-12 my-2">
+                                            <h5 class="card-title"> <i class="fa-solid fa-chart-line ms-1"></i>
+                                                Review </h5>
+                                        </div>
+                                        <div class="col-md-12 my-2">
+                                            <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; "
+                                                [columnDefs]="colDefs" [rowSelection]="'multiple'"
+                                                (gridReady)="Review1GridReady($event)" [defaultColDef]="DeafultCol">
+                                            </ag-grid-angular>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade " id="map2">
+
+                                    <div class="row g-2" *ngIf="oMailHistoryReportDto1?.mailMapDetails">
+                                        <div class="col-md-9 my-2 pe-2">
+                                            <div class=" fw-bold text-black">
+                                                <!-- SkyTeck Solution Limited For Parts and Wholesale Accessory -->
+                                                {{oMailHistoryReportDto1.mailMapDetails.mapNewBusinessName}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 fs-4 ">
+                                            <div class="fw-bold text-black"> <a style="cursor: pointer;"
+                                                    (click)="openNewWindow(oMailHistoryReportDto1.mailMapDetails.mapNewWebsite)"><i
+                                                        class="fa-solid fa-globe me-3"></i></a>
+                                                <a style="cursor: pointer;"
+                                                    (click)="openNewWindow(oMailHistoryReportDto1.mailMapDetails.mapCurrentMapLink)"><i
+                                                        class="fa-solid fa-map-location-dot"></i></a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 pe-2 my-2">
+                                            <div class="text-black">
+                                                {{oMailHistoryReportDto1.mailMapDetails.mapNewBusinessCategoryName}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 pe-2 my-2">
+                                            <div class="text-black" style="text-decoration-line: line-through;">
+                                                {{oMailHistoryReportDto1.mailMapDetails.mapCurrentCategoryName}}</div>
+                                        </div>
+
+
+
+                                        <div class="col-md-12 my-2 ">
+                                            <div style="font-size: small;">
+                                                {{oMailHistoryReportDto1.mailMapDetails.mapNewBusinessAddress}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 my-2 pe-2">
+                                            <div class="" style="font-size: small;">
+                                                {{oMailHistoryReportDto1.mailMapDetails.mapNewPhone}}</div>
+                                        </div>
+                                        <div class="col-md-6 my-2 ps-2">
+                                            <div class="" style="font-size: small; text-decoration-line: line-through;">
+                                                {{oMailHistoryReportDto1.mailMapDetails.mapCurrentNumber}}
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-12">
+                                            <hr>
+                                        </div>
+                                        <div class="col-md-12 my-2">
+                                            <h5 class="card-title"> <i class="fa-solid fa-chart-line ms-1"></i>
+                                                Review </h5>
+                                        </div>
+                                        <div class="col-md-12 my-2">
+                                            <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; "
+                                                [columnDefs]="colDefs" [rowSelection]="'multiple'"
+                                                (gridReady)="Review2GridReady($event)" [defaultColDef]="DeafultCol">
+                                            </ag-grid-angular>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade " id="tasks">
+
+                                    <div class="row g-2">
+
+                                        <div class="col-md-12 my-2">
+                                            <h5 class="card-title"> <i class="fa-solid fa-chart-line ms-1"></i>
+                                                Task </h5>
+                                        </div>
+                                        <div class="col-md-12 my-2">
+
+                                            <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; "
+                                                [columnDefs]="colDefstask" [rowSelection]="'multiple'"
+                                                (gridReady)="Task1GridReady($event)" [defaultColDef]="DeafultCol">
+                                            </ag-grid-angular>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Tab data  -->
+
+            </div>
         </div>
-    </div>
-    <div class="col mb-3">
-        <button type="submit" class="btn btn-success" (click)="searchEmail()">Search</button>
-    </div>
-    <div class="w-100 mt-2">
 
     </div>
 
@@ -77,7 +280,7 @@
                 <div *ngFor="let item of oVActivityHistoryDtoList" class="card mb-3">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12 mb-3">
+                            <div class="col-md-12">
 
                                 <div class="row">
                                     <div class="col-3">
@@ -109,166 +312,99 @@
         </div>
     </div>
 
-    <div class="col-md-3 ps-2">
 
-        <div class="card">
-            <div class="card-header">
-                <h5 class="card-title"> <i class="fa-solid fa-chart-line ms-1"></i>
-                    Mail History </h5>
+
+</div>
+
+
+
+
+
+
+<!-- modal setup  -->
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" hidden id="taskModalOpen" data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop">
+    Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"><i
+                        class="fa-solid fa-envelopes-bulk text-black ms-1"></i>
+                    Task</h5>
+                <button type="button" class="btn-close" id="taskModalClose" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
-            <div class="card-body">
-
-                <!-- Start Tab data  -->
-
-                <div class="col-md-12">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#map1">Map 1</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#map2">Map 2</a>
-                        </li>
-                    </ul>
+            <div class="modal-body p-4">
+                <div class="mb-2">
+                    <label for="mailIssueNote" class="form-label">Task Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="oMailTasksManualFormDto.mailTaskName"
+                        name="mailTaskName" id="mailTaskName">
+                </div>
+                <div class="mb-2">
+                    <label for="Description" class="form-label">Description</label>
+                    <textarea rows="3" type="text" class="form-control"
+                        [(ngModel)]="oMailTasksManualFormDto.mailTaskDescription" name="Description" id="Description">
+            </textarea>
                 </div>
 
-                <div class="col-md-12 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div id="myTabContent" class="tab-content">
-                                <div class="tab-pane fade show active" id="map1">
-                                    <div class="row g-2">
-                                        <div class="col-md-6 my-2 pe-2">
-                                            <div class="">Business Name</div>
-                                        </div>
-                                        <div class="col-md-6 mb-2 ps-2">
-                                           <div class=""> Web Icon  | Map Icon</div>
-                                        </div>
-
-
-                                        <div class="col-md-12 my-2">
-                                            <div class="">Address</div>
-                                        </div>
-                                     
-
-
-                                        <div class="col-md-6 my-2 pe-2">
-                                            <div class="">Business Name</div>
-                                        </div>
-                                        <div class="col-md-6 my-2 ps-2">
-                                           <div class=""> Web Icon  | Map Icon</div>
-                                        </div>
-
-
-                                        <div class="col-md-6 my-2 pe-2">
-                                            <div class="">Phone</div>
-                                        </div>
-                                        <div class="col-md-6 my-2 ps-2">
-                                           <div class=""> Old Phone</div>
-                                        </div>
-
-                                        <div class="col-md-12 my-2">
-                                          <div class="card">
-                                            <div class="card-header">
-                                                Task
-                                            </div>
-                                            <div class="card-body p-0">
-                                                <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; " 
-                                                [columnDefs]="colDefs"  [rowSelection]="'multiple'"   
-                                                    (gridReady)="Task1GridReady($event)"  [defaultColDef]="DeafultCol">
-                                                  </ag-grid-angular>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <div class="col-md-12 my-2">
-                                            <div class="card">
-                                              <div class="card-header">
-                                                  Review
-                                              </div>
-                                              <div class="card-body p-0">
-                                                  <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; " 
-                                                  [columnDefs]="colDefs"  [rowSelection]="'multiple'"   
-                                                      (gridReady)="Review1GridReady($event)"  [defaultColDef]="DeafultCol">
-                                                    </ag-grid-angular>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade " id="map2">
-
-                                    <div class="row g-2">
-                                        <div class="col-md-6 my-2 pe-2">
-                                            <div class="">Business Name</div>
-                                        </div>
-                                        <div class="col-md-6 mb-2 ps-2">
-                                           <div class=""> Web Icon  | Map Icon</div>
-                                        </div>
-
-
-                                        <div class="col-md-12 my-2">
-                                            <div class="">Address</div>
-                                        </div>
-                                     
-
-                                        <div class="col-md-6 my-2 pe-2">
-                                            <div class="">Business Name</div>
-                                        </div>
-                                        <div class="col-md-6 my-2 ps-2">
-                                           <div class=""> Web Icon  | Map Icon</div>
-                                        </div>
-
-
-                                        <div class="col-md-6 my-2 pe-2">
-                                            <div class="">Phone</div>
-                                        </div>
-                                        <div class="col-md-6 my-2 ps-2">
-                                           <div class=""> Old Phone</div>
-                                        </div>
-
-                                        <div class="col-md-12 my-2">
-                                          <div class="card">
-                                            <div class="card-header">
-                                                Task
-                                            </div>
-                                            <div class="card-body p-0">
-                                                <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; " 
-                                                [columnDefs]="colDefs"  [rowSelection]="'multiple'"   
-                                                    (gridReady)="Task2GridReady($event)"  [defaultColDef]="DeafultCol">
-                                                  </ag-grid-angular>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <div class="col-md-12 my-2">
-                                            <div class="card">
-                                              <div class="card-header">
-                                                  Review
-                                              </div>
-                                              <div class="card-body p-0">
-                                                  <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; " 
-                                                  [columnDefs]="colDefs"  [rowSelection]="'multiple'"   
-                                                      (gridReady)="Review2GridReady($event)"  [defaultColDef]="DeafultCol">
-                                                    </ag-grid-angular>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mb-2">
+                    <label for="mailIssueNote" class="form-label">Note</label>
+                    <input type="text" class="form-control" [(ngModel)]="oMailTasksManualFormDto.mailTaskNote"
+                        name="mailTaskNote" id="mailTaskNote">
                 </div>
-
-                <!-- End Tab data  -->
-
             </div>
         </div>
-
     </div>
+</div>
 
+
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" hidden id="reviewModalOpen" data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop">
+    Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"><i
+                        class="fa-solid fa-envelopes-bulk text-black ms-1"></i>
+                    Task</h5>
+                <button type="button" class="btn-close" id="reviewModalClose" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <div class="mb-2">
+                    <label for="mailIssueNote" class="form-label">Task Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="oMailTasksManualFormDto.mailTaskName"
+                        name="mailTaskName" id="mailTaskName">
+                </div>
+                <div class="mb-2">
+                    <label for="Description" class="form-label">Description</label>
+                    <textarea rows="3" type="text" class="form-control"
+                        [(ngModel)]="oMailTasksManualFormDto.mailTaskDescription" name="Description" id="Description">
+            </textarea>
+                </div>
+
+                <div class="mb-2">
+                    <label for="mailIssueNote" class="form-label">Note</label>
+                    <input type="text" class="form-control" [(ngModel)]="oMailTasksManualFormDto.mailTaskNote"
+                        name="mailTaskNote" id="mailTaskNote">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

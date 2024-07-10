@@ -3,12 +3,12 @@ export class MailHistoryReportDto {
 
     constructor() {
         this.mailMapDetails = new MailMapReportDto();
-        this.mmailTasks = [];
-        this.noOfRecord = [];
+        this.mailTasks = [];
+        this.mailReviews  = [];
     }
     public mailMapDetails: MailMapReportDto;
-    public mmailTasks: MailTaskReportDto[];
-    public noOfRecord: MailTaskReportDto[];
+    public mailTasks: MailTaskReportDto[];
+    public mailReviews: MailReviewReportDto[];
 }
 
 export class MailMapReportDto {
