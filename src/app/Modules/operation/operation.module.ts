@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: "change_map_info", component: ChangeMapInfoComponent, title: "Change Map Info" },
   { path: "assign_for_review_on_map", component: AssignReviewMapComponent, title: "Assign For Review On Map" },
   { path: "review_on_map", component: ReviewMapComponent, title: "Review On Map" },
-  { path: "report/mail-history", component: ReportMailHistoryComponent, title: "Review On Map" },
+  { path: "report/mail-history", component: ReportMailHistoryComponent, title: "Mail History" },
 ]
 
 @NgModule({
