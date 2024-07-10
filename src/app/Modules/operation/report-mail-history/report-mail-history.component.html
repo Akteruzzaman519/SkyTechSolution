@@ -5,10 +5,9 @@
 
     <div class="col-md-3 mb-3">
         <div class="">
-            <select class="form-select" aria-label="Default select example">
-                <option selected value="1">Mail</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <select class="form-select" [(ngModel)]="searchBy" aria-label="Default select example">
+                <option value="mail">Email</option>
+                <option value="map">Map URL</option>
             </select>
         </div>
     </div>
@@ -115,9 +114,158 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title"> <i class="fa-solid fa-chart-line ms-1"></i>
-                    Activity History </h5>
+                    Mail History </h5>
             </div>
             <div class="card-body">
+
+                <!-- Start Tab data  -->
+
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#map1">Map 1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#map2">Map 2</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade show active" id="map1">
+                                    <div class="row g-2">
+                                        <div class="col-md-6 my-2 pe-2">
+                                            <div class="">Business Name</div>
+                                        </div>
+                                        <div class="col-md-6 mb-2 ps-2">
+                                           <div class=""> Web Icon  | Map Icon</div>
+                                        </div>
+
+
+                                        <div class="col-md-12 my-2">
+                                            <div class="">Address</div>
+                                        </div>
+                                     
+
+
+                                        <div class="col-md-6 my-2 pe-2">
+                                            <div class="">Business Name</div>
+                                        </div>
+                                        <div class="col-md-6 my-2 ps-2">
+                                           <div class=""> Web Icon  | Map Icon</div>
+                                        </div>
+
+
+                                        <div class="col-md-6 my-2 pe-2">
+                                            <div class="">Phone</div>
+                                        </div>
+                                        <div class="col-md-6 my-2 ps-2">
+                                           <div class=""> Old Phone</div>
+                                        </div>
+
+                                        <div class="col-md-12 my-2">
+                                          <div class="card">
+                                            <div class="card-header">
+                                                Task
+                                            </div>
+                                            <div class="card-body p-0">
+                                                <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; " 
+                                                [columnDefs]="colDefs"  [rowSelection]="'multiple'"   
+                                                    (gridReady)="Task1GridReady($event)"  [defaultColDef]="DeafultCol">
+                                                  </ag-grid-angular>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-md-12 my-2">
+                                            <div class="card">
+                                              <div class="card-header">
+                                                  Review
+                                              </div>
+                                              <div class="card-body p-0">
+                                                  <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; " 
+                                                  [columnDefs]="colDefs"  [rowSelection]="'multiple'"   
+                                                      (gridReady)="Review1GridReady($event)"  [defaultColDef]="DeafultCol">
+                                                    </ag-grid-angular>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade " id="map2">
+
+                                    <div class="row g-2">
+                                        <div class="col-md-6 my-2 pe-2">
+                                            <div class="">Business Name</div>
+                                        </div>
+                                        <div class="col-md-6 mb-2 ps-2">
+                                           <div class=""> Web Icon  | Map Icon</div>
+                                        </div>
+
+
+                                        <div class="col-md-12 my-2">
+                                            <div class="">Address</div>
+                                        </div>
+                                     
+
+                                        <div class="col-md-6 my-2 pe-2">
+                                            <div class="">Business Name</div>
+                                        </div>
+                                        <div class="col-md-6 my-2 ps-2">
+                                           <div class=""> Web Icon  | Map Icon</div>
+                                        </div>
+
+
+                                        <div class="col-md-6 my-2 pe-2">
+                                            <div class="">Phone</div>
+                                        </div>
+                                        <div class="col-md-6 my-2 ps-2">
+                                           <div class=""> Old Phone</div>
+                                        </div>
+
+                                        <div class="col-md-12 my-2">
+                                          <div class="card">
+                                            <div class="card-header">
+                                                Task
+                                            </div>
+                                            <div class="card-body p-0">
+                                                <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; " 
+                                                [columnDefs]="colDefs"  [rowSelection]="'multiple'"   
+                                                    (gridReady)="Task2GridReady($event)"  [defaultColDef]="DeafultCol">
+                                                  </ag-grid-angular>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div class="col-md-12 my-2">
+                                            <div class="card">
+                                              <div class="card-header">
+                                                  Review
+                                              </div>
+                                              <div class="card-body p-0">
+                                                  <ag-grid-angular class="ag-theme-alpine" style="height: 30vh;width: 100%; " 
+                                                  [columnDefs]="colDefs"  [rowSelection]="'multiple'"   
+                                                      (gridReady)="Review2GridReady($event)"  [defaultColDef]="DeafultCol">
+                                                    </ag-grid-angular>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Tab data  -->
+
             </div>
         </div>
 
