@@ -1,6 +1,8 @@
 import { AuthService, Roles } from 'shared/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpCommonService } from 'src/app/Modules/Common/http-common.service';
+import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { AGGridHelper } from 'src/app/Modules/Common/AGGridHelper';
 
 @Component({
   templateUrl: './home.component.html',
@@ -33,11 +35,17 @@ export class HomeComponent implements OnInit {
     { border: 'border-warning', background: 'bg-warning', color1: "text-warning", color2: "text-white" },
     { border: 'border-info', background: 'bg-info', color1: "text-info", color2: "text-white" },
   ];
+
+  private AgentstGridApi!: GridApi;
+  private ActivityReportGridApi!: GridApi;
+  public paginationPageSize = 20;
+  public DeafultCol = AGGridHelper.DeafultCol;
+  
   constructor(private authService: AuthService, private service: HttpCommonService) { }
 
   ngOnInit(): void {
 
-    this.GetRequest();
+    this.GetLifecycleWorkloadSummary();
     this.authService.isLoggedIn
       .subscribe(state => {
         if (state) {
@@ -45,6 +53,30 @@ export class HomeComponent implements OnInit {
           this.redirectToRoleBasedUrl();
         }
       }).unsubscribe();
+  }
+
+  public colDefsAgents: ColDef[] = [
+    { valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 100, editable: false, checkboxSelection: false, headerCheckboxSelection: false, showDisabledCheckboxes: false, },
+    { field: 'userFullName', headerName: 'Full Name' },
+    { field: 'countPendingCurrentTask', headerName: 'Pending Current Task' },
+    { field: 'countPendingAllTask', headerName: 'Pending All Task' },
+  ];
+  public colDefsActivityReport: ColDef[] = [
+    { valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 100, editable: false, checkboxSelection: false, headerCheckboxSelection: false, showDisabledCheckboxes: false, },
+    { field: 'userFullName', headerName: 'Full Name' },
+    { field: 'countPendingCurrentTask', headerName: 'Pending Current Task' },
+    { field: 'countPendingAllTask', headerName: 'Pending All Task' },
+  ];
+
+  onGridReadyAgents(params: GridReadyEvent) {
+    params.api.sizeColumnsToFit();
+    this.AgentstGridApi = params.api;
+    this.AgentstGridApi.setRowData([]);
+  }
+  onGridReadyActivityReport(params: GridReadyEvent) {
+    params.api.sizeColumnsToFit();
+    this.ActivityReportGridApi = params.api;
+    this.ActivityReportGridApi.setRowData([]);
   }
 
   private redirectToRoleBasedUrl() {
@@ -71,16 +103,13 @@ export class HomeComponent implements OnInit {
 
 
 
-  private GetRequest() {
-
+  private GetLifecycleWorkloadSummary() {
     this.service.Get('/EmailReport/GetLifecycleWorkloadSummary').subscribe((res: any) => {
       this.VLifecycleWorkloadSummaryDto = res;
-      console.log("Helo" + res.LifecycleName)
     },
       (err: any) => {
         console.log(err);
       })
-
   }
 
 

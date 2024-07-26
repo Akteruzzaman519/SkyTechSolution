@@ -1,7 +1,6 @@
-<h2 class="my-1">PENDING LIST</h2>
 <div class="main_contant row">
     <div class="col-md-6">
-
+        <h4 class="my-1 text-uppercase">PENDING LIST</h4>
         <div class="card p-3">
             <div class="d-inline mt-3 border" [ngClass]="lifeCycleColor[i].border"
                 *ngFor="let Item of VLifecycleWorkloadSummaryDto; index as i">
@@ -18,6 +17,32 @@
     </div>
 
     <div class="col-md-6">
+
+        <div class="row g-0">
+            <div class="col-md-12">
+                <h4 class="my-1 text-uppercase">Activity Report</h4>
+                <div class="card">
+                    <div class="card-body p-0">
+                        <ag-grid-angular class="ag-theme-alpine" style="height: 45vh;width: 100%; "
+                            [columnDefs]="colDefsActivityReport" (gridReady)="onGridReadyActivityReport($event)"
+                            [paginationPageSize]="paginationPageSize" [defaultColDef]="DeafultCol">
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 mt-4">
+                <h4 class="my-1 text-uppercase"> Agents Workload Report</h4>
+                <div class="card">
+                    <div class="card-body p-0">
+                        <ag-grid-angular class="ag-theme-alpine" style="height: 45vh;width: 100%; "
+                            [columnDefs]="colDefsAgents" (gridReady)="onGridReadyAgents($event)"
+                            [paginationPageSize]="paginationPageSize" [defaultColDef]="DeafultCol">
+                        </ag-grid-angular>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
