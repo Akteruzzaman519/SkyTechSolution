@@ -1,17 +1,23 @@
 <h2 class="my-1">PENDING LIST</h2>
-<div class="main_contant">
+<div class="main_contant row">
     <div class="col-md-6">
-        <div class="card p-4">
-            <div class="d-inline bordera mt-3" *ngFor="let Item of VLifecycleWorkloadSummaryDto">
+
+        <div class="card p-3">
+            <div class="d-inline mt-3 border" [ngClass]="lifeCycleColor[i].border"
+                *ngFor="let Item of VLifecycleWorkloadSummaryDto; index as i">
                 <div class="left_bar float-start p-2">
-                    <span class="text_size start_text">{{Item.lifecycleName}}</span>
+                    <span class="text_size " [ngClass]="lifeCycleColor[i].color1">{{Item.lifecycleName}}</span>
                 </div>
-                <div class="right_site float-end bordera p-2 value_text">
-                    <span class="text_size">{{Item.noOfRecord}}</span>
+                <div class="right_site float-end  p-2" [ngClass]="lifeCycleColor[i].background">
+                    <span class="text_size" [ngClass]="lifeCycleColor[i].color2">{{Item.noOfRecord}}</span>
                 </div>
             </div>
 
         </div>
+
     </div>
 
+    <div class="col-md-6">
+
+    </div>
 </div>
