@@ -27,25 +27,18 @@ export class AssignToPreferredModuleComponent implements OnInit {
 
 
   public indicatorName: string = "sequence";
+  public searchType: string = "byEmail";
   public relatedModule: string = "back_office";
+  public moduleType: string = "";
+  public emailSearch: string = "";
 
-  public KeyValueInStringDtoList: KeyValueDto[] = []
+  public KeyValueInStringDtoList: any[] = []
 
   // Column Definitions: Defines the columns to be displayed.
   public colDefs: ColDef[] = [
     { valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 100, editable: false, checkboxSelection: true, headerCheckboxSelection: true, },
-    {
-      field: 'mailUploadedDate', headerName: 'Updated At',
-      cellRenderer: (params: ValueFormatterParams) => {
-        return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
-      }
-    },
-    { field: 'mailUploadedByFullName', headerName: 'Uploaded By' },
-    { field: 'mailUploadedByUniqueCode', headerName: 'Code' },
-    { field: 'sourceName', headerName: 'Source' },
-    // { field: 'mailBatch', headerName: 'Batch' },
     { field: 'mailUserName', headerName: 'Email' },
-    { field: 'lifecycleRelatedName', headerName: 'Status' },
+    { field: 'lifecycleName', headerName: 'Name' },
   ];
 
   public colDefsConfirmAssign: ColDef[] = [
@@ -62,8 +55,7 @@ export class AssignToPreferredModuleComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    // this.GetEmailsByStatusTag(0, 1, 100000);
-    this.GetLifecycles();
+
   }
 
 
@@ -86,8 +78,9 @@ export class AssignToPreferredModuleComponent implements OnInit {
   IndicatorNameChange(event: any) {
     this.GetLifecycles()
   }
+
   private GetLifecycles() {
-    this.service.Get('/GetLifecycles/'+this.indicatorName+'/'+this.relatedModule).subscribe((res: any) => {
+    this.service.Get('/EmailReport/GetLifecycles/' + this.indicatorName + '/' + this.relatedModule).subscribe((res: any) => {
       this.KeyValueInStringDtoList = res;
     },
       (err: any) => {
@@ -95,6 +88,27 @@ export class AssignToPreferredModuleComponent implements OnInit {
       })
   }
 
+  GetData() {
+
+    let url = "";
+    if (this.searchType == "byEmail") {
+ 
+      url = "/EmailReport/GetMailBySearch/mail?search=" + this.emailSearch;
+    } else if (this.searchType == "byModule") {
+      url = "/EmailOperation/GetEmailsByOperationTag/" + this.moduleType;
+    }
+    else {
+      return;
+    }
+
+    this.service.Get(url).subscribe((res: any) => {
+      this.asignToAgentGridApi.setRowData(res)
+    },
+      (err: any) => {
+        console.log(err);
+      })
+
+  }
 
   private GetEmailsByStatusTag(userSystemId: number, pageIndex: number, pageSize: number) {
 
@@ -105,6 +119,18 @@ export class AssignToPreferredModuleComponent implements OnInit {
       (err: any) => {
         console.log(err);
       })
+
+  }
+
+
+  public Submit() {
+    var data = AGGridHelper.GetSelectedRows(this.asignToAgentGridApi);
+    if (data.length == 0) {
+      this.toast.warning("Please select an item!!", "Warning", { progressBar: true });
+      return;
+    }
+    this.GetUsersCurrentWorkloadCount();
+    document.getElementById("modalOpen")?.click();
 
   }
 
@@ -119,19 +145,6 @@ export class AssignToPreferredModuleComponent implements OnInit {
 
   }
 
-  public AssignToAgent() {
-
-    // document.getElementById('modalOpen')?.click();
-    var data = AGGridHelper.GetSelectedRows(this.asignToAgentGridApi);
-    if (data.length == 0) {
-      this.toast.warning("Please select an item!!", "Warning", { progressBar: true });
-      return;
-    }
-    this.GetUsersCurrentWorkloadCount();
-
-    document.getElementById("modalOpen")?.click();
-
-  }
 
   public ConfirmAssign() {
 

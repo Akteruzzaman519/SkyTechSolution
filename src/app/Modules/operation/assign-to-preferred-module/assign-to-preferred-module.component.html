@@ -4,31 +4,31 @@
     </div>
 
     <div class="col-md-4 px-3">
-        <label for="indicatorName" class="form-label">State</label>
-        <select id="indicatorName" (change)="IndicatorNameChange($event)" [(ngModel)]="indicatorName"
-            name="indicatorName" class="form-select">
-            <option value="sequence">By Email Search</option>
-            <option value="sequence1">By Module</option>
+        <label for="searchType" class="form-label">Search Type </label>
+        <select id="searchType" (change)="IndicatorNameChange($event)" [(ngModel)]="searchType"
+            name="searchType" class="form-select">
+            <option value="byEmail">By Email Search</option>
+            <option value="byModule">By Module</option>
         </select>
     </div>
 
-    <div *ngIf="indicatorName=='sequence'" class="col-md-4 px-2">
-        <label for="inputState" class="form-label">State</label>
-        <select id="inputState" class="form-select">
+    <div *ngIf="searchType=='byModule'" class="col-md-4 px-2">
+        <label for="moduleType" class="form-label">Module</label>
+        <select id="moduleType" class="form-select" [(ngModel)]="moduleType" name="moduleType">
             <ng-container *ngFor="let item of KeyValueInStringDtoList">
-                <option value="{{item.key}}">{{item.value}}</option>
+                <option value="{{item.key}}">{{item.title}}</option>
             </ng-container>
 
         </select>
     </div>
 
-    <div *ngIf="indicatorName=='sequence1'" class="col-md-4 px-2">
-        <label for="inputEmail4" class="form-label">State</label>
-        <input type="text" class="form-control" id="inputEmail4">
+    <div *ngIf="searchType=='byEmail'" class="col-md-4 px-2">
+        <label for="emailSearch" class="form-label">search</label>
+        <input type="text" class="form-control" id="emailSearch" [(ngModel)]="emailSearch" name="emailSearch" placeholder="type here..">
     </div>
 
     <div class="col-md-4 px-2" style="align-content: end;">
-        <button type="button" class="btn btn-primary">Get Data</button>
+        <button type="button" class="btn btn-primary" (click)="GetData()">Get Data</button>
     </div>
 
 
@@ -82,8 +82,7 @@
             </div>
 
             <div class="col-md-3">
-                <button type="button" class="btn btn-success float-end" (click)="AssignToAgent()">Assign To
-                    Agent</button>
+                <button type="button" class="btn btn-success float-end" (click)="Submit()">Submit</button>
             </div>
         </div>
     </div>
