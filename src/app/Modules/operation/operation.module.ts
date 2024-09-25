@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: "assign_for_review_on_map", component: AssignReviewMapComponent, title: "Assign For Review On Map" },
   { path: "review_on_map", component: ReviewMapComponent, title: "Review On Map" },
   { path: "report/mail-history", component: ReportMailHistoryComponent, title: "Mail History" },
-  { path: "assign_to_preferred_module", component: AssignToPreferredModuleComponent, title: "Assign To Preferred" },
+  { path: "assign_to_preferred_module", component: AssignToPreferredModuleComponent, title: "Assign To Preferred Module" },
 ]
 
 @NgModule({

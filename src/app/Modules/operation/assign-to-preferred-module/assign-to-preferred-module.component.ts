@@ -30,9 +30,11 @@ export class AssignToPreferredModuleComponent implements OnInit {
   public searchType: string = "byEmail";
   public relatedModule: string = "back_office";
   public moduleType: string = "";
+  public selectModuleType: string = "";
   public emailSearch: string = "";
 
   public KeyValueInStringDtoList: any[] = []
+  public KeyValueInStringList: any[] = []
 
   // Column Definitions: Defines the columns to be displayed.
   public colDefs: ColDef[] = [
@@ -55,7 +57,7 @@ export class AssignToPreferredModuleComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-
+    this.GetLifecyclesDropdown();
   }
 
 
@@ -79,6 +81,16 @@ export class AssignToPreferredModuleComponent implements OnInit {
     this.GetLifecycles()
   }
 
+  private GetLifecyclesDropdown() {
+    this.service.Get('/EmailReport/GetLifecycles/' + this.indicatorName + '/' + this.relatedModule).subscribe((res: any) => {
+      this.KeyValueInStringList = res;
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
+
+
   private GetLifecycles() {
     this.service.Get('/EmailReport/GetLifecycles/' + this.indicatorName + '/' + this.relatedModule).subscribe((res: any) => {
       this.KeyValueInStringDtoList = res;
@@ -92,17 +104,31 @@ export class AssignToPreferredModuleComponent implements OnInit {
 
     let url = "";
     if (this.searchType == "byEmail") {
- 
+
       url = "/EmailReport/GetMailBySearch/mail?search=" + this.emailSearch;
     } else if (this.searchType == "byModule") {
-      url = "/EmailOperation/GetEmailsByOperationTag/" + this.moduleType;
+      if(this.moduleType==""){
+        this.toast.warning("Please select module", "Warning", { progressBar: true });
+        return;
+      }
+      url = "/EmailOperation/GetEmailsByStatusTag/"+this.moduleType+"/0/1/100000";
     }
     else {
       return;
     }
 
     this.service.Get(url).subscribe((res: any) => {
-      this.asignToAgentGridApi.setRowData(res)
+      debugger
+
+      if (this.searchType == "byModule"){
+        this.asignToAgentGridApi.setRowData(res.emailList);
+
+      }
+
+      if (this.searchType == "byEmail"){
+        this.asignToAgentGridApi.setRowData(res);
+      }
+
     },
       (err: any) => {
         console.log(err);
@@ -110,20 +136,15 @@ export class AssignToPreferredModuleComponent implements OnInit {
 
   }
 
-  private GetEmailsByStatusTag(userSystemId: number, pageIndex: number, pageSize: number) {
-
-    this.service.Get('/EmailOperation/GetEmailsByStatusTag/' + this.statusTag + '/' + userSystemId + '/' + pageIndex + '/' + pageSize).subscribe((res: any) => {
-      this.oEmailGridDto = res;
-      this.asignToAgentGridApi.setRowData(res.emailList)
-    },
-      (err: any) => {
-        console.log(err);
-      })
-
-  }
 
 
-  public Submit() {
+
+  public AssignToAgent() {
+
+    if(this.selectModuleType==""){
+      this.toast.warning("Please select an item!!", "Warning", { progressBar: true });
+      return;
+    }
     var data = AGGridHelper.GetSelectedRows(this.asignToAgentGridApi);
     if (data.length == 0) {
       this.toast.warning("Please select an item!!", "Warning", { progressBar: true });
@@ -136,7 +157,7 @@ export class AssignToPreferredModuleComponent implements OnInit {
 
   private GetUsersCurrentWorkloadCount() {
     this.confirmToAgentGridApi.setRowData([]);
-    this.service.Get('/EmailOperation/GetUsersCurrentWorkloadCount/' + this.statusTag + '/mail_agent').subscribe((res: any) => {
+    this.service.Get('/EmailOperation/GetUsersCurrentWorkloadCount/' + this.selectModuleType + '/mail_agent').subscribe((res: any) => {
       this.confirmToAgentGridApi.setRowData(res);
     },
       (err: any) => {
@@ -168,7 +189,7 @@ export class AssignToPreferredModuleComponent implements OnInit {
       this.toast.success("Agent Email Assign Successfully!!", "success", { progressBar: true });
       document.getElementById("assignToAgentCloseModal")?.click();
       this.totalRecord = 0;
-      this.GetEmailsByStatusTag(0, 1, 100000);
+      this.GetData();
 
     },
       (err: any) => {

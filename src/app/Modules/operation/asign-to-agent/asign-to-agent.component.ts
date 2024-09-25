@@ -99,7 +99,6 @@ export class AsignToAgentComponent implements OnInit {
 
   public AssignToAgent() {
     
-    // document.getElementById('modalOpen')?.click();
     var data = AGGridHelper.GetSelectedRows(this.asignToAgentGridApi);
     if (data.length == 0) {
       this.toast.warning("Please select an item!!", "Warning", { progressBar: true });

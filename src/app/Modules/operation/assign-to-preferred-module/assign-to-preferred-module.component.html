@@ -4,16 +4,16 @@
     </div>
 
     <div class="col-md-4 px-3">
-        <label for="searchType" class="form-label">Search Type </label>
-        <select id="searchType" (change)="IndicatorNameChange($event)" [(ngModel)]="searchType"
-            name="searchType" class="form-select">
+        <label for="searchType" class="form-label">Search By </label>
+        <select id="searchType" (change)="IndicatorNameChange($event)" [(ngModel)]="searchType" name="searchType"
+            class="form-select">
             <option value="byEmail">By Email Search</option>
             <option value="byModule">By Module</option>
         </select>
     </div>
 
     <div *ngIf="searchType=='byModule'" class="col-md-4 px-2">
-        <label for="moduleType" class="form-label">Module</label>
+        <label for="moduleType" class="form-label">Select Module</label>
         <select id="moduleType" class="form-select" [(ngModel)]="moduleType" name="moduleType">
             <ng-container *ngFor="let item of KeyValueInStringDtoList">
                 <option value="{{item.key}}">{{item.title}}</option>
@@ -23,8 +23,9 @@
     </div>
 
     <div *ngIf="searchType=='byEmail'" class="col-md-4 px-2">
-        <label for="emailSearch" class="form-label">search</label>
-        <input type="text" class="form-control" id="emailSearch" [(ngModel)]="emailSearch" name="emailSearch" placeholder="type here..">
+        <label for="emailSearch" class="form-label">Enter email</label>
+        <input type="text" class="form-control" id="emailSearch" [(ngModel)]="emailSearch" name="emailSearch"
+            placeholder="Type email here..">
     </div>
 
     <div class="col-md-4 px-2" style="align-content: end;">
@@ -71,18 +72,22 @@
             </div>
 
             <div class="col-md-2 px-2 text-end" style="align-content: center;">
-                <label for="inputState" class="form-label">State</label>
+                <label for="selectModuleType" class="form-label">Select Module</label>
             </div>
 
             <div class="col-md-3 pz-2">
-                <select id="inputState" class="form-select">
-                    <option selected>By Email Search</option>
-                    <option>By Module</option>
+                <select id="selectModuleType" class="form-select" [(ngModel)]="selectModuleType" name="moduleType">
+                    <option value="">-- select module --</option>
+                    <ng-container *ngFor="let item of KeyValueInStringList">
+                        <option value="{{item.key}}">{{item.title}}</option>
+                    </ng-container>
+
                 </select>
+
             </div>
 
             <div class="col-md-3">
-                <button type="button" class="btn btn-success float-end" (click)="Submit()">Submit</button>
+                <button type="button" class="btn btn-success float-end" (click)="AssignToAgent()">Assign To Agent</button>
             </div>
         </div>
     </div>

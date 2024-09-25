@@ -40,12 +40,14 @@ export class HomeComponent implements OnInit {
   private ActivityReportGridApi!: GridApi;
   public paginationPageSize = 20;
   public DeafultCol = AGGridHelper.DeafultCol;
-  
+  public KeyValueInStringList: any[] = [];
+  public selectModuleType: string = "";
   constructor(private authService: AuthService, private service: HttpCommonService) { }
 
   ngOnInit(): void {
 
     this.GetLifecycleWorkloadSummary();
+    this.GetLifecyclesDropdown();
     this.authService.isLoggedIn
       .subscribe(state => {
         if (state) {
@@ -68,6 +70,8 @@ export class HomeComponent implements OnInit {
     { field: 'countPendingAllTask', headerName: 'Pending All Task' },
   ];
 
+
+
   onGridReadyAgents(params: GridReadyEvent) {
     params.api.sizeColumnsToFit();
     this.AgentstGridApi = params.api;
@@ -78,6 +82,33 @@ export class HomeComponent implements OnInit {
     this.ActivityReportGridApi = params.api;
     this.ActivityReportGridApi.setRowData([]);
   }
+  public moduleTypeSelectionChange() {
+    this.GetUsersCurrentWorkloadCount();
+  }
+  private GetUsersCurrentWorkloadCount() {
+    this.AgentstGridApi.setRowData([]);
+    this.service.Get('/EmailOperation/GetUsersCurrentWorkloadCount/' + this.selectModuleType + '/mail_agent').subscribe((res: any) => {
+      this.AgentstGridApi.setRowData(res);
+    },
+      (err: any) => {
+        console.log(err);
+      })
+
+  }
+
+  private GetLifecyclesDropdown() {
+    this.service.Get('/EmailReport/GetLifecycles/sequence/back_office').subscribe((res: any) => {
+      this.KeyValueInStringList = res;
+      if (this.KeyValueInStringList.length > 0) {
+        this.selectModuleType = this.KeyValueInStringList[0].key;
+        this.GetUsersCurrentWorkloadCount();
+      }
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
+
 
   private redirectToRoleBasedUrl() {
     const user = this.authService.currentUser;
