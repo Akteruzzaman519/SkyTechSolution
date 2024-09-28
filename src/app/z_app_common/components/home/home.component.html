@@ -1,12 +1,12 @@
 <div class="main_contant row">
     <div class="col-md-6">
-     <div class="row g-0">
-        <div class="col-12 my-2">
-            <h4 class="text-uppercase">PENDING LIST</h4>
+        <div class="row g-0">
+            <div class="col-12 my-2">
+                <h4 class="text-uppercase">PENDING LIST</h4>
+            </div>
         </div>
-     </div>
-        <div class="card mt-1 p-3">
-            <div class="d-inline mt-3 border" [ngClass]="lifeCycleColor[i].border"
+        <div class="card mt-0 p-3">
+            <div class="d-inline mt-1 border" [ngClass]="lifeCycleColor[i].border"
                 *ngFor="let Item of VLifecycleWorkloadSummaryDto; index as i">
                 <div class="left_bar float-start p-2">
                     <span class="text_size " [ngClass]="lifeCycleColor[i].color1">{{Item.lifecycleName}}</span>
@@ -24,25 +24,27 @@
 
         <div class="row g-0">
             <div class="col-md-12">
-                
+
                 <div class="row g-0">
                     <div class="col-md my-2">
                         <h4 class=" text-uppercase">Activity Report</h4>
                     </div>
                     <div class="col-md my-2">
-                        <select id="selectModuleType" class="form-select" (change)="moduleTypeSelectionChange()" [(ngModel)]="selectModuleType" name="moduleType">
+                        <select id="selectModuleType" class="form-select" (change)="moduleTypeSelectionChange()"
+                            [(ngModel)]="selectModuleType" name="moduleType">
                             <option value="">-- select module --</option>
                             <ng-container *ngFor="let item of KeyValueInStringList">
                                 <option value="{{item.key}}">{{item.title}}</option>
                             </ng-container>
-        
+
                         </select>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body p-0">
+
                         <ag-grid-angular class="ag-theme-alpine" style="height: 45vh;width: 100%; "
-                            [columnDefs]="colDefsActivityReport" (gridReady)="onGridReadyActivityReport($event)"
+                            [columnDefs]="colDefsAgents" (gridReady)="onGridReadyAgents($event)"
                             [paginationPageSize]="paginationPageSize" [defaultColDef]="DeafultCol">
                         </ag-grid-angular>
                     </div>
@@ -51,10 +53,44 @@
 
             <div class="col-md-12 mt-4">
                 <h4 class="my-1 text-uppercase"> Agents Workload Report</h4>
+            </div>
+            <div class="col-md-3 px-2">
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Start</label>
+                    <input type="date" class="form-control" id="startDate" [(ngModel)]="startDate" name="startDate">
+                </div>
+            </div>
+            <div class="col-md-3 px-2">
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">End</label>
+                    <input type="date" class="form-control" id="endDate" [(ngModel)]="endDate" name="endDate">
+                </div>
+            </div>
+            <div class="col-md-3 px-2">
+                <div class="mb-3">
+                    <label for="agentUserSystemId" class="form-label">Agent</label>
+                    <select id="agentUserSystemId" class="form-select" (change)="agentSelectionChange()"
+                        [(ngModel)]="agentUserSystemId" name="agentUserSystemId">
+                        <option value="">-- select module --</option>
+                        <ng-container *ngFor="let item of KeyValueDto">
+                            <option value="{{item.key}}">{{item.title}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3 px-2" style="align-self: self-end;">
+                <div class="mb-3">
+                    <button type="button" class="btn btn-success" (click)="getAgents()">Get Data</button>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 my-1">
                 <div class="card">
                     <div class="card-body p-0">
                         <ag-grid-angular class="ag-theme-alpine" style="height: 45vh;width: 100%; "
-                            [columnDefs]="colDefsAgents" (gridReady)="onGridReadyAgents($event)"
+                            [columnDefs]="colDefsActivityReport" (gridReady)="onGridReadyActivityReport($event)"
                             [paginationPageSize]="paginationPageSize" [defaultColDef]="DeafultCol">
                         </ag-grid-angular>
                     </div>

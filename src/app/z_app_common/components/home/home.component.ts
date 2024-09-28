@@ -3,10 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { HttpCommonService } from 'src/app/Modules/Common/http-common.service';
 import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
 import { AGGridHelper } from 'src/app/Modules/Common/AGGridHelper';
+import { DatePipe } from '@angular/common';
 
 @Component({
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  providers: [DatePipe]
 })
 export class HomeComponent implements OnInit {
 
@@ -41,11 +43,19 @@ export class HomeComponent implements OnInit {
   public paginationPageSize = 20;
   public DeafultCol = AGGridHelper.DeafultCol;
   public KeyValueInStringList: any[] = [];
+  public KeyValueDto: any[] = [];
   public selectModuleType: string = "";
-  constructor(private authService: AuthService, private service: HttpCommonService) { }
+  public agentUserSystemId: string = "";
+  public startDate: any = "";
+  public endDate: any = "";
+
+
+  constructor(private authService: AuthService, private datePipe: DatePipe, private service: HttpCommonService) { }
 
   ngOnInit(): void {
 
+    this.startDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.endDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.GetLifecycleWorkloadSummary();
     this.GetLifecyclesDropdown();
     this.authService.isLoggedIn
@@ -102,6 +112,7 @@ export class HomeComponent implements OnInit {
       if (this.KeyValueInStringList.length > 0) {
         this.selectModuleType = this.KeyValueInStringList[0].key;
         this.GetUsersCurrentWorkloadCount();
+        this.GetUsersInKeyValueByUserCategory();
       }
     },
       (err: any) => {
@@ -144,9 +155,29 @@ export class HomeComponent implements OnInit {
   }
 
 
+  public agentSelectionChange() {
+    this.getAgents();
+  }
 
 
+  getAgents() {
+    this.service.Get(`/EmailReport/CountCompletionWorkByAgent/${this.startDate}/${this.endDate}/${1002}`).subscribe((res: any) => {
+      this.ActivityReportGridApi.setRowData(res);
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
 
+
+  GetUsersInKeyValueByUserCategory() {
+    this.service.Get('/KeyValue/GetUsersInKeyValueByUserCategory/' + 1002).subscribe((res: any) => {
+      this.KeyValueDto = res;
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
 
 
 
