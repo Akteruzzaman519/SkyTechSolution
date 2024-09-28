@@ -144,7 +144,6 @@ export class HomeComponent implements OnInit {
   }
 
 
-
   private GetLifecycleWorkloadSummary() {
     this.service.Get('/EmailReport/GetLifecycleWorkloadSummary').subscribe((res: any) => {
       this.VLifecycleWorkloadSummaryDto = res;
