@@ -5,8 +5,7 @@
 
   <div class="col-md-6">
     <ag-grid-angular class="ag-theme-alpine" style="height: 67vh;width: 100%; overflow-x: hidden; " [rowData]="rowData"
-      [columnDefs]="colDefs" (gridReady)="ApiGridReady($event)" rowSelection='single'
-      [defaultColDef]="DeafultCol">
+      [columnDefs]="colDefs" (gridReady)="ApiGridReady($event)" rowSelection='single' [defaultColDef]="DeafultCol">
     </ag-grid-angular>
     <div class="mt-2">
       <div class="col-md-12 my-3">
@@ -92,7 +91,7 @@
                                       </textarea>
                       </div>
                       <hr>
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                         <label for="nCategoryId" class="form-label">New Category</label>
                         <select class="form-select form-select mb-3"
                           [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
@@ -101,6 +100,14 @@
                           <option *ngFor="let item of KeyValuesCategory" value="{{item.key}}">{{item.value}}</option>
                         </select>
                       </div>
+                       -->
+                      <div class="col-md-6 mb-3">
+                        <label for="mapManualNewBusinessCategory" class="form-label">New Category </label>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="EmailMapInfoChangeFormDto.mapManualNewBusinessCategory"
+                          name="mapManualNewBusinessCategory" id="mapManualNewBusinessCategory">
+                      </div>
+
                       <div class="col-md-6">
                         <label for="mapNewWebsite" class="form-label">New Website </label>
                         <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewWebsite"
@@ -109,26 +116,53 @@
                       <div class="col-md-12 mb-2">
                         <label for="mapNewBusinessName" class="form-label">New Business</label>
                         <input type="text" class="form-control"
-                          [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessName" name="mapNewBusinessName" id="mapNewBusinessName">
+                          [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessName" name="mapNewBusinessName"
+                          id="mapNewBusinessName">
                       </div>
 
                       <div class="col-md-12 mb-2">
                         <label for="mapNewBusinessAddress" class="form-label">New Address </label>
                         <textarea type="text" class="form-control"
-                          [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress" id="mapNewBusinessAddress">
+                          [(ngModel)]="EmailMapInfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress"
+                          id="mapNewBusinessAddress">
                           </textarea>
                       </div>
+
+                      <div class="col-md-6 pe-2">
+                        <label for="nmapNewPhone" class="form-label">2FA </label>
+                        <select class="form-select form-select mb-3" [(ngModel)]="sMap12FAPhone" name="sMap12FAPhone"
+                          id="sMap12FAPhone" aria-label=".form-select-lg example">
+                          <option value="no"> No</option>
+                          <option value="yes"> Yes</option>
+                        </select>
+                      </div>
+
+                      <div *ngIf="sMap12FAPhone=='yes'" class="col-md-6 ps-2">
+                        <label for="nmapNewTwoFactorAuthRelatedPhone" class="form-label">2FA Phone </label>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="EmailMapInfoChangeFormDto.mapNewTwoFactorAuthRelatedPhone "
+                          name="nmapNewTwoFactorAuthRelatedPhone" id="nmapNewTwoFactorAuthRelatedPhone">
+                      </div>
+
+
 
                       <div class="col-md-12 mb-2">
                         <label for="mapNewPhone" class="form-label">New Number </label>
                         <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewPhone"
                           name="mapNewPhone" id="mapNewPhone">
                       </div>
+
+                      <div class="col-md-12">
+                        <label for="mapNewReviewLink" class="form-label">Review Link </label>
+                        <input type="text" class="form-control" [(ngModel)]="EmailMapInfoChangeFormDto.mapNewReviewLink"
+                          name="mapNewReviewLink" id="mapNewReviewLink">
+                      </div>
+
                     </div>
                   </div>
 
                   <div class="tab-pane fade " id="map2">
-       
+
                     <div class="row g-2">
                       <div class="col-md-6 mb-2">
                         <label for="nCategoryId" class="form-label">Category</label>
@@ -148,7 +182,7 @@
                                       </textarea>
                       </div>
                       <hr>
-                      <div class="col-md-6 mb-2">
+                      <!-- <div class="col-md-6 mb-2">
                         <label for="nCategoryId" class="form-label">New Category</label>
                         <select class="form-select form-select mb-3"
                           [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessCategory" name="nCategoryId"
@@ -156,7 +190,15 @@
                           <option value="0"> ---Select Category---</option>
                           <option *ngFor="let item of KeyValuesCategory" value="{{item.key}}">{{item.value}}</option>
                         </select>
+                      </div> -->
+
+                      <div class="col-md-6 mb-3">
+                        <label for="mapManualNewBusinessCategory" class="form-label">New Category </label>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapManualNewBusinessCategory"
+                          name="mapManualNewBusinessCategory" id="mapManualNewBusinessCategory">
                       </div>
+
                       <div class="col-md-6">
                         <label for="mapNewWebsite" class="form-label">New Website </label>
                         <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewWebsite"
@@ -165,20 +207,45 @@
                       <div class="col-md-12">
                         <label for="mapNewBusinessName" class="form-label">New Business</label>
                         <input type="text" class="form-control"
-                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessName" name="mapNewBusinessName" id="mapNewBusinessName">
+                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessName" name="mapNewBusinessName"
+                          id="mapNewBusinessName">
                       </div>
 
                       <div class="col-md-12">
                         <label for="mapNewBusinessAddress" class="form-label">New Address </label>
                         <textarea rows="2" type="text" class="form-control"
-                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress" id="mapNewBusinessAddress">
+                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewBusinessAddress" name="mapNewBusinessAddress"
+                          id="mapNewBusinessAddress">
                         </textarea>
                       </div>
 
+                      <div class="col-md-6 pe-2">
+                        <label for="sMap22FAPhone" class="form-label">2FA </label>
+                        <select class="form-select form-select mb-3" [(ngModel)]="sMap22FAPhone" name="sMap22FAPhone"
+                          id="sMap22FAPhone" aria-label=".form-select-lg example">
+                          <option value="no"> No</option>
+                          <option value="yes"> Yes</option>
+                        </select>
+                      </div>
+
+                      <div *ngIf="sMap22FAPhone=='yes'" class="col-md-6 ps-2">
+                        <label for="nmapNewTwoFactorAuthRelatedPhone" class="form-label">2FA Phone </label>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewTwoFactorAuthRelatedPhone "
+                          name="nmapNewTwoFactorAuthRelatedPhone" id="nmapNewTwoFactorAuthRelatedPhone">
+                      </div>
+
                       <div class="col-md-12">
-                        <label for="mailRelatedTag" class="form-label">New Number </label>
+                        <label for="nmapNewPhone" class="form-label">New Number </label>
                         <input type="text" class="form-control" [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewPhone"
-                          name="sNumber" id="sNumber">
+                          name="nmapNewPhone" id="nmapNewPhone">
+                      </div>
+
+                      <div class="col-md-12">
+                        <label for="nmapNewReviewLink" class="form-label">Review Link </label>
+                        <input type="text" class="form-control"
+                          [(ngModel)]="EmailMap2InfoChangeFormDto.mapNewReviewLink" name="nmapNewReviewLink"
+                          id="nmapNewReviewLink">
                       </div>
                     </div>
 
@@ -191,7 +258,8 @@
       </div>
       <div class="card-footer">
         <button type="button" class="btn btn-danger" (click)="addBulkEmailBtn()">Report Issue</button>
-        <button type="button" class="btn btn-success float-end text-uppercase" (click)="ChangeMapInfo()">Submit</button>
+        <button type="button" class="btn btn-success float-end text-uppercase"
+          (click)="ChangeMapInfoCloseModal()">Submit</button>
       </div>
 
     </div>
@@ -219,23 +287,23 @@
           aria-label="Close"></button>
       </div>
       <div class="modal-body p-4">
-  
-          <div class="mb-2">
-            <label for="nReportIssueId" class="form-label">Select Issue</label>
-            <select class="form-select form-select mb-3" [(ngModel)]="nReportIssueId" name="nReportIssueId"
-              id="mailSourcingId" aria-label=".form-select-lg example">
-              <option value="-1"> --- Select Issue ---</option>
-              <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
-              <option value="0">Custom</option>
-            </select>
-          </div>
 
-          <div *ngIf="nReportIssueId==0" class="mb-2">
-            <label for="mailIssueNote" class="form-label">Custom Issue Note</label>
-            <textarea rows="3" type="text" class="form-control" [(ngModel)]="sMailIssueNote" name="mailIssueNote"
-              id="mailIssueNote">
+        <div class="mb-2">
+          <label for="nReportIssueId" class="form-label">Select Issue</label>
+          <select class="form-select form-select mb-3" [(ngModel)]="nReportIssueId" name="nReportIssueId"
+            id="mailSourcingId" aria-label=".form-select-lg example">
+            <option value="-1"> --- Select Issue ---</option>
+            <option *ngFor="let item of KeyValues" value="{{item.key}}">{{item.value}}</option>
+            <option value="0">Custom</option>
+          </select>
+        </div>
+
+        <div *ngIf="nReportIssueId==0" class="mb-2">
+          <label for="mailIssueNote" class="form-label">Custom Issue Note</label>
+          <textarea rows="3" type="text" class="form-control" [(ngModel)]="sMailIssueNote" name="mailIssueNote"
+            id="mailIssueNote">
             </textarea>
-          </div>
+        </div>
 
       </div>
       <div class="modal-footer">
@@ -244,3 +312,41 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" hidden id="ConfirmationPopupRemarklOpen" data-bs-toggle="modal"
+    data-bs-target="#staticBackdropConfirmationPopupRemark">
+    ConfirmationPopupRemark
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdropConfirmationPopupRemark" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabelss" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabelss"><i class="fa-solid fa-envelopes-bulk text-black ms-1"></i>
+            Confirmation</h5>
+          <button type="button" class="btn-close" id="ConfirmationPopupRemarkCloseModal" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+
+          <h5 class="text-center mb-3"> are you want to comfirm?</h5>
+          <div class="mb-2">
+            <label for="sRemarksNote" class="form-label">Remarks</label>
+            <textarea rows="3" type="text" class="form-control" [(ngModel)]="sRemarksNote" name="sRemarksNote"
+              id="sRemarksNote">
+          </textarea>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="ChangeMapInfo()"> Submit </button>
+        </div>
+      </div>
+    </div>
+
+
+    
