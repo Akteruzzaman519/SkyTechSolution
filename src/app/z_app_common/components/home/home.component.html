@@ -2,7 +2,7 @@
     <div class="col-md-6">
         <div class="row g-0">
             <div class="col-12 my-2">
-                <h4 class="text-uppercase">PENDING LIST</h4>
+                <h4 class="text-uppercase"> <i class="fa-solid fa-clock-rotate-left"></i> PENDING LIST</h4>
             </div>
         </div>
         <div class="card mt-0 p-3">
@@ -27,7 +27,7 @@
 
                 <div class="row g-0">
                     <div class="col-md my-2">
-                        <h4 class=" text-uppercase">Activity Report</h4>
+                        <h4 class=" text-uppercase"> <i class="fa-brands fa-mailchimp"></i> Agents Workload Report</h4>
                     </div>
                     <div class="col-md my-2">
                         <select id="selectModuleType" class="form-select" (change)="moduleTypeSelectionChange()"
@@ -52,23 +52,23 @@
             </div>
 
             <div class="col-md-12 mt-4">
-                <h4 class="my-1 text-uppercase"> Agents Workload Report</h4>
+                <h4 class="my-1 text-uppercase"> <i class="fa-solid fa-border-all"></i>  Activity Report </h4>
             </div>
             <div class="col-md-3 px-2">
                 <div class="mb-3">
-                    <label for="startDate" class="form-label">Start</label>
+                    <label for="startDate" class="form-label">From</label>
                     <input type="date" class="form-control" id="startDate" [(ngModel)]="startDate" name="startDate">
                 </div>
             </div>
             <div class="col-md-3 px-2">
                 <div class="mb-3">
-                    <label for="endDate" class="form-label">End</label>
+                    <label for="endDate" class="form-label">To</label>
                     <input type="date" class="form-control" id="endDate" [(ngModel)]="endDate" name="endDate">
                 </div>
             </div>
             <div class="col-md-3 px-2">
                 <div class="mb-3">
-                    <label for="agentUserSystemId" class="form-label">Agent</label>
+                    <label for="agentUserSystemId" class="form-label">Agent Name</label>
                     <select id="agentUserSystemId" class="form-select" (change)="agentSelectionChange()"
                         [(ngModel)]="agentUserSystemId" name="agentUserSystemId">
                         <option value="">-- select module --</option>

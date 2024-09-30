@@ -75,9 +75,8 @@ export class HomeComponent implements OnInit {
   ];
   public colDefsActivityReport: ColDef[] = [
     { valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 100, editable: false, checkboxSelection: false, headerCheckboxSelection: false, showDisabledCheckboxes: false, },
-    { field: 'userFullName', headerName: 'Full Name' },
-    { field: 'countPendingCurrentTask', headerName: 'Pending Current Task' },
-    { field: 'countPendingAllTask', headerName: 'Pending All Task' },
+    { field: 'mailOperationName', headerName: 'Activity Name' },
+    { field: 'operationCount', headerName: 'Total Completed' },
   ];
 
 
@@ -160,7 +159,7 @@ export class HomeComponent implements OnInit {
 
 
   getAgents() {
-    this.service.Get(`/EmailReport/CountCompletionWorkByAgent/${this.startDate}/${this.endDate}/${1002}`).subscribe((res: any) => {
+    this.service.Get(`/EmailReport/CountCompletionWorkByAgent/${this.startDate}/${this.endDate}/${this.agentUserSystemId}`).subscribe((res: any) => {
       this.ActivityReportGridApi.setRowData(res);
     },
       (err: any) => {
@@ -170,7 +169,7 @@ export class HomeComponent implements OnInit {
 
 
   GetUsersInKeyValueByUserCategory() {
-    this.service.Get('/KeyValue/GetUsersInKeyValueByUserCategory/' + 1002).subscribe((res: any) => {
+    this.service.Get('/KeyValue/GetUsersInKeyValueByUserCategory/mail_agent').subscribe((res: any) => {
       this.KeyValueDto = res;
     },
       (err: any) => {
