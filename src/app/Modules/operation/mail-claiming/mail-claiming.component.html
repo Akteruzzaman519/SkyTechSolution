@@ -65,18 +65,39 @@
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
                     <label for="nCategoryId" class="form-label">Category</label>
                     <select class="form-select form-select mb-3" [(ngModel)]="nFirstMapCategory" name="nCategoryId"
                       id="mailSourcingId" aria-label=".form-select-lg example">
                       <option value="0"> ---Select Category---</option>
                       <option *ngFor="let item of CategoryKeyValues" value="{{item.key}}">{{item.value}}</option>
                     </select>
+                  </div> -->
+                  <div class="col-md-6 mb-3">
+                    <label for="sFirstMapManualCurrentCategory" class="form-label">Category </label>
+                    <input type="text" class="form-control" [(ngModel)]="sFirstMapManualCurrentCategory" name="sFirstMapManualCurrentCategory" id="sFirstMapManualCurrentCategory">
                   </div>
+
                   <div class="col-md-6">
                     <label for="mailRelatedTag" class="form-label">Number </label>
                     <input type="text" class="form-control" [(ngModel)]="sFirstMapNumber" name="sNumber" id="sNumber">
                   </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="sFirstMapRelatedVpnCityName" class="form-label">City </label>
+                    <input type="text" class="form-control" [(ngModel)]="sFirstMapRelatedVpnCityName" name="sFirstMapRelatedVpnCityName" id="sFirstMapRelatedVpnCityName">
+                  </div>
+
+                  <div class="col-md-3 pe-2">
+                    <label for="sFirstMapRelatedVpnCityStateName" class="form-label">State </label>
+                    <input type="text" class="form-control" [(ngModel)]="sFirstMapRelatedVpnCityStateName" name="sFirstMapRelatedVpnCityStateName" id="sFirstMapRelatedVpnCityStateName">
+                  </div>
+
+                  <div class="col-md-3 ps-2">
+                    <label for="sFirstMapRelatedVpnCityZipCode" class="form-label">Zip </label>
+                    <input type="text" class="form-control" [(ngModel)]="sFirstMapRelatedVpnCityZipCode" name="sFirstMapRelatedVpnCityZipCode" id="sFirstMapRelatedVpnCityZipCode">
+                  </div>
+
                   <div class="col-md-12">
                     <label for="mailIssueNote" class="form-label">Link</label>
                     <textarea rows="2" type="text" class="form-control" [(ngModel)]="sFirstMapLink" name="mailIssueNote"
@@ -95,20 +116,43 @@
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
                     <label for="nCategoryId" class="form-label">Category</label>
                     <select class="form-select form-select mb-3" [(ngModel)]="nSecondMapCategory" name="nCategoryId"
                       id="mailSourcingId" aria-label=".form-select-lg example">
                       <option value="0"> ---Select Category---</option>
                       <option *ngFor="let item of CategoryKeyValues" value="{{item.key}}">{{item.value}}</option>
                     </select>
+                  </div> -->
+
+                  <div class="col-md-6 mb-3">
+                    <label for="sSecondMapManualCurrentCategory" class="form-label">Category </label>
+                    <input type="text" class="form-control" [(ngModel)]="sSecondMapManualCurrentCategory" name="sSecondMapManualCurrentCategory" id="sSecondMapManualCurrentCategory">
                   </div>
-                  <div class="col-md-6">
+
+                  <div class="col-md-6 mb-3">
 
                     <label for="mailRelatedTag" class="form-label">Number </label>
                     <input type="text" class="form-control" [(ngModel)]="sSecondMapNumber" name="sNumber" id="sNumber">
 
                   </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="sSecondMapRelatedVpnCityName" class="form-label">City </label>
+                    <input type="text" class="form-control" [(ngModel)]="sSecondMapRelatedVpnCityName" name="sSecondMapRelatedVpnCityName" id="sSecondMapRelatedVpnCityName">
+                  </div>
+
+                  <div class="col-md-3 pe-2">
+                    <label for="sSecondMapRelatedVpnCityStateName" class="form-label">State </label>
+                    <input type="text" class="form-control" [(ngModel)]="sSecondMapRelatedVpnCityStateName" name="sSecondMapRelatedVpnCityStateName" id="sSecondMapRelatedVpnCityStateName">
+                  </div>
+
+                  <div class="col-md-3 ps-2">
+                    <label for="sSecondMapRelatedVpnCityZipCode" class="form-label">Zip </label>
+                    <input type="text" class="form-control" [(ngModel)]="sSecondMapRelatedVpnCityZipCode" name="sSecondMapRelatedVpnCityZipCode" id="sSecondMapRelatedVpnCityZipCode">
+                  </div>
+
+
                   <div class="col-md-12">
                     <label for="mailIssueNote" class="form-label">Link</label>
                     <textarea rows="2" type="text" class="form-control" [(ngModel)]="sSecondMapLink"
