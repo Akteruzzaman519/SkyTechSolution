@@ -68,6 +68,8 @@ export class MailClaimingComponent implements OnInit {
   public totalRecord: number = 0;
   public bIsDisable: boolean = false;
 
+
+  public sRemarksNote = "";
   constructor(private service: HttpCommonService, private toast: ToastrService, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router) {
     this.route.url.subscribe(urlSegments => {
@@ -232,9 +234,7 @@ export class MailClaimingComponent implements OnInit {
       })
   }
 
-
-
-  public ClaimEmailMaps() {
+  ChangeMapInfo(){
 
     if(this.sFirstMapManualCurrentCategory ==""){
       this.toast.warning("Please Provide Map 1 Category!!", "Warning", { progressBar: true });
@@ -260,6 +260,14 @@ export class MailClaimingComponent implements OnInit {
       this.toast.warning("Please Provide Map 2 Link!!", "Warning", { progressBar: true });
       return;
     }
+
+    document.getElementById("ConfirmationPopupRemarklOpen")?.click();
+  }
+
+
+  public ClaimEmailMaps() {
+
+ 
     this.oEmailMapClaimFormDto = new EmailMapClaimFormDto();
     this.oEmailMapClaimFormDto.mapCurrentCategory = this.nFirstMapCategory;
     this.oEmailMapClaimFormDto.mapCurrentMapLink = this.sFirstMapLink;
@@ -284,7 +292,7 @@ export class MailClaimingComponent implements OnInit {
     this.oEmailMapClaimFormDtoList.push(this.oEmailMapClaimFormDto);
 
     //{{baseURL}}/EmailManagement/ClaimEmailMaps/{mailSystemId}/{mailOperationCompletionId}/{statusTag}
-    this.service.Post('/EmailManagement/ClaimEmailMaps/' + this.mailSystemId + "/" + this.mailOperationCompletionId + "/" + this.statusTag, this.oEmailMapClaimFormDtoList, true).subscribe((res: any) => {
+    this.service.Post('/EmailManagement/ClaimEmailMaps/' + this.mailSystemId + "/" + this.mailOperationCompletionId + "/" + this.statusTag+"?remarks="+this.sRemarksNote, this.oEmailMapClaimFormDtoList, true).subscribe((res: any) => {
       this.toast.success("Map Climing Info Saved!!", "Success", { progressBar: true });
       this.sFirstMapNumber = "";
       this.sSecondMapNumber = "";
@@ -293,6 +301,7 @@ export class MailClaimingComponent implements OnInit {
       this.sFirstMapLink = "";
       this.sSecondMapLink = "";
       this.GetEmailsByOperationTag(this.statusTag)
+      document.getElementById("ConfirmationPopupRemarkCloseModal")?.click();
 
       this.rowData = [];
       this.totalRecord = 0;
@@ -350,6 +359,7 @@ export class MailClaimingComponent implements OnInit {
       this.eyeIconRecovery = '👁️';
     }
   }
+
 
 }
 

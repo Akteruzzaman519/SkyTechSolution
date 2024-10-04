@@ -16,9 +16,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './change-mail-credential.component.html',
   styleUrls: ['./change-mail-credential.component.css']
 })
-export class ChangeMailCredentialComponent  implements OnInit {
-  
-  
+export class ChangeMailCredentialComponent implements OnInit {
+
+
   private balkEmailGridApi!: GridApi;
   passwordFieldType: string = 'password';
   recoveryFieldType: string = 'password';
@@ -28,29 +28,30 @@ export class ChangeMailCredentialComponent  implements OnInit {
   public DeafultCol = AGGridHelper.DeafultCol;
   public rowData: any[] = [];
 
-  public oEmailBaseInfo :EmailBaseInfo = new EmailBaseInfo();
-  public oEmailIssueFormDto :EmailIssueFormDto = new EmailIssueFormDto();
-  public oEmailOperationGridDtoList :EmailOperationGridDto[] = [];
+  public oEmailBaseInfo: EmailBaseInfo = new EmailBaseInfo();
+  public oEmailIssueFormDto: EmailIssueFormDto = new EmailIssueFormDto();
+  public oEmailOperationGridDtoList: EmailOperationGridDto[] = [];
   public KeyValues: KeyValueDto[] = [];
   public oEmailFormDto = new EmailFormDto();
-  public sEmailUserName :string = "";
-  public sEmailPassword :string = "";
-  public sEmailRecoveryEmail :string = "";
-  public statusTag :any= "";
+  public sEmailUserName: string = "";
+  public sEmailPassword: string = "";
+  public sEmailRecoveryEmail: string = "";
+  public statusTag: any = "";
   public mailSystemId = 0;
   public mailOperationCompletionId = 0;
 
-  public sNewEmailPassword :string = "";
-  public sNewRecoveryEmail :string = "";
-  public sMailIssueNote:string = "";
+  public sNewEmailPassword: string = "";
+  public sNewRecoveryEmail: string = "";
+  public sMailIssueNote: string = "";
   public totalRecord: number = 0;
-  public bIsDisable : boolean = false;
+  public bIsDisable: boolean = false;
   public nReportIssueId: number = -1;
+  public sRemarksNote = "";
 
-  constructor(private service: HttpCommonService, private toast: ToastrService,private datePipe: DatePipe,
+  constructor(private service: HttpCommonService, private toast: ToastrService, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router) {
-      this.route.url.subscribe(urlSegments => {
-        this.statusTag = urlSegments[urlSegments.length - 1];
+    this.route.url.subscribe(urlSegments => {
+      this.statusTag = urlSegments[urlSegments.length - 1];
     });
   }
 
@@ -66,22 +67,24 @@ export class ChangeMailCredentialComponent  implements OnInit {
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: any[] = [
-    { valueGetter: "node.rowIndex + 1", headerName: '', cellStyle: { 'border-right': '0.5px solid #e9ecef' }, filter:false, width: 20, editable: false},
-    { field: "mailUserName", headerName: 'Email', width:200 },
-    { field: "mailOperationAssignedByFullName", headerName: 'Assign By', width:180 },
-    { field: "mailOperationAssignedAt", headerName: 'Assign At',width:185, cellRenderer: (params: ValueFormatterParams) => {
-      return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
-    }, },
-    { field: 'Details', headerName: 'Details',width:100, resizable: true, cellRenderer: this.detailToGrid.bind(this) },
+    { valueGetter: "node.rowIndex + 1", headerName: '', cellStyle: { 'border-right': '0.5px solid #e9ecef' }, filter: false, width: 20, editable: false },
+    { field: "mailUserName", headerName: 'Email', width: 200 },
+    { field: "mailOperationAssignedByFullName", headerName: 'Assign By', width: 180 },
+    {
+      field: "mailOperationAssignedAt", headerName: 'Assign At', width: 185, cellRenderer: (params: ValueFormatterParams) => {
+        return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
+      },
+    },
+    { field: 'Details', headerName: 'Details', width: 100, resizable: true, cellRenderer: this.detailToGrid.bind(this) },
   ];
 
   detailToGrid(params: any) {
     const eDiv = document.createElement('div');
     var sDisableed = ''
-    if( this.bIsDisable ){
-      sDisableed =  params.data.mailOperationCompletionStatus  != 2 ? 'style= "display: None"' : ''
+    if (this.bIsDisable) {
+      sDisableed = params.data.mailOperationCompletionStatus != 2 ? 'style= "display: None"' : ''
     }
-    eDiv.innerHTML = ' <button class="btn btn-success p-0 px-1" '+sDisableed+'><i class="fa-solid fa-eye" aria-hidden="true"></i> Detail</button>'
+    eDiv.innerHTML = ' <button class="btn btn-success p-0 px-1" ' + sDisableed + '><i class="fa-solid fa-eye" aria-hidden="true"></i> Detail</button>'
     eDiv.addEventListener('click', () => {
       this.mailSystemId = params.data.mailSystemId;
       this.mailOperationCompletionId = params.data.mailOperationCompletionId;
@@ -90,17 +93,17 @@ export class ChangeMailCredentialComponent  implements OnInit {
     return eDiv;
   }
 
-  public RowDoubleClick(params: RowDoubleClickedEvent){
+  public RowDoubleClick(params: RowDoubleClickedEvent) {
     console.log(params.data)
     this.mailSystemId = params.data.mailSystemId;
     this.mailOperationCompletionId = params.data.mailOperationCompletionId;
     this.LoadDetails();
   }
 
-  LoadDetails(){
+  LoadDetails() {
     this.GetEmailUsername();
     this.TrackOperationStart();
-  
+
     this.sEmailUserName = "";
     this.sEmailPassword = "";
     this.sEmailRecoveryEmail = "";
@@ -114,7 +117,7 @@ export class ChangeMailCredentialComponent  implements OnInit {
 
 
   addBulkEmailBtn() {
-    if(this.mailSystemId <= 0){
+    if (this.mailSystemId <= 0) {
       this.toast.warning("Select a mail from listt!!", "Warning", { progressBar: true });
       return;
     }
@@ -125,11 +128,11 @@ export class ChangeMailCredentialComponent  implements OnInit {
     //{{baseURL}}/EmailOperation/GetEmailsByOperationTag/{operationTag}
     this.service.Get('/EmailOperation/GetEmailsByOperationTag/' + relatedModule).subscribe((res: any) => {
       this.oEmailOperationGridDtoList = res;
-      this.totalRecord =  this.oEmailOperationGridDtoList.length;
-      this.bIsDisable = this.oEmailOperationGridDtoList.find(x => x.mailOperationCompletionStatus == 2) ?  true : false;
+      this.totalRecord = this.oEmailOperationGridDtoList.length;
+      this.bIsDisable = this.oEmailOperationGridDtoList.find(x => x.mailOperationCompletionStatus == 2) ? true : false;
       this.balkEmailGridApi.setRowData(this.oEmailOperationGridDtoList);
       this.balkEmailGridApi.forEachNode(node => {
-        if(node.data.mailOperationCompletionStatus == 2) {
+        if (node.data.mailOperationCompletionStatus == 2) {
           node.setSelected(true);
         }
       })
@@ -140,8 +143,8 @@ export class ChangeMailCredentialComponent  implements OnInit {
   }
 
   public GetEmailUsername() {
-  //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
-    this.service.Get('/EmailManagement/GetEmailUsername/' + this.mailSystemId +"/"+this.statusTag).subscribe((res: any) => {
+    //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
+    this.service.Get('/EmailManagement/GetEmailUsername/' + this.mailSystemId + "/" + this.statusTag).subscribe((res: any) => {
       this.sEmailUserName = res.data;
     },
       (err: any) => {
@@ -161,55 +164,60 @@ export class ChangeMailCredentialComponent  implements OnInit {
 
   public GetEmailPassword() {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
-      this.service.Get('/EmailManagement/GetEmailPassword/' +  this.mailSystemId+"/"+this.statusTag).subscribe((res: any) => {
-        this.sEmailPassword = res.data;
-      },
-        (err: any) => {
-          console.log(err);
-        })
-    }
+    this.service.Get('/EmailManagement/GetEmailPassword/' + this.mailSystemId + "/" + this.statusTag).subscribe((res: any) => {
+      this.sEmailPassword = res.data;
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
 
-    //{{baseURL}}/EmailManagement/GetEmailRcoveryEmail/{mailSystemId}
+  //{{baseURL}}/EmailManagement/GetEmailRcoveryEmail/{mailSystemId}
   public GetEmailRcoveryEmail() {
     //{{baseURL}}/EmailManagement/GetEmailUsername/{mailSystemId}
-      this.service.Get('/EmailManagement/GetEmailRecoveryMail/' +  this.mailSystemId+"/"+this.statusTag).subscribe((res: any) => {
-        this.sEmailRecoveryEmail = res.data;
-      },
-        (err: any) => {
-          console.log(err);
-        })
-    }
+    this.service.Get('/EmailManagement/GetEmailRecoveryMail/' + this.mailSystemId + "/" + this.statusTag).subscribe((res: any) => {
+      this.sEmailRecoveryEmail = res.data;
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
 
-    public GetIssuesInKeyValue() {
-       //{{baseURL}}/KeyValue/GetIssuesInKeyValue/{operationTag}
-        this.service.Get('/KeyValue/GetIssuesInKeyValue/' +  this.statusTag).subscribe((res: any) => {
-          this.KeyValues = res;
-        },
-          (err: any) => {
-            console.log(err);
-          })
-      }
+  public GetIssuesInKeyValue() {
+    //{{baseURL}}/KeyValue/GetIssuesInKeyValue/{operationTag}
+    this.service.Get('/KeyValue/GetIssuesInKeyValue/' + this.statusTag).subscribe((res: any) => {
+      this.KeyValues = res;
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
 
-   
-
-  public ChangeEmailCredential(){
-
-    if(this.sNewEmailPassword == ""){
+  ChangeMapInfo(){
+    if (this.sNewEmailPassword == "") {
       this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
       return;
     }
-    if(this.sNewRecoveryEmail == ""){
+    if (this.sNewRecoveryEmail == "") {
       this.toast.warning("Please Provide New Recovery Email!!", "Warning", { progressBar: true });
       return;
     }
+    document.getElementById("ConfirmationPopupRemarklOpen")?.click();
+  }
+
+
+  public ChangeEmailCredential() {
+
+
 
     this.oEmailBaseInfo.mailUserName = this.sEmailUserName;
     this.oEmailBaseInfo.mailRecoveryMail = this.sNewRecoveryEmail;
     this.oEmailBaseInfo.mailUserPassword = this.sNewEmailPassword;
     //{{baseURL}}/EmailManagement/ChangeEmailCredential/{mailSystemId}
-    this.service.Post('/EmailManagement/ChangeEmailCredential/'+ this.mailSystemId+ "/"+ this.mailOperationCompletionId+"/" + this.statusTag, this.oEmailBaseInfo, true).subscribe((res: any) => {
+    this.service.Post('/EmailManagement/ChangeEmailCredential/' + this.mailSystemId + "/" + this.mailOperationCompletionId + "/" + this.statusTag + "?remarks=" + this.sRemarksNote, this.oEmailBaseInfo, true).subscribe((res: any) => {
       this.toast.success("Credential Changed Successfully!!", "Success", { progressBar: true });
       this.GetEmailsByOperationTag(this.statusTag)
+      document.getElementById("ConfirmationPopupRemarkCloseModal")?.click();
       this.sEmailUserName = "";
       this.sEmailPassword = "";
       this.sEmailRecoveryEmail = "";
@@ -228,28 +236,28 @@ export class ChangeMailCredentialComponent  implements OnInit {
       })
   }
 
-  
 
-  public ReportMailIssue(){
+
+  public ReportMailIssue() {
     this.oEmailIssueFormDto.mailIssueId = this.nReportIssueId;
     this.oEmailIssueFormDto.mailSystemId = this.mailSystemId;
     this.oEmailIssueFormDto.mailIssueNote = this.sMailIssueNote;
 
-    if(this.nReportIssueId ==  -1 ){
+    if (this.nReportIssueId == -1) {
       this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
       return;
     }
-    if(this.nReportIssueId == 0) {
-      if(this.sMailIssueNote ==  "" ){
+    if (this.nReportIssueId == 0) {
+      if (this.sMailIssueNote == "") {
         this.toast.warning("Custom issue note required!!", "Warning", { progressBar: true });
         return;
       }
     }
-    if(this.nReportIssueId != 0){
-      this.oEmailIssueFormDto.mailIssueNote="" 
+    if (this.nReportIssueId != 0) {
+      this.oEmailIssueFormDto.mailIssueNote = ""
     }
     //{{baseURL}}/EmailOperation/ReportMailIssue
-    this.service.Post('/EmailOperation/ReportMailIssue/'+this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
+    this.service.Post('/EmailOperation/ReportMailIssue/' + this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
       this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
       document.getElementById("BulkemailCloseModal")?.click();
       this.GetEmailsByOperationTag(this.statusTag);
@@ -279,6 +287,10 @@ export class ChangeMailCredentialComponent  implements OnInit {
       this.eyeIconRecovery = '👁️';
     }
   }
+
+
+
+
 
 }
 
