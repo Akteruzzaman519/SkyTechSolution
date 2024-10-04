@@ -252,19 +252,22 @@ export class ChangeMapInfoComponent implements OnInit {
 
 
   public ChangeMapInfoCloseModal() {
+
+    if(this.EmailMapInfoChangeFormDto.mapNewBusinessName == ""){
+      this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
+      return;
+    }
+    if(this.sNewRecoveryEmail == ""){
+      this.toast.warning("Please Provide New Recovery Email!!", "Warning", { progressBar: true });
+      return;
+    }
+    
     document.getElementById("ConfirmationPopupRemarklOpen")?.click();
   }
 
   public ChangeMapInfo() {
 
-    // if(this.EmailMapInfoChangeFormDto.mapNewBusinessName == ""){
-    //   this.toast.warning("Please Provide New Password!!", "Warning", { progressBar: true });
-    //   return;
-    // }
-    // if(this.sNewRecoveryEmail == ""){
-    //   this.toast.warning("Please Provide New Recovery Email!!", "Warning", { progressBar: true });
-    //   return;
-    // }
+
     this.EmailMapInfoChangeFormDto.mapClaimingId = this.oEmailMapGridDto.mapClaimingId;
     this.EmailMap2InfoChangeFormDto.mapClaimingId = this.oEmailMap2GridDto.mapClaimingId;
     this.EmailMapInfoChangeFormDtoList.push(this.EmailMapInfoChangeFormDto);
