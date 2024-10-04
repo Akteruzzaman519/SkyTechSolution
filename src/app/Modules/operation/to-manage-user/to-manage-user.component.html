@@ -1,0 +1,106 @@
+<div class="row g-0">
+    <div class="col-md-12 my-3">
+        <span class="grid-header"><i aria-hidden="true" class="fa fa-list"></i> Manage Users </span>
+    </div>
+
+    <div class="col-md-8">
+        <div class="row g-0">
+            <div class="col-md-4 px-2 mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select id="category" class="form-select" [(ngModel)]="category" name="category">
+                    <ng-container *ngFor="let item of categoryList">
+                        <option value="{{item.key}}">{{item.title}}</option>
+                    </ng-container>
+                </select>
+            </div>
+
+            <div class="col-md-4 px-3 mb-3">
+                <label for="statusType" class="form-label">Status </label>
+                <select id="statusType" (change)="ChangeStatus()" [(ngModel)]="statusType" name="statusType"
+                    class="form-select">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="col-md-4 px-2 mb-3" style="align-content: end;">
+                <button type="button" class="btn btn-primary" (click)="GetData()">Get Data</button>
+            </div>
+
+
+            <div class="col-md-12 px-2 position-relative">
+                <ag-grid-angular class="ag-theme-alpine" style="height: 67vh;width: 100%; " [rowData]="rowData"
+                    rowSelection="single" [columnDefs]="colDefs" (gridReady)="ApiGridReady($event)"
+                    [paginationPageSize]="paginationPageSize" [pagination]="true" [class]="themeClass"
+                    [defaultColDef]="DeafultCol">
+                </ag-grid-angular>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header py-2 px-3">
+                <div *ngIf="oUserFormGeneralDto.userCategoryId==0" class=""> Add User </div>
+                <div *ngIf="oUserFormGeneralDto.userCategoryId>0" class=""> Update User</div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="userFirstName" class="form-label">First Name </label>
+                    <input type="text" class="form-control" [(ngModel)]="oUserFormGeneralDto.userFirstName"
+                        name="userFirstName" id="userFirstName" placeholder="">
+                </div>
+
+                <div class="mb-3">
+                    <label for="userLastName" class="form-label">Last Name </label>
+                    <input type="text" class="form-control" [(ngModel)]="oUserFormGeneralDto.userLastName"
+                        name="userLastName" id="userLastName" placeholder="">
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select id="category" class="form-select" [(ngModel)]="oUserFormGeneralDto.userCategoryId"
+                        name="category">
+                        <ng-container *ngFor="let item of categoryModalList">
+                            <option value="{{item.key}}">{{item.title}}</option>
+                        </ng-container>
+
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="userName" class="form-label">User Name </label>
+                    <input type="text" class="form-control" [(ngModel)]="oUserFormGeneralDto.userName" name="userName"
+                        id="userName" placeholder="">
+                </div>
+
+                <div class="mb-3">
+                    <label for="userPassword" class="form-label">Password</label>
+                    <input type="text" class="form-control" [(ngModel)]="oUserFormGeneralDto.userPassword"
+                        name="userPassword" id="userPassword" placeholder="">
+                </div>
+
+                <div class="mb-3">
+                    <label for="userActiveStatus" class="form-label">Status </label>
+                    <select id="userActiveStatus" (change)="ChangeStatus()"
+                        [(ngModel)]="oUserFormGeneralDto.userActiveStatus" name="userActiveStatus" class="form-select">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="card-footer text-end p-2">
+                <button *ngIf="oUserFormGeneralDto.userCategoryId==0" type="button" class="btn btn-primary"
+                    (click)="AddUser()"> Save Data </button>
+                <button *ngIf="oUserFormGeneralDto.userCategoryId>0" type="button" class="btn btn-primary"
+                    (click)="UpdateUser()"> Update Data </button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+</div>

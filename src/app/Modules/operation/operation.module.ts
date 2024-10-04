@@ -19,6 +19,7 @@ import { IDValueModule } from 'src/app/cod/Modules/idvalue/idvalue.module';
 import { ReportMailHistoryComponent } from './report-mail-history/report-mail-history.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { AssignToPreferredModuleComponent } from './assign-to-preferred-module/assign-to-preferred-module.component';
+import { ToManageUserComponent } from './to-manage-user/to-manage-user.component';
 
 const routes: Routes = [
   { path: "fresh_email_upload", component: EmailUploadComponent, title: "Email Upload" },
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: "review_on_map", component: ReviewMapComponent, title: "Review On Map" },
   { path: "report/mail-history", component: ReportMailHistoryComponent, title: "Mail History" },
   { path: "assign_to_preferred_module", component: AssignToPreferredModuleComponent, title: "Assign To Preferred Module" },
+  { path: "manage-general-user", component: ToManageUserComponent, title: "Manage Users" },
 ]
 
 @NgModule({
@@ -51,7 +53,8 @@ const routes: Routes = [
     ReviewMapComponent,
     ReportMailHistoryComponent,
     PaginationComponent,
-    AssignToPreferredModuleComponent
+    AssignToPreferredModuleComponent,
+    ToManageUserComponent
   ],
   imports: [
     CommonModule,
