@@ -7,7 +7,6 @@ export const environment = {
   version: '1.0.1',
   apiBaseUrl: 'http://taskapi.skytechsllc.com/api'
 };
-// apiBaseUrl: 'http://erpapi.ajrgroupbd.net/api'
 
 /*
  * For easier debugging in development mode, you can import the following file
