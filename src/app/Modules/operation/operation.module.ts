@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: "assign_to_preferred_module", component: AssignToPreferredModuleComponent, title: "Assign To Preferred Module" },
   { path: "manage-general-user", component: ToManageUserComponent, title: "Manage Users" },
   { path: "layered_routine_check", component: LayeredRoutineCheckComponent, title: "Layered Routine Task" },
-  { path: "verification_pending", component: LayeredRoutineCheckComponent, title: "Pending For Verification" },
+  { path: "verification_pending", component: OperationVerificationPendingComponent, title: "Pending For Verification" },
 ]
 
 @NgModule({
