@@ -21,6 +21,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { AssignToPreferredModuleComponent } from './assign-to-preferred-module/assign-to-preferred-module.component';
 import { ToManageUserComponent } from './to-manage-user/to-manage-user.component';
 import { LayeredRoutineCheckComponent } from './layered-routine-check/layered-routine-check.component';
+import { OperationVerificationPendingComponent } from './operation-verification-pending/operation-verification-pending.component';
 
 const routes: Routes = [
   { path: "fresh_email_upload", component: EmailUploadComponent, title: "Email Upload" },
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: "assign_to_preferred_module", component: AssignToPreferredModuleComponent, title: "Assign To Preferred Module" },
   { path: "manage-general-user", component: ToManageUserComponent, title: "Manage Users" },
   { path: "layered_routine_check", component: LayeredRoutineCheckComponent, title: "Layered Routine Task" },
+  { path: "verification_pending", component: LayeredRoutineCheckComponent, title: "Pending For Verification" },
 ]
 
 @NgModule({
@@ -57,7 +59,8 @@ const routes: Routes = [
     PaginationComponent,
     AssignToPreferredModuleComponent,
     ToManageUserComponent,
-    LayeredRoutineCheckComponent
+    LayeredRoutineCheckComponent,
+    OperationVerificationPendingComponent
   ],
   imports: [
     CommonModule,
