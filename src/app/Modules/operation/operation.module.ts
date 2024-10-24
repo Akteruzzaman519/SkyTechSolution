@@ -20,6 +20,7 @@ import { ReportMailHistoryComponent } from './report-mail-history/report-mail-hi
 import { PaginationComponent } from './pagination/pagination.component';
 import { AssignToPreferredModuleComponent } from './assign-to-preferred-module/assign-to-preferred-module.component';
 import { ToManageUserComponent } from './to-manage-user/to-manage-user.component';
+import { LayeredRoutineCheckComponent } from './layered-routine-check/layered-routine-check.component';
 
 const routes: Routes = [
   { path: "fresh_email_upload", component: EmailUploadComponent, title: "Email Upload" },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: "report/mail-history", component: ReportMailHistoryComponent, title: "Mail History" },
   { path: "assign_to_preferred_module", component: AssignToPreferredModuleComponent, title: "Assign To Preferred Module" },
   { path: "manage-general-user", component: ToManageUserComponent, title: "Manage Users" },
+  { path: "layered_routine_check", component: LayeredRoutineCheckComponent, title: "Layered Routine Task" },
 ]
 
 @NgModule({
@@ -54,7 +56,8 @@ const routes: Routes = [
     ReportMailHistoryComponent,
     PaginationComponent,
     AssignToPreferredModuleComponent,
-    ToManageUserComponent
+    ToManageUserComponent,
+    LayeredRoutineCheckComponent
   ],
   imports: [
     CommonModule,
