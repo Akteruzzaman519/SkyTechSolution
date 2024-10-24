@@ -115,9 +115,9 @@ export class LayeredRoutineCheckComponent implements OnInit {
 
   }
 
-  private GetVerificationPendingEmailAfterRoutineTask() {
+  private GetUsersCurrentWorkloadCount() {
     this.confirmToAgentGridApi.setRowData([]);
-    this.service.Get('/EmailOperation/GetVerificationPendingEmailAfterRoutineTask/' +1+'/'+ 100000).subscribe((res: any) => {
+    this.service.Get('/EmailOperation/GetUsersCurrentWorkloadCount/' + this.statusTag + '/mail_agent').subscribe((res: any) => {
       this.confirmToAgentGridApi.setRowData(res);
     },
       (err: any) => {
@@ -127,14 +127,12 @@ export class LayeredRoutineCheckComponent implements OnInit {
   }
 
   public AssignToAgent() {
-    
-    // document.getElementById('modalOpen')?.click();
     var data = AGGridHelper.GetSelectedRows(this.asignToAgentGridApi);
     if (data.length == 0) {
       this.toast.warning("Please select an item!!", "Warning", { progressBar: true });
       return;
     }
-    this.GetVerificationPendingEmailAfterRoutineTask();
+    this.GetUsersCurrentWorkloadCount();
 
     document.getElementById("modalOpen")?.click();
 
