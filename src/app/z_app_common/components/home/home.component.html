@@ -26,10 +26,10 @@
             <div class="col-md-12">
 
                 <div class="row g-0">
-                    <div class="col-md my-2">
-                        <h4 class=" text-uppercase"> <i class="fa-brands fa-mailchimp"></i> Agents Workload Report</h4>
+                    <div class="col my-2">
+                        <h4 class=" text-uppercase"> <i class="fa-solid fa-user"></i> Agents Workload Report</h4>
                     </div>
-                    <div class="col-md my-2">
+                    <div class="col-4 my-2">
                         <select id="selectModuleType" class="form-select" (change)="moduleTypeSelectionChange()"
                             [(ngModel)]="selectModuleType" name="moduleType">
                             <option value="">-- select module --</option>
@@ -54,7 +54,7 @@
             <div class="col-md-12 mt-4">
                 <h4 class="my-1 text-uppercase"> <i class="fa-solid fa-border-all"></i>  Activity Report </h4>
             </div>
-            <div class="col-md-3 px-2">
+            <div class="col-md-3 pe-2">
                 <div class="mb-3">
                     <label for="startDate" class="form-label">From</label>
                     <input type="date" class="form-control" id="startDate" [(ngModel)]="startDate" name="startDate">
@@ -73,7 +73,7 @@
                         [(ngModel)]="agentUserSystemId" name="agentUserSystemId">
                         <option value="">-- select module --</option>
                         <ng-container *ngFor="let item of KeyValueDto">
-                            <option value="{{item.key}}">{{item.title}}</option>
+                            <option value="{{item.key}}">{{item.value}}</option>
                         </ng-container>
                     </select>
                 </div>
