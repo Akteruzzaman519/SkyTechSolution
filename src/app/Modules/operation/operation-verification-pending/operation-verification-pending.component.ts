@@ -9,6 +9,7 @@ import { KeyValueDto } from 'src/app/Models/KeyValueDto';
 import { MailTasksManualFormDto } from 'src/app/Models/MailTasksManualFormDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
+import { EmailVerificationFormDto } from 'src/app/Models/EmailVerificationFormDto';
 
 @Component({
   selector: 'app-operation-verification-pending',
@@ -47,6 +48,8 @@ export class OperationVerificationPendingComponent implements OnInit {
   public bIsDisable: boolean = false;
   public nReportIssueId: number = 0;
 
+  public oEmailVerificationFormDto= new EmailVerificationFormDto()
+
   constructor(private service: HttpCommonService, private toast: ToastrService, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router) {
     this.route.url.subscribe(urlSegments => {
@@ -68,6 +71,16 @@ export class OperationVerificationPendingComponent implements OnInit {
         console.log(err);
       })
   }
+
+  public VerifyEmailAfterRoutineTask() {
+    this.service.Post('/EmailManagement/VerifyEmailAfterRoutineTask',this.oEmailVerificationFormDto).subscribe((res: any) => {
+      
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
+
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
