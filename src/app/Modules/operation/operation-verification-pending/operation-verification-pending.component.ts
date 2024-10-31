@@ -10,6 +10,7 @@ import { MailTasksManualFormDto } from 'src/app/Models/MailTasksManualFormDto';
 import { AGGridHelper } from '../../Common/AGGridHelper';
 import { HttpCommonService } from '../../Common/http-common.service';
 import { EmailVerificationFormDto } from 'src/app/Models/EmailVerificationFormDto';
+import { MailSystem } from 'src/app/Models/MailSystem';
 
 @Component({
   selector: 'app-operation-verification-pending',
@@ -48,7 +49,8 @@ export class OperationVerificationPendingComponent implements OnInit {
   public bIsDisable: boolean = false;
   public nReportIssueId: number = 0;
 
-  public oEmailVerificationFormDto= new EmailVerificationFormDto()
+  public oMailSystem = new MailSystem();
+  public oEmailVerificationFormDto = new EmailVerificationFormDto()
 
   constructor(private service: HttpCommonService, private toast: ToastrService, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router) {
@@ -59,132 +61,93 @@ export class OperationVerificationPendingComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetVerificationPendingEmailAfterRoutineTask();
-    this.GetIssuesInKeyValue();
   }
-
-
-  public GetIssuesInKeyValue() {
-    this.service.Get('/KeyValue/GetIssuesInKeyValue/' + this.statusTag).subscribe((res: any) => {
-      this.KeyValues = res;
-    },
-      (err: any) => {
-        console.log(err);
-      })
-  }
-
-  public VerifyEmailAfterRoutineTask() {
-    this.service.Post('/EmailManagement/VerifyEmailAfterRoutineTask',this.oEmailVerificationFormDto).subscribe((res: any) => {
-      
-    },
-      (err: any) => {
-        console.log(err);
-      })
-  }
-
 
   ApiGridReady(event: GridReadyEvent) {
     this.balkEmailGridApi = event.api;
     this.balkEmailGridApi.sizeColumnsToFit();
   }
-  ApiGridReadyTask(event: GridReadyEvent) {
-    this.taskEmailGridApi = event.api;
-    this.taskEmailGridApi.sizeColumnsToFit();
-  }
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: any[] = [
-    { valueGetter: "node.rowIndex + 1", headerName: '', cellStyle: { 'border-right': '0.5px solid #e9ecef' }, filter: false, width: 20, editable: false },
-    { field: "mailUserName", headerName: 'Email', width: 200 },
-    { field: "mailOperationAssignedByFullName", headerName: 'Assign By', width: 180 },
+    { valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 100, editable: false, checkboxSelection: true, headerCheckboxSelection: true, },
+
+    { field: 'mailUserName', headerName: 'Email' },
+    { field: 'MailLastActionTakenAge', headerName: 'Age' },
+
     {
-      field: "mailOperationAssignedAt", headerName: 'Assign At', width: 185, cellRenderer: (params: ValueFormatterParams) => {
+      field: 'mailRoutineTaskDate1', headerName: 'Claimed At',
+      cellRenderer: (params: ValueFormatterParams) => {
         return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
-      },
+      }
     },
-    { field: 'Details', headerName: 'Details', width: 100, resizable: true, cellRenderer: this.detailToGrid.bind(this) },
-  ];
-
-  colDefsTask: any[] = [
-    { valueGetter: "node.rowIndex + 1", headerName: '', cellStyle: { 'border-right': '0.5px solid #e9ecef' }, filter: false, width: 20, editable: false },
-    { field: "mailTaskName", headerName: 'Task Name', width: 200 },
-    { field: "mailTaskDescription", headerName: 'Description', width: 180 },
-    { field: "mailTaskNote", headerName: 'Note', width: 185 },
-  ];
-
-  detailToGrid(params: any) {
-    const eDiv = document.createElement('div');
-    var sDisableed = ''
-    if (this.bIsDisable) {
-      sDisableed = params.data.mailOperationCompletionStatus != 2 ? 'style= "display: None"' : ''
+    {
+      field: 'mailRoutineTaskDate2', headerName: 'Check 1',
+      cellRenderer: (params: ValueFormatterParams) => {
+        return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
+      }
+    },
+    {
+      field: 'mailRoutineTaskDate3', headerName: 'Check 2',
+      cellRenderer: (params: ValueFormatterParams) => {
+        return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
+      }
+    },
+    {
+      field: 'mailRoutineTaskDate4', headerName: 'Check 3',
+      cellRenderer: (params: ValueFormatterParams) => {
+        return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
+      }
+    },
+    {
+      field: 'mailRoutineTaskDate5', headerName: 'Check 4',
+      cellRenderer: (params: ValueFormatterParams) => {
+        return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
+      }
+    },
+    {
+      field: 'mailRoutineTaskDate6', headerName: 'Check 5',
+      cellRenderer: (params: ValueFormatterParams) => {
+        return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
+      }
+    },
+    {
+      field: 'mailRoutineTaskDate7', headerName: 'Check 6',
+      cellRenderer: (params: ValueFormatterParams) => {
+        return this.datePipe.transform(params.value, 'dd MMM y, h:mm:ss a');
+      }
     }
-    eDiv.innerHTML = ' <button class="btn btn-success p-0 px-1" ' + sDisableed + '><i class="fa-solid fa-eye" aria-hidden="true"></i> Detail</button>'
-    eDiv.addEventListener('click', () => {
-      this.mailSystemId = params.data.mailSystemId;
-      this.mailOperationCompletionId = params.data.mailOperationCompletionId;
-      this.LoadDetails()
-    });
-    return eDiv;
-  }
-  public RowDoubleClickTask(params: RowDoubleClickedEvent) {
-    this.oMailTasksManualFormDto = params.data;
-    this.bIsEdit = true;
-    this.sTaskTitle = "Update";
-    document.getElementById('modalOpen')?.click();
+  ];
+
+
+  public OpenModalDialog() {
+    var selectedRow = AGGridHelper.GetSelectedRow(this.balkEmailGridApi);
+    console.log(selectedRow)
+    if (selectedRow == null) {
+      this.toast.warning("Select a mail from listt!!", "Warning", { progressBar: true });
+      return;
+    }
+    this.oEmailVerificationFormDto = new EmailVerificationFormDto();
+    this.oEmailVerificationFormDto.mailSystemId = selectedRow.mailSystemId;
+    this.sEmailUserName = selectedRow.mailUserName;
+    this.mailSystemId = selectedRow.mailSystemId;
+
+    document.getElementById('reportmodalOpen')?.click();
   }
 
   LoadDetails() {
-    this.GetEmailUsername();
-    this.TrackOperationStart();
+    this.oEmailVerificationFormDto = new EmailVerificationFormDto();
     this.sEmailUserName = "";
     this.sEmailPassword = "";
     this.sEmailRecoveryEmail = "";
-
-    this.nReportIssueId = 0;
     this.eyeIcon = '👁️';
     this.eyeIconRecovery = '👁️';
   }
-
-  onSelectionChanged() {
-    this.sEmailUserName = "";
-    this.sEmailPassword = "";
-    this.sEmailRecoveryEmail = "";
-    this.nReportIssueId = 0;
-    this.eyeIcon = '👁️';
-    this.eyeIconRecovery = '👁️';
-  }
-  addBulkEmailBtn() {
-    if (this.mailSystemId <= 0) {
-      this.toast.warning("Select a mail from listt!!", "Warning", { progressBar: true });
-      return;
-    }
-    document.getElementById('modalOpen')?.click();
-    this.bIsEdit = false;
-    this.sTaskTitle = "Add";
-    this.oMailTasksManualFormDto = new MailTasksManualFormDto();
-  }
-
-  AddReportIssue() {
-    if (this.mailSystemId <= 0) {
-      this.toast.warning("Select a mail from listt!!", "Warning", { progressBar: true });
-      return;
-    }
-    document.getElementById('reportmodalOpen')?.click();
-    this.oEmailIssueFormDto = new EmailIssueFormDto();
-
-  }
-
 
   public GetVerificationPendingEmailAfterRoutineTask() {
     this.service.Get('/EmailOperation/GetVerificationPendingEmailAfterRoutineTask/' + 1 + '/' + 100000).subscribe((res: any) => {
-      this.oEmailOperationGridDtoList = res;
-      this.totalRecord = this.oEmailOperationGridDtoList.length;
-      this.bIsDisable = this.oEmailOperationGridDtoList.find(x => x.mailOperationCompletionStatus == 2) ? true : false;
-      this.balkEmailGridApi.setRowData(this.oEmailOperationGridDtoList);
-      this.balkEmailGridApi.forEachNode(node => {
-        if (node.data.mailOperationCompletionStatus == 2) {
-          node.setSelected(true);
-        }
-      })
+      this.balkEmailGridApi.setRowData(res.emailList);
+      this.totalRecord = res.noOfTotalRecord;
     },
       (err: any) => {
         console.log(err);
@@ -199,14 +162,16 @@ export class OperationVerificationPendingComponent implements OnInit {
         console.log(err);
       })
   }
-  public TrackOperationStart() {
-    this.service.Get('/EmailOperation/TrackOperationStart/' + this.mailOperationCompletionId).subscribe((res: any) => {
-      console.log(res)
-      this.GetVerificationPendingEmailAfterRoutineTask();
-    },
-      (err: any) => {
-        console.log(err);
-      })
+
+  togglePasswordVisibility(): void {
+    if (this.passwordFieldType === 'password') {
+      this.passwordFieldType = 'text';
+      this.eyeIcon = '';
+      this.GetEmailPassword()
+    } else {
+      this.passwordFieldType = 'password';
+      this.eyeIcon = '👁️';
+    }
   }
 
   public GetEmailPassword() {
@@ -227,94 +192,6 @@ export class OperationVerificationPendingComponent implements OnInit {
       })
   }
 
-  public TaskRoutineSubmit() {
-    this.oMailTasksManualFormDtoList = [];
-
-    this.taskEmailGridApi.forEachNode(node => {
-      this.oMailTasksManualFormDtoList.push(node.data);
-    })
-    if (this.oMailTasksManualFormDtoList.length <= 0) {
-      this.toast.warning("add at least one task!!", "Warning", { progressBar: true });
-      return
-    }
-    this.service.Post('/EmailManagement/AddMailTasksManual/' + this.mailSystemId + "/" + this.mailOperationCompletionId + "/" + this.statusTag, this.oMailTasksManualFormDtoList, true).subscribe((res: any) => {
-      this.toast.success("Routine Task Submitted Successfully!!", "Success", { progressBar: true });
-      this.GetVerificationPendingEmailAfterRoutineTask()
-      this.onSelectionChanged();
-      this.rowData = [];
-      this.totalRecord = 0;
-    },
-      (err: any) => {
-        console.log(err);
-        this.toast.error(err, "Error", { progressBar: true });
-      })
-  }
-
-  public AddReviewIntoGrid() {
-
-    if (this.oMailTasksManualFormDto.mailTaskName == "") {
-      this.toast.warning("Task Name Required!!", "Warning", { progressBar: true });
-      return
-    }
-    if (this.oMailTasksManualFormDto.mailTaskDescription == "") {
-      this.toast.warning("Task Description Required!!", "Warning", { progressBar: true });
-      return
-    }
-    if (this.oMailTasksManualFormDto.mailTaskNote == "") {
-      this.toast.warning("Task Note Required!!", "Warning", { progressBar: true });
-      return
-    }
-
-    if (this.bIsEdit) {
-      this.taskEmailGridApi.applyTransaction({ update: [this.oMailTasksManualFormDto] })
-    }
-    else {
-      this.taskEmailGridApi.applyTransaction({ add: [this.oMailTasksManualFormDto] })
-    }
-
-    document.getElementById("BulkemailCloseModal")?.click();
-
-  }
-  
-  public DeleteReviewIntoGrid() {
-    this.taskEmailGridApi.applyTransaction({ remove: [this.oMailTasksManualFormDto] })
-  }
-
-
-  public ReportMailIssue() {
-    this.oEmailIssueFormDto.mailSystemId = this.mailSystemId;
-    if (this.oEmailIssueFormDto.mailIssueId == -1) {
-      this.toast.warning("Please Select An Issue!!", "Warning", { progressBar: true });
-      return;
-    }
-    if (this.oEmailIssueFormDto.mailIssueId == 0) {
-      if (this.oEmailIssueFormDto.mailIssueNote == "") {
-        this.toast.warning("Custom issue note required!!", "Warning", { progressBar: true });
-        return;
-      }
-    }
-
-    this.service.Post('/EmailOperation/ReportMailIssue/' + this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
-      this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
-      this.rowData = [];
-      this.totalRecord = 0;
-      document.getElementById("reportCloseModal")?.click();
-    },
-      (err: any) => {
-        this.toast.error(err, "Error", { progressBar: true });
-      })
-  }
-
-  togglePasswordVisibility(): void {
-    if (this.passwordFieldType === 'password') {
-      this.passwordFieldType = 'text';
-      this.eyeIcon = '';
-      this.GetEmailPassword()
-    } else {
-      this.passwordFieldType = 'password';
-      this.eyeIcon = '👁️';
-    }
-  }
 
   toggleRecoveryEmailVisibility(): void {
     if (this.recoveryFieldType === 'password') {
@@ -326,6 +203,33 @@ export class OperationVerificationPendingComponent implements OnInit {
       this.eyeIconRecovery = '👁️';
     }
   }
+
+
+  public VerifyEmailAfterRoutineTask() {
+
+    if (this.oEmailVerificationFormDto.mailRoutineTaskVerificationStatus == 0) {
+      this.toast.warning("Please select status!!", "Warning", { progressBar: true });
+      return;
+    }
+
+    if (this.oEmailVerificationFormDto.mailRoutineTaskVerificationStatus == 1 || this.oEmailVerificationFormDto.mailRoutineTaskVerificationStatus == 1) {
+      if (this.oEmailVerificationFormDto.mailRoutineTaskVerificationNotes == "") {
+        this.toast.warning("Please provide custom vefification note!!", "Warning", { progressBar: true });
+        return;
+      }
+    }
+
+    this.service.Post('/EmailManagement/VerifyEmailAfterRoutineTask', this.oEmailVerificationFormDto).subscribe((res: any) => {
+      this.LoadDetails()
+      this.toast.success("Vefification save successfully!!", "Success", { progressBar: true });
+      document.getElementById("reportCloseModal")?.click();
+      this.GetVerificationPendingEmailAfterRoutineTask();
+    },
+      (err: any) => {
+        console.log(err);
+      })
+  }
+
 
 }
 
