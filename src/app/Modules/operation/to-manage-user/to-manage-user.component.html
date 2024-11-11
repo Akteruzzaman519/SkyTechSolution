@@ -9,7 +9,7 @@
                 <label for="category" class="form-label">Category</label>
                 <select id="category" class="form-select" [(ngModel)]="category" name="category">
                     <ng-container *ngFor="let item of categoryList">
-                        <option value="{{item.key}}">{{item.title}}</option>
+                        <option value="{{item.key}}">{{item.value}}</option>
                     </ng-container>
                 </select>
             </div>
@@ -40,8 +40,8 @@
     <div class="col-md-4">
         <div class="card">
             <div class="card-header py-2 px-3">
-                <div *ngIf="oUserFormGeneralDto.userCategoryId==0" class=""> Add User </div>
-                <div *ngIf="oUserFormGeneralDto.userCategoryId>0" class=""> Update User</div>
+                <div *ngIf="oUserFormGeneralDto.userSystemId==0" class=""> Add User </div>
+                <div *ngIf="oUserFormGeneralDto.userSystemId>0" class=""> Update User</div>
             </div>
             <div class="card-body">
                 <div class="mb-3">
@@ -57,11 +57,11 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="category" class="form-label">Category</label>
-                    <select id="category" class="form-select" [(ngModel)]="oUserFormGeneralDto.userCategoryId"
-                        name="category">
+                    <label for="userCategoryId" class="form-label">Category</label>
+                    <select id="userCategoryId" class="form-select" [(ngModel)]="oUserFormGeneralDto.userCategoryId"
+                        name="userCategoryId">
                         <ng-container *ngFor="let item of categoryModalList">
-                            <option value="{{item.key}}">{{item.title}}</option>
+                            <option value="{{item.key}}">{{item.value}}</option>
                         </ng-container>
 
                     </select>
@@ -90,9 +90,9 @@
 
             </div>
             <div class="card-footer text-end p-2">
-                <button *ngIf="oUserFormGeneralDto.userCategoryId==0" type="button" class="btn btn-primary"
+                <button *ngIf="oUserFormGeneralDto.userSystemId==0" type="button" class="btn btn-primary"
                     (click)="AddUser()"> Save Data </button>
-                <button *ngIf="oUserFormGeneralDto.userCategoryId>0" type="button" class="btn btn-primary"
+                <button *ngIf="oUserFormGeneralDto.userSystemId>0" type="button" class="btn btn-primary"
                     (click)="UpdateUser()"> Update Data </button>
             </div>
         </div>

@@ -53,7 +53,7 @@ export class ToManageUserComponent implements OnInit {
 
   colDefs: any[] = [
     { valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 100 },
-    { field: "userFullName ", headerName: 'Full Name' },
+    { field: "userFullName", headerName: 'Full Name' },
     { field: "userCategoryName", headerName: 'Category' },
     { field: "userActiveStatus", headerName: 'Status' },
   ];
