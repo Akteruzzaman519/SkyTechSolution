@@ -132,14 +132,14 @@ export class MailClaimingComponent implements OnInit {
     this.nSecondMapCategory = 0;
     this.sFirstMapLink = "";
     this.sSecondMapLink = "";
-    this.sFirstMapManualCurrentCategory="";
-    this.sFirstMapRelatedVpnCityName="";
-    this.sFirstMapRelatedVpnCityStateName="";
-    this.sFirstMapRelatedVpnCityZipCode="";
-    this.sSecondMapManualCurrentCategory="";
-    this.sSecondMapRelatedVpnCityName="";
-    this.sSecondMapRelatedVpnCityStateName="";
-    this.sSecondMapRelatedVpnCityZipCode="";
+    this.sFirstMapManualCurrentCategory = "";
+    this.sFirstMapRelatedVpnCityName = "";
+    this.sFirstMapRelatedVpnCityStateName = "";
+    this.sFirstMapRelatedVpnCityZipCode = "";
+    this.sSecondMapManualCurrentCategory = "";
+    this.sSecondMapRelatedVpnCityName = "";
+    this.sSecondMapRelatedVpnCityStateName = "";
+    this.sSecondMapRelatedVpnCityZipCode = "";
 
   }
 
@@ -234,9 +234,9 @@ export class MailClaimingComponent implements OnInit {
       })
   }
 
-  ChangeMapInfo(){
+  ChangeMapInfo() {
 
-    if(this.sFirstMapManualCurrentCategory ==""){
+    if (this.sFirstMapManualCurrentCategory == "") {
       this.toast.warning("Please Provide Map 1 Category!!", "Warning", { progressBar: true });
       return;
     }
@@ -248,7 +248,7 @@ export class MailClaimingComponent implements OnInit {
       this.toast.warning("Please Provide Map 1 Link!!", "Warning", { progressBar: true });
       return;
     }
-    if(this.sSecondMapManualCurrentCategory == ""){
+    if (this.sSecondMapManualCurrentCategory == "") {
       this.toast.warning("Please Provide Map 2 Category!!", "Warning", { progressBar: true });
       return;
     }
@@ -267,7 +267,7 @@ export class MailClaimingComponent implements OnInit {
 
   public ClaimEmailMaps() {
 
- 
+
     this.oEmailMapClaimFormDto = new EmailMapClaimFormDto();
     this.oEmailMapClaimFormDto.mapCurrentCategory = this.nFirstMapCategory;
     this.oEmailMapClaimFormDto.mapCurrentMapLink = this.sFirstMapLink;
@@ -292,7 +292,7 @@ export class MailClaimingComponent implements OnInit {
     this.oEmailMapClaimFormDtoList.push(this.oEmailMapClaimFormDto);
 
     //{{baseURL}}/EmailManagement/ClaimEmailMaps/{mailSystemId}/{mailOperationCompletionId}/{statusTag}
-    this.service.Post('/EmailManagement/ClaimEmailMaps/' + this.mailSystemId + "/" + this.mailOperationCompletionId + "/" + this.statusTag+"?remarks="+this.sRemarksNote, this.oEmailMapClaimFormDtoList, true).subscribe((res: any) => {
+    this.service.Post('/EmailManagement/ClaimEmailMaps/' + this.mailSystemId + "/" + this.mailOperationCompletionId + "/" + this.statusTag + "?remarks=" + this.sRemarksNote, this.oEmailMapClaimFormDtoList, true).subscribe((res: any) => {
       this.toast.success("Map Climing Info Saved!!", "Success", { progressBar: true });
       this.sFirstMapNumber = "";
       this.sSecondMapNumber = "";
@@ -300,7 +300,9 @@ export class MailClaimingComponent implements OnInit {
       this.nSecondMapCategory = 0;
       this.sFirstMapLink = "";
       this.sSecondMapLink = "";
-      this.GetEmailsByOperationTag(this.statusTag)
+      this.GetEmailsByOperationTag(this.statusTag);
+      this.oEmailMapClaimFormDto = new EmailMapClaimFormDto();
+      this.oEmailMapClaimFormDtoList = [];
       document.getElementById("ConfirmationPopupRemarkCloseModal")?.click();
 
       this.rowData = [];
@@ -333,6 +335,7 @@ export class MailClaimingComponent implements OnInit {
     this.service.Post('/EmailOperation/ReportMailIssue/' + this.statusTag, this.oEmailIssueFormDto, true).subscribe((res: any) => {
       this.toast.success("Mail Report Issue  Successfully!!", "Success", { progressBar: true });
       document.getElementById("BulkemailCloseModal")?.click();
+      this.oEmailIssueFormDto = new EmailIssueFormDto();
     },
       (err: any) => {
         this.toast.error(err, "Error", { progressBar: true });

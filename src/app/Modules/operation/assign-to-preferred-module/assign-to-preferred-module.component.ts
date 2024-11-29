@@ -168,7 +168,6 @@ export class AssignToPreferredModuleComponent implements OnInit {
 
 
   public ConfirmAssign() {
-
     let selectedAgent = AGGridHelper.GetSelectedRow(this.confirmToAgentGridApi);
     if (selectedAgent == null) {
       this.toast.warning("Please select  agent!!", "Warning", { progressBar: true });
@@ -185,7 +184,7 @@ export class AssignToPreferredModuleComponent implements OnInit {
     getSelectedRow.forEach((element: any) => {
       payload.push(element.mailSystemId)
     })
-    this.service.Post('/EmailOperation/AssignEmailOperation/' + this.selectModuleType + '/' + assignedTo, payload, true).subscribe((res: any) => {
+    this.service.Post('/EmailOperation/AssignEmailOperation/' + this.selectModuleType + '/' + assignedTo+"?note="+this.statusTag, payload, true).subscribe((res: any) => {
       this.toast.success("Agent Email Assign Successfully!!", "success", { progressBar: true });
       document.getElementById("assignToAgentCloseModal")?.click();
       this.totalRecord = 0;
