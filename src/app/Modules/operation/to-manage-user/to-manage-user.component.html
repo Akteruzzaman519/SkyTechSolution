@@ -70,7 +70,6 @@
                         <ng-container *ngFor="let item of categoryModalList">
                             <option value="{{item.key}}">{{item.value}}</option>
                         </ng-container>
-
                     </select>
                 </div>
 
@@ -82,7 +81,7 @@
 
                 <div class="mb-3">
                     <label for="userPassword" class="form-label">Password</label>
-                    <input type="text" class="form-control" [(ngModel)]="oUserFormGeneralDto.userPassword"
+                    <input type="password" class="form-control" [(ngModel)]="oUserFormGeneralDto.userPassword"
                         name="userPassword" id="userPassword" placeholder="">
                 </div>
 

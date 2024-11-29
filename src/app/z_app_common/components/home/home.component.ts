@@ -171,6 +171,10 @@ export class HomeComponent implements OnInit {
   GetUsersInKeyValueByUserCategory() {
     this.service.Get('/KeyValue/GetUsersInKeyValueByUserCategory/mail_agent').subscribe((res: any) => {
       this.KeyValueDto = res;
+      if (this.KeyValueDto.length > 0) {
+        this.agentUserSystemId = this.KeyValueDto[0].key;
+        this.getAgents();
+      }
     },
       (err: any) => {
         console.log(err);

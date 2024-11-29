@@ -106,25 +106,31 @@ export class ToManageUserComponent implements OnInit {
   public ManaageGeneralUser() {
 
     if (this.oUserFormGeneralDto.userFirstName == "") {
-      this.toast.warning("Enter first name");
+      this.toast.warning("Enter first name","Warning!!",{progressBar:true});
+      return;
     }
     if (this.oUserFormGeneralDto.userLastName == "") {
-      this.toast.warning("Enter last name");
+      this.toast.warning("Enter last name","Warning!!",{progressBar:true});
+      return;
     }
     if (this.oUserFormGeneralDto.userCategoryId ==0) {
-      this.toast.warning("Please select category");
+      this.toast.warning("Please select category","Warning!!",{progressBar:true});
+      return;
     }
 
     if (this.oUserFormGeneralDto.userName == "") {
-      this.toast.warning("Enter user name");
+      this.toast.warning("Enter user name","Warning!!",{progressBar:true});
+      return;
     }
     if (this.oUserFormGeneralDto.userPassword == "") {
-      this.toast.warning("Enter user password");
+      this.toast.warning("Enter user password","Warning!!",{progressBar:true});
+      return;
     }
 
     this.service.Post('/User/ManaageGeneralUser', this.oUserFormGeneralDto, true).subscribe((res: any) => {
       this.toast.success("Data" + (this.oUserFormGeneralDto.userSystemId == 0 ? ' Save' : ' Update') + " Successfully!!", "Success", { progressBar: true });
       this.oUserFormGeneralDto = new UserFormGeneralDto();
+      this.GetData();
     },
       (err: any) => {
         console.log(err);
