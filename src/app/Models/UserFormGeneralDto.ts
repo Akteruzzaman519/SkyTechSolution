@@ -5,7 +5,7 @@ export class UserFormGeneralDto {
         this.userFirstName = "";
         this.userLastName = "";
         this.userCategoryId = 0;
-        this.userActiveStatus = 0;
+        this.userActiveStatus = 1;
         this.userName = "";
         this.userPassword = "";
     }

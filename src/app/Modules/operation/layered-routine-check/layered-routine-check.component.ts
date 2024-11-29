@@ -29,7 +29,7 @@ export class LayeredRoutineCheckComponent implements OnInit {
     { valueGetter: "node.rowIndex + 1", headerName: 'SL', width: 100, editable: false, checkboxSelection: true, headerCheckboxSelection: true, },
     
     { field: 'mailUserName', headerName: 'Email' },
-    { field: 'MailLastActionTakenAge', headerName: 'Age' },
+    { field: 'mailLastActionTakenAge', headerName: 'Age' },
     
     { field: 'mailRoutineTaskDate1', headerName: 'Claimed At',
       cellRenderer: (params: ValueFormatterParams) => {
