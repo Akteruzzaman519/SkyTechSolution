@@ -158,7 +158,10 @@ export class MailClaimingComponent implements OnInit {
     this.service.Get('/EmailOperation/GetEmailsByOperationTag/' + relatedModule).subscribe((res: any) => {
       this.oEmailOperationGridDtoList = res;
       this.totalRecord = this.oEmailOperationGridDtoList.length;
-      this.bIsDisable = this.oEmailOperationGridDtoList.find(x => x.mailOperationCompletionStatus == 2) ? true : false;
+      
+      this.bIsDisable = this.oEmailOperationGridDtoList.filter(x => x.mailOperationCompletionStatus == 2).length>4 ? true : false;
+      // this.bIsDisable = this.oEmailOperationGridDtoList.find(x => x.mailOperationCompletionStatus == 2) ? true : false;
+
       this.balkEmailGridApi.setRowData(this.oEmailOperationGridDtoList);
       this.balkEmailGridApi.forEachNode(node => {
         if (node.data.mailOperationCompletionStatus == 2) {
