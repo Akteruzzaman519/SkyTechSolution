@@ -67,7 +67,6 @@ export class LoginComponent implements OnInit {
 	onLogin() {
 		this.formSubmitted = true;
 		if (this.isLoginObjectValid()) {
-			console.log(this.user);
 			// return;
 
 			this.authService.login(this.user)

@@ -78,7 +78,6 @@ export class SingleElementSelectionComponent implements OnInit, OnChanges, OnDes
 	ngOnChanges() {
 
 		if (this.showModal) {
-			console.log(this.isFindEnabled);
 
 			this.searchTerm = this.defaultTerm ? this.defaultTerm : "";
 			this.optionSorter = "ASC";
@@ -87,7 +86,6 @@ export class SingleElementSelectionComponent implements OnInit, OnChanges, OnDes
 			this.pageSelectedOptionKey = this.selectedOptionKey;
 			this.setRecordSize();
 
-			console.log(this.searchTerm);
 
 			if (this.configuration.preloadData) {
 				this.loadDataOnPageLoad();

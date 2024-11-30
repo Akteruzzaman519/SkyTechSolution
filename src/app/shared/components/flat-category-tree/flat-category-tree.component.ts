@@ -46,13 +46,11 @@ export class FlatCategoryTreeComponent implements AfterViewInit {
 	}
 
 	ngAfterViewInit(): void {
-		console.log(this.treeControl);
 	}
 
 	hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
 	expandNode() {
-		console.log(this.treeControl.dataNodes);
 
 		let expandableNodes: number[] = [];
 
@@ -70,7 +68,6 @@ export class FlatCategoryTreeComponent implements AfterViewInit {
 				}
 			}
 
-			console.log(expandableNodes);
 		}
 
 		expandableNodes.forEach(node => {
@@ -80,8 +77,6 @@ export class FlatCategoryTreeComponent implements AfterViewInit {
 
 
 	onNodeClicked(node: FoodNode) {
-		console.log(node);
-		console.log(this.treeControl);
 	}
 
 	testExpand() {

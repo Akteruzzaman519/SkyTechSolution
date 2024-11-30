@@ -146,15 +146,6 @@ export class MultiElementSelectionComponent implements OnChanges, OnInit {
 	}
 
 	onSelectedOptionChange($event: any, option: any) {
-    console.log("Unselect option ==> ", option);
-    console.log("this.allPageSelectedOptions ==> ", this.allPageSelectedOptions);
-		 //var selectedOption = this.allPageOptions.find(a => a.key == option);
-		 //var tempObj = Object.assign({}, selectedOption);
-		 //tempObj.isChecked = false;
-		 //var index = this.allPageOptions.findIndex(a => a.key == option);
-		 //this.allPageOptions.splice(index, 1, tempObj);
-
-
 		var index = this.allPageSelectedOptions.findIndex(a => a.key == option);
 		this.allPageSelectedOptions.splice(index, 1);
 

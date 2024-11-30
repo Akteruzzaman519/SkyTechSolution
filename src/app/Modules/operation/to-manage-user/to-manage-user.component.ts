@@ -87,7 +87,6 @@ export class ToManageUserComponent implements OnInit {
 
   onSelectionChanged(event: any) {
     const selectedData = AGGridHelper.GetSelectedRow(this.userManageGridApi);
-    console.log(selectedData);
     this.oUserFormGeneralDto = new UserFormGeneralDto();
     this.oUserFormGeneralDto.userSystemId = Number(selectedData?.userSystemId);
     this.oUserFormGeneralDto.userFirstName = selectedData?.userFirstName == undefined ? '' : selectedData?.userFirstName;
@@ -96,8 +95,6 @@ export class ToManageUserComponent implements OnInit {
     this.oUserFormGeneralDto.userActiveStatus = Number(selectedData.userActiveStatus);
     this.oUserFormGeneralDto.userName = selectedData.userName;
     this.oUserFormGeneralDto.userPassword = selectedData.userPassword;
-
-    console.log(this.oUserFormGeneralDto);
   }
   UpdateUser() {
     this.ManaageGeneralUser();

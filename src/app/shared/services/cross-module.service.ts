@@ -129,7 +129,6 @@ export class CrossModuleService extends CommonService {
 		if (search) {
 			endPoint += `?search=${encodeURIComponent(search)}`;
 		}
-		console.log(endPoint);
 
 		// return of(this.dummyRows);
 		return this.http.get<ProductGrid[]>(endPoint, options);

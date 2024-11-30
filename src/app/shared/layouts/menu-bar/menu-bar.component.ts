@@ -27,12 +27,7 @@ export class MenuBarComponent implements OnInit {
 		this.authService.getMenu()
 			.subscribe({
 				next: (response) => {
-					console.log(response);
-					// this.menus = JSON.parse(response);
-
 					this.menus = response ?? [];
-					console.log(this.menus);
-					// console.log(this.menus.length);
 				},
 				error: (error) => {
 					console.log(error);

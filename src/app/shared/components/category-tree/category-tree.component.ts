@@ -41,7 +41,6 @@ export class CategoryTreeComponent implements OnChanges, OnInit, OnDestroy {
 		this.subs.sink = this.crModuleService.getProductCategoriesInTreeview()
 			.subscribe({
 				next: (response) => {
-					console.log(response);
 					this.dataSource.data = response;
 				},
 				error: (err) => {
@@ -77,8 +76,6 @@ export class CategoryTreeComponent implements OnChanges, OnInit, OnDestroy {
 	hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
 	expandNode() {
-		console.log(this.treeControl.dataNodes);
-
 		let expandableNodes: number[] = [];
 
 		const nodeIndex = this.treeControl.dataNodes.findIndex(a => a.id == this.selectedId);
@@ -93,8 +90,6 @@ export class CategoryTreeComponent implements OnChanges, OnInit, OnDestroy {
 					parentNodeLevel = parentNodeLevel - 1;
 				}
 			}
-
-			console.log(expandableNodes);
 		}
 
 		expandableNodes.forEach(node => {
@@ -104,7 +99,6 @@ export class CategoryTreeComponent implements OnChanges, OnInit, OnDestroy {
 
 
 	onNodeClicked(node: ExampleFlatNode) {
-		console.log(node);
 		this.selectedId = node.id;
 		this.onCategorySelected.emit({
 			categoryId: node.id,

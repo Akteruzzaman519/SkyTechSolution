@@ -122,7 +122,6 @@ export class OperationVerificationPendingComponent implements OnInit {
 
   public OpenModalDialog() {
     var selectedRow = AGGridHelper.GetSelectedRow(this.balkEmailGridApi);
-    console.log(selectedRow)
     if (selectedRow == null) {
       this.toast.warning("Select a mail from listt!!", "Warning", { progressBar: true });
       return;

@@ -196,7 +196,6 @@ export class ReportMailHistoryComponent implements OnInit {
     debugger
     this.oMailReviewReportDto = params.data;
     document.getElementById('reviewModalOpen')?.click();
-    console.log(params.data);
   }
 
   public RowDoubleClickTask(params: RowDoubleClickedEvent){

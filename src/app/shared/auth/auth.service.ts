@@ -47,7 +47,6 @@ export class AuthService {
 			.pipe(
 				take(1),
 				tap((response: any) => {
-					console.log(response);
 					if(response.hasOwnProperty('token')) {
 						this.storeLoggedInInformation(response['token']);
 					}
@@ -206,7 +205,6 @@ export class AuthService {
 				.pipe(
 					take(1),
 					map((response: any) => {
-						console.log(response);
 						if (response['data']) {
 							this.saveMenuToken(response['data']);
 							return this.decodeMenuToken();

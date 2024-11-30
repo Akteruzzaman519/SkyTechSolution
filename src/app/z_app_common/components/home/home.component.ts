@@ -125,16 +125,16 @@ export class HomeComponent implements OnInit {
     if (user) {
       switch (user.role) {
         case Roles.cwh:
-          console.log("CWH")
+
           break;
         case Roles.hub:
-          console.log("Hub")
+
           break;
         case Roles.merchant:
-          console.log("Merchant")
+
           break;
         case Roles.hub_user:
-          console.log("Hub User")
+
           break;
         default:
           break;

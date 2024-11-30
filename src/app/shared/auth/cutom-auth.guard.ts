@@ -38,9 +38,7 @@ export abstract class CustomAuthGuard implements CanActivate {
 	}
 
 	private handleRoute(url: string) : boolean {
-        console.log(url);
         const menus = this.authService.decodeMenuToken();
-        console.log(menus);
         if(!menus)
             return false;
 
@@ -50,7 +48,6 @@ export abstract class CustomAuthGuard implements CanActivate {
 
             if(!matched) {
                 if(menu.MenuURL == url) {
-                    console.log("matched => ", menu);
                     matched = true;
                 }
     
@@ -58,7 +55,6 @@ export abstract class CustomAuthGuard implements CanActivate {
                     menu.SubMenus.forEach(subMenu => {
                         if(!matched) {
                             if(subMenu.SubMenuURL == url) {
-                                console.log("matched Submenu => ", subMenu);
                                 matched = true;
                             }                        }
                         

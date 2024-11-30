@@ -109,7 +109,6 @@ export class ChangeMapInfoComponent implements OnInit {
   }
 
   public RowDoubleClick(params: RowDoubleClickedEvent) {
-    console.log(params.data)
     this.mailSystemId = params.data.mailSystemId;
     this.mailOperationCompletionId = params.data.mailOperationCompletionId;
     this.LoadDetails();

@@ -72,7 +72,6 @@ export class CategoryTreeShellComponent implements OnChanges {
 					})
 				).subscribe({
 					next: (response) => {
-						console.log(response);
 						this.allItems = response;
 						this.TempALlItems = response;
 						var inputElement = document.getElementById("txtSearchProduct") as any;
